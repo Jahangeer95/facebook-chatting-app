@@ -1,4 +1,4 @@
-export const Sidebar = ({ users = [], onSelect, selectedId, pageID }) => {
+export function Sidebar  ({ users = [], onSelect, selectedId, pageID }) {
   return (
     <div className="w-1/5 border-r overflow-auto bg-gray-50">
       <div className="p-4 font-bold text-lg border-b bg-blue-500 text-white">

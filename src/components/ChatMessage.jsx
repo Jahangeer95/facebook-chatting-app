@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCheckDouble } from "@fortawesome/free-solid-svg-icons";
 
-export const ChatMessage = ({ message }) => {
+export function ChatMessage  ({ message })  {
   const isUser = message.from?.name === "Next-Gen Coders";
   const time = new Date(message.created_time).toLocaleTimeString([], {
     hour: "2-digit",
@@ -19,16 +19,14 @@ export const ChatMessage = ({ message }) => {
         return (
           <div>
             {!imageLoaded && (
-              <span style={{ color: "#888" }}>Loading image...</span>
+              <span className="text-gray-500">Loading image...</span>
             )}
             <img
               src={imageUrl}
               alt={attachment.name || "Image"}
-              style={{
-                maxWidth: "300px",
-                borderRadius: "8px",
-                display: imageLoaded ? "block" : "none",
-              }}
+              className={`max-w-[300px] rounded-lg ${
+                imageLoaded ? "block" : "hidden"
+              }`}
               onLoad={() => setImageLoaded(true)}
               onError={() => {
                 setImageLoaded(false);

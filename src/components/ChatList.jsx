@@ -1,59 +1,47 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef} from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { ChatMessage } from "./ChatMessage";
+import { groupMessagesByDate } from "../helper/GroupMessage";
+export function ChatList  ({ messages, onLoadMore })  {
+  const messageEndRef = useRef();
 
-export const ChatList = ({ messages }) => {
-  const messagesEndRef = useRef(null);
-
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" }); //auto scroll to the bottom
-    }
-  }, [messages]);
-
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    const today = new Date();
-    const yesterday = new Date();
-    yesterday.setDate(today.getDate() - 1);
-
-    const isToday = date.toDateString() === today.toDateString();
-    const isYesterday = date.toDateString() === yesterday.toDateString();
-
-    if (isToday) return "Today";
-    if (isYesterday) return "Yesterday";
-
-    return date.toDateString();
-  };
-
-  const groupMessagesByDate = () => {
-    const groups = {};
-
-    messages.forEach((msg) => {
-      const dateLabel = formatDate(msg.created_time);
-
-      if (!groups[dateLabel]) {
-        groups[dateLabel] = [];
-      }
-
-      groups[dateLabel].push(msg);
-    });
-
-    return groups;
-  };
-
-  const groupedMessages = groupMessagesByDate();
+  //group messages by date
+  const groupedMessages = groupMessagesByDate(messages);
 
   return (
-    <div className="flex-1 overflow-auto p-4 bg-white">
-      {Object.entries(groupedMessages).map(([date, msgs]) => (
-        <div key={date}>
-          <div className="text-center text-sm text-gray-500 my-2">{date}</div>
-          {msgs.map((msg) => (
-            <ChatMessage key={msg.id} message={msg} />
+    // scrollable container
+    <div
+      id="scroll-chat"
+      ref={messageEndRef}
+      className="h-full overflow-auto flex flex-col-reverse"
+    >
+      <InfiniteScroll
+        dataLength={messages.length}
+        next={onLoadMore}
+        hasMore={true}
+        inverse={true}
+        scrollableTarget="scroll-chat"
+        loader={
+          <div className="text-center text-sm text-gray-400">
+            Loading more...
+          </div>
+        }
+        //order message from bottom to top
+        className="flex flex-col-reverse"
+      >
+        {Object.entries(groupedMessages)
+          .reverse()
+          .map(([date, msgs]) => (
+            <div key={date}>
+              <div className="text-center text-sm text-gray-500 my-2">
+                {date}
+              </div>
+              {msgs.map((msg) => (
+                <ChatMessage key={msg.id} message={msg} />
+              ))}
+            </div>
           ))}
-        </div>
-      ))}
-      <div ref={messagesEndRef} />
+      </InfiniteScroll>
     </div>
   );
 };

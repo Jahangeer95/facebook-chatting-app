@@ -6,17 +6,17 @@ import {
   sendMessage,
 } from "../api/MessengerApi";
 import { io } from "socket.io-client";
-
-const pageID = "750201798171865";
+import { pageID } from "../config";
 const socket = io("https://a86d1d4bce35.ngrok-free.app", {
   transports: ["websocket"],
 });
 
-export const ChatPage = () => {
+export function ChatPage() {
   const [conversations, setConversations] = useState([]);
   const [selected, setSelected] = useState(null);
   const [messages, setMessages] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
+  const [paging, setPaging] = useState(null); //for page information
   const selectedRef = useRef(null);
 
   useEffect(() => {
@@ -42,104 +42,87 @@ export const ChatPage = () => {
     loadConversations();
   }, []);
 
-
-
   //to load chat history
   useEffect(() => {
-    if (selected?.id) {
-      fetchMessages(selected.id).then((fetched) => {
-        setMessages(
-          fetched.map((msg) => ({
-            ...msg,
-            status: msg.status || "sent",
-          }))
-        );
+    const loadMessages = async () => {
+      if (!selected?.id) return;
 
-        const last = fetched[fetched.length - 1];
-        setConversations((prev) =>
-          prev.map((conv) =>
-            conv.id === selected.id
-              ? {
-                  ...conv,
-                  lastMessage: last?.message || "",
-                  updatedAt: last?.created_time || "",
-                }
-              : conv
-          )
-        );
-      });
-    }
+      const { messages: fetchedMessages, paging } = await fetchMessages(
+        selected.id
+      );
+      setMessages(
+        [...fetchedMessages]
+          .reverse()
+          .sort((a, b) => new Date(a.created_time) - new Date(b.created_time))
+      );
+      setPaging(paging);
+    };
+
+    loadMessages();
   }, [selected]);
 
   useEffect(() => {
     window.socket = socket;
 
-    //to check socket connection 
+    //to check socket connection
     socket.on("connect", () => console.log("Connected:", socket.id));
     socket.on("disconnect", () => console.log("Disconnected"));
 
-    socket.on("message_from_user", (data) => {
-      const { senderId, message, attachments, id } = data;
-
-      const formatted = {
-        id: id || Date.now().toString(), 
-        message: typeof message === "string" ? message : "",
-        attachments: attachments  
-          ? {
-              data: [
-                {
-                  image_data: {
-                    url: attachments.url,
-                  },
-                },
-              ],
-            }
-          : null,
-        from: {
-          id: senderId,
-          name:
-            selectedRef.current?.participants.find((p) => p.id === senderId)
-              ?.name || "User",
-        },
-        created_time: new Date().toISOString(),
-        status: "sent",
-      };
-
-      setMessages((prevMessages) => {
-        const exists = prevMessages.some((msg) => msg.id === formatted.id);
-        if (!exists) return [...prevMessages, formatted];
-        return prevMessages;
-      });
+    //refresh after each incoming or outgoing message
+    socket.on("message_from_user", async () => {
+      try {
+        const { messages: updatedMessages, paging } = await fetchMessages(
+          selectedRef.current.id
+        );
+        setMessages(
+          [...updatedMessages]
+            .reverse()
+            .sort((a, b) => new Date(a.created_time) - new Date(b.created_time))
+        );
+        setPaging(paging);
+      } catch (err) {
+        console.error("Failed to refresh messages:", err);
+      }
     });
-//to set latest message to delivered
-    socket.on("message_delivered", () => {
-      setMessages((prev) => {
-        const updated = [...prev];
-        for (let i = updated.length - 1; i >= 0; i--) {
-          const msg = updated[i];
-          const isSentByMe = msg.from?.id === pageID;
+
+    socket.on("message_delivered", ({ userId }) => {
+      const currentChat = selectedRef.current;
+      //checking if the received user id  is in the selected conversation
+      const exist = currentChat?.participants?.some((p) => p.id === userId);
+
+      if (!exist) return;
+
+      setMessages((prev) =>
+        prev.map((msg) => {
+          const isSentByMe = msg.from?.id === pageID; 
           if (isSentByMe && !msg.delivered) {
-            updated[i] = { ...msg, delivered: true };
-            break;
-          }
-        }
-        return updated;
-      });
-    });
-
-    socket.on("message_read", () => {
-      setMessages((prev) => {
-        return prev.map((msg) => {
-          const isSentByMe = msg.from?.id === pageID;
-          if (isSentByMe) {
-            return { ...msg, read: true };
+            return { ...msg, delivered: true ,status:"delivered"};   //mark message read when event receive
           }
           return msg;
-        });
-      });
+        })
+      );
     });
 
-  socket.onAny((ev, ...args) => console.log("Event:", ev, args));
+    socket.on("message_read", ({ userId }) => {
+      const currentChat = selectedRef.current;
+
+      // checking if the read user exists in selected conversation
+      const exist = currentChat?.participants?.some((p) => p.id === userId);
+
+      if (!exist) return;
+
+      setMessages((prev) =>
+        prev.map((msg) => {
+          const isSentByMe = msg.from?.id === pageID;
+          if (isSentByMe && msg.status !== "read") {
+            return { ...msg, read: true, status: "read" }; //mark message read when event receive
+          }
+          return msg;
+        })
+      );
+    });
+
+    socket.onAny((ev, ...args) => console.log("Event:", ev, args));
 
     return () => {
       socket.off("connect");
@@ -185,16 +168,49 @@ export const ChatPage = () => {
         onOutOfWindow: () => setShowDialog(true),
       });
 
-      const updated = await fetchMessages(selected.id);
-      setMessages(
-        updated.map((msg) => ({
-          ...msg,
-          status: msg.status || "sent",
-        }))
-      );
+      const updatedResponse = await fetchMessages(selected.id);
+
+      const updated = updatedResponse.messages || [];
+
+      if (Array.isArray(updated)) {
+        setMessages(
+          updated.map((msg) => ({
+            ...msg,
+            status: msg.status || "sent",
+          }))
+        );
+      } else {
+        console.error("Messages should be an array got:", updated);
+      }
     } catch (err) {
       console.error("Send failed:", err);
     }
+  };
+
+  const handlepreviousMessages = async () => {
+    if (!paging?.next || !selected?.id) return;
+
+    const afterCursor = new URL(paging.next).searchParams.get("after");
+    if (!afterCursor) return;
+
+    const { messages: olderMessages, paging: newPaging } = await fetchMessages(
+      selected.id,
+      afterCursor
+    );
+
+    setMessages((prev) => {
+      const combined = [...olderMessages, ...prev];
+      const uniqueMap = new Map();
+      combined.forEach((msg) => {
+        uniqueMap.set(msg.id, { ...msg, status: msg.status || "sent" });
+      });
+
+      return [...uniqueMap.values()].sort(
+        (a, b) => new Date(a.created_time) - new Date(b.created_time)
+      );
+    });
+
+    setPaging(newPaging);
   };
 
   const selectedUser = selected?.participants?.find((p) => p.id !== pageID);
@@ -209,7 +225,8 @@ export const ChatPage = () => {
       />
       <div className="flex flex-col flex-1 overflow-hidden">
         <ChatHeader user={selectedUser} />
-        <ChatList messages={messages} />
+        <ChatList messages={messages} onLoadMore={handlepreviousMessages} />
+
         <ChatInput onSend={handleSendMessage} disabled={!selected} />
         {/* Alert of 24 hours window  */}
         {showDialog && (
@@ -230,4 +247,4 @@ export const ChatPage = () => {
       </div>
     </div>
   );
-};
+}

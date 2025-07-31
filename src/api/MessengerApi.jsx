@@ -1,7 +1,7 @@
-const baseURL = "https://a86d1d4bce35.ngrok-free.app";
-const pageID = "750201798171865";
 
-// Fetch conversations from your own backend
+import { baseURL,pageID } from "../config";
+
+// fetch conversations
 export const fetchConversations = async () => {
   try {
     const res = await fetch(`${baseURL}/fb/conversations/${pageID}`, {
@@ -21,29 +21,35 @@ export const fetchConversations = async () => {
 };
 
 // fetch messages for a conversation
-export const fetchMessages = async (conversationId) => {
+export const fetchMessages = async (conversationId, afterCursor = "") => {
   try {
-    const url = `${baseURL}/fb/messages/${conversationId}`;
-    console.log("Fetching messages from:", url);
+    const url = new URL(`${baseURL}/fb/messages/${conversationId}`);
+    if (afterCursor) {
+      url.searchParams.append("after", afterCursor);
+    }
 
-    const res = await fetch(url, {
-      method: 'GET',
+    const res = await fetch(url.toString(), {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': 'true',
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
       },
     });
 
     const data = await res.json();
-    console.log("Raw message API response:", data);
-
-    
-    return Array.isArray(data) ? data.reverse() : [];
+    console.log("Fetched messages:", {
+      messages: data.messages,
+      paging: data.paging,
+      type: typeof data.messages,
+    });
+    return data;
   } catch (error) {
-    console.error('Error fetching messages:', error);
-    return [];
+    console.error("Error fetching messages:", error);
+    return { messages: [], paging: null };
   }
 };
+
+//for sending message
 export const sendMessage = async ({
   recipientId,
   text,
@@ -56,6 +62,7 @@ export const sendMessage = async ({
   const lastMessageDate = new Date(lastUserMessageTime);
   const diffHours = (now - lastMessageDate) / (1000 * 60 * 60);
 
+  //24 hours window check
   if (diffHours > 24) {
     if (onOutOfWindow && typeof onOutOfWindow === 'function') {
       onOutOfWindow();
@@ -71,7 +78,7 @@ export const sendMessage = async ({
     formData.append("message", text);
   } else if (type === "image" && file) {
     formData.append("file", file);
-    formData.append("message", file.name); 
+    formData.append("message", file.name);
   }
 
   const res = await fetch(`${baseURL}/fb/send-message`, {
@@ -89,9 +96,6 @@ export const sendMessage = async ({
   return data;
 };
 
-
-
-//to fetch the name of user
 export const fetchConversationsWithParticipants = async () => {
   const headers = {
     'ngrok-skip-browser-warning': 'true',
@@ -120,7 +124,7 @@ export const fetchConversationsWithParticipants = async () => {
     const participantsData = await participantsRes.json();
     const participantsList = participantsData?.data || [];
 
-    const newConversations = conversations.map((conv) => {
+    const enrichedConversations = conversations.map((conv) => {
       const match = participantsList.find((p) => p.conversationId === conv.id);
       return {
         ...conv,
@@ -128,12 +132,9 @@ export const fetchConversationsWithParticipants = async () => {
       };
     });
 
-    return newConversations;
+    return enrichedConversations;
   } catch (error) {
     console.error("Error fetching conversations or participants:", error.message);
     throw error;
   }
 };
-
-
-
