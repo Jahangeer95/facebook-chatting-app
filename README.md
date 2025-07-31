@@ -17,10 +17,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 
  ### `Features`
-Realtime Messaging: Send and receive messages instantly.
-Image Support: Upload and send images along with your message.
-24-Hour Message Window: You can only send messages within 24 hours of the user's last interaction.
-Conversation View: Select a user from the sidebar to view your chat history.
+1. Realtime Messaging: Send and receive messages instantly.
+2. Image Support: Upload and send images along with your message.
+3. 24-Hour Message Window: You can only send messages within 24 hours of the user's last interaction.
+4. Conversation View: Select a user from the sidebar to view your chat history.
 
 
 
