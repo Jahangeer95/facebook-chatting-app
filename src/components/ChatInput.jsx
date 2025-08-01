@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faPaperclip } from "@fortawesome/free-solid-svg-icons";
 
-export function ChatInput ({ onSend, disabled }) {
+export function ChatInput({ onSend, disabled }) {
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -63,13 +63,21 @@ export function ChatInput ({ onSend, disabled }) {
 
       {/* for image*/}
       <div className="flex items-center gap-2">
+        {/* icon for file input */}
+        <label
+          htmlFor="fileInput"
+          className="cursor-pointer p-2 rounded hover:bg-gray-400 text-gray-800 bg-gray-200"
+        >
+          <FontAwesomeIcon icon={faPaperclip} />
+        </label>
         <input
+          id="fileInput"
           type="file"
           accept="image/*"
           ref={fileInputRef}
           onChange={(e) => setFile(e.target.files[0])}
           disabled={disabled}
-          className="w-36 text-sm"
+          className="hidden"
         />
         {/* for text */}
         <input
@@ -92,4 +100,4 @@ export function ChatInput ({ onSend, disabled }) {
       </div>
     </div>
   );
-};
+}
