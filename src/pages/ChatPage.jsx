@@ -7,7 +7,7 @@ import {
 } from "../api/MessengerApi";
 import { io } from "socket.io-client";
 import { pageID } from "../config";
-const socket = io("https://a86d1d4bce35.ngrok-free.app", {
+const socket = io("https://backend-whatsapp-chat-production.up.railway.app", {
   transports: ["websocket"],
 });
 
