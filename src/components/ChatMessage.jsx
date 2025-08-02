@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCheckDouble } from "@fortawesome/free-solid-svg-icons";
 
-export function ChatMessage  ({ message })  {
+export function ChatMessage({ message }) {
   const isUser = message.from?.name === "Next-Gen Coders";
   const time = new Date(message.created_time).toLocaleTimeString([], {
     hour: "2-digit",
@@ -24,7 +24,7 @@ export function ChatMessage  ({ message })  {
             <img
               src={imageUrl}
               alt={attachment.name || "Image"}
-              className={`max-w-[300px] rounded-lg ${
+              className={`max-w-[300px] max-h-[300px] rounded-lg ${
                 imageLoaded ? "block" : "hidden"
               }`}
               onLoad={() => setImageLoaded(true)}
@@ -41,9 +41,20 @@ export function ChatMessage  ({ message })  {
     }
 
     if (message.message && typeof message.message === "string") {
-      return <span>{message.message}</span>;
+      return <span className="text-2xl">{message.message}</span>;
     }
+     
 
+    if (message.sticker) {
+      return (
+        <img
+          src={message.sticker}
+          alt="sticker"
+          className="max-w-[120px] rounded-lg"
+          onError={() => console.warn("Sticker failed to load")}
+        />
+      );
+    }
     return null;
   };
 
@@ -81,4 +92,4 @@ export function ChatMessage  ({ message })  {
       </div>
     </div>
   );
-};
+}
