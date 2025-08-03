@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCheckDouble } from "@fortawesome/free-solid-svg-icons";
-
+import { pageID } from "../config";
 export function ChatMessage({ message }) {
-  const isUser = message.from?.name === "Next-Gen Coders";
+  const isUser = message.from?.id === pageID;
   const time = new Date(message.created_time).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
@@ -14,6 +14,8 @@ export function ChatMessage({ message }) {
   const imageUrl = attachment?.image_data?.url;
 
   const messageContent = () => {
+
+    //to handle attachment message
     if (attachment) {
       if (imageUrl) {
         return (
@@ -40,11 +42,12 @@ export function ChatMessage({ message }) {
       }
     }
 
+   //to handle text message
     if (message.message && typeof message.message === "string") {
-      return <span className="text-2xl">{message.message}</span>;
+      return <span>{message.message}</span>;
     }
      
-
+   //to handle sticker message
     if (message.sticker) {
       return (
         <img

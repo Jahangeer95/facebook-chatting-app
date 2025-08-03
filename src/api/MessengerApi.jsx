@@ -138,3 +138,16 @@ export const fetchConversationsWithParticipants = async () => {
     throw error;
   }
 };
+
+
+//to get/fetch profile pics
+export async function getUserProfilePic(userId) {
+  try {
+    const res = await fetch(`${baseURL}/fb/user/${userId}`);
+    const data = await res.json();
+    return data?.data || null; 
+  } catch (err) {
+    console.error("Failed to fetch profile image:", err);
+    return null;
+  }
+}
