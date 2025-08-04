@@ -1,24 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState ,useRef} from "react";
 import { getUserProfilePic } from "../api/MessengerApi";
 export function Sidebar({ users = [], onSelect, selectedId, pageID }) {
   const [profilePics, setProfilePic] = useState({});
-  useEffect(() => {
-    async function getUsersPic() {
-      const pics = {};
-      for (const conv of users) {
-        const user = conv.participants?.find((p) => p.id !== pageID);
-        if (user?.id && !profilePics[user.id]) {
-          const pic = await getUserProfilePic(user.id);
-          pics[user.id] = pic;
-        }
-      }
-      setProfilePic((prev) => ({ ...prev, ...pics }));
-    };
-    if (users.length > 0) {
-      getUsersPic();
+  const pics=useRef({});
+   function getPic(userId){
+    if(!pics.current[userId]){
+      pics.current[userId]=true;
+      getUserProfilePic(userId).then((pic)=>{
+        setProfilePic((prev)=>({...prev,[userId]:pic}));
+      });
     }
-  }, [users, pageID]);
-
+   }
   return (
     <div className="w-1/5 border-r overflow-auto bg-gray-50">
       <div className="p-4 font-bold text-lg border-b bg-blue-500 text-white">
@@ -26,6 +18,9 @@ export function Sidebar({ users = [], onSelect, selectedId, pageID }) {
       </div>
       {users.map((conv) => {
         const user = conv.participants?.find((p) => p.id !== pageID);
+        if(user?.id){
+          getPic(user.id);
+        }
         const profilePic = profilePics[user?.id];
 
         return (
@@ -41,6 +36,12 @@ export function Sidebar({ users = [], onSelect, selectedId, pageID }) {
                 src={profilePic || "avatar.jpg"}
                 alt="Profile"
                 className="w-10 h-10 rounded-full object-cover"
+                onError={
+                  (e)=>{
+                    e.target.onerror=null;
+                    e.target.src="avatar.jpg"
+                  }
+                }
               />
               <div className="font-semibold">{user?.name || "XYZ"}</div>
             </div>
