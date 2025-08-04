@@ -7,7 +7,7 @@ export function Sidebar({ users = [], onSelect, selectedId, pageID }) {
       </div>
       {users.map((conv) => {
         const user = conv.participants?.find((p) => p.id !== pageID);
-       
+
         return (
           <div
             key={conv.id}
@@ -18,6 +18,7 @@ export function Sidebar({ users = [], onSelect, selectedId, pageID }) {
           >
             <div className="flex items-center gap-4">
               <img
+                crossOrigin="anonymous"
                 src={`${baseURL}/fb/user/${user.id}`}
                 alt="Profile"
                 className="w-10 h-10 rounded-full object-cover"
