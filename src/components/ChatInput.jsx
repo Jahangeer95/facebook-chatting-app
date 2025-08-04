@@ -1,11 +1,14 @@
 import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import { faSmile } from "@fortawesome/free-regular-svg-icons";
+import EmojiPicker from "emoji-picker-react";
 
 export function ChatInput({ onSend, disabled }) {
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
+  const [emoji, setEmoji] = useState(false);
 
   const handleSend = () => {
     if (!text && !file) return;
@@ -40,8 +43,12 @@ export function ChatInput({ onSend, disabled }) {
     }
   };
 
+  function handleEmoji(selectedemoji) {
+    setText((prev) => prev + selectedemoji.emoji);
+  }
+
   return (
-    <div className="flex flex-col gap-2 p-4 bg-gray-100 border-t">
+    <div className="flex flex-col gap-2 p-4 bg-gray-100 border-t relative">
       {/* preview image*/}
       {file && (
         <div className="relative w-32">
@@ -60,9 +67,23 @@ export function ChatInput({ onSend, disabled }) {
           </button>
         </div>
       )}
+      {/* emoji card  */}
+      {emoji && (
+        <div className="absolute bottom-20 left-4 z-50">
+          <EmojiPicker onEmojiClick={handleEmoji} />
+        </div>
+      )}
 
       {/* for image*/}
       <div className="flex items-center gap-2">
+        {/* for emoji */}
+        <label
+          htmlFor="text"
+          className="cursor-pointer p-2 rounded hover:bg-gray-400 text-gray-800 bg-gray-200"
+          onClick={() => setEmoji((prev) => !prev)}
+        >
+          <FontAwesomeIcon icon={faSmile} />
+        </label>
         {/* icon for file input */}
         <label
           htmlFor="fileInput"
