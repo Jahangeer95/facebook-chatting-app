@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Sidebar, ChatList, ChatInput, ChatHeader } from "../components";
 import {
   fetchConversationsWithParticipants,
@@ -7,7 +7,7 @@ import {
 } from "../api/MessengerApi";
 import { io } from "socket.io-client";
 import { pageID } from "../config";
-import {baseURL} from "../config"
+import { baseURL } from "../config";
 const socket = io(`${baseURL}`, {
   transports: ["websocket"],
 });
@@ -24,24 +24,28 @@ export function ChatPage() {
     selectedRef.current = selected;
   }, [selected]);
 
-  useEffect(() => {
-    const loadConversations = async () => {
-      const convs = await fetchConversationsWithParticipants();
-      const enriched = convs.map((conv) => {
-        const user = conv.participants.find((p) => p.id !== pageID);
-        const updatedAt = conv.messages?.data?.slice(-1)[0]?.created_time || "";
-        return {
-          ...conv,
-          displayName: user?.name || "Unknown",
-          updatedAt,
-        };
-      });
-      setConversations(
-        enriched.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
-      );
-    };
-    loadConversations();
+  const loadConversations = useCallback(async () => {
+    const convs = await fetchConversationsWithParticipants();
+    const enriched = convs.map((conv) => {
+      const user = conv.participants.find((p) => p.id !== pageID);
+      const updatedAt = conv.latestMessage?.created_time || "";
+
+      return {
+        ...conv,
+        displayName: user?.name || "Unknown",
+        participants: conv.participants,
+        updatedAt,
+      };
+    });
+
+    setConversations(
+      enriched.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+    );
   }, []);
+
+  useEffect(() => {
+    loadConversations();
+  }, [loadConversations]);
 
   //to load chat history
   useEffect(() => {
@@ -72,6 +76,7 @@ export function ChatPage() {
     //refresh after each incoming or outgoing message
     socket.on("message_from_user", async () => {
       try {
+        if(selectedRef.current?.id){
         const { messages: updatedMessages, paging } = await fetchMessages(
           selectedRef.current.id
         );
@@ -81,6 +86,8 @@ export function ChatPage() {
             .sort((a, b) => new Date(a.created_time) - new Date(b.created_time))
         );
         setPaging(paging);
+      }
+        await loadConversations();
       } catch (err) {
         console.error("Failed to refresh messages:", err);
       }
@@ -95,9 +102,9 @@ export function ChatPage() {
 
       setMessages((prev) =>
         prev.map((msg) => {
-          const isSentByMe = msg.from?.id === pageID; 
+          const isSentByMe = msg.from?.id === pageID;
           if (isSentByMe && !msg.delivered) {
-            return { ...msg, delivered: true ,status:"delivered"};   //mark message read when event receive
+            return { ...msg, delivered: true, status: "delivered" }; //mark message read when event receive
           }
           return msg;
         })
@@ -133,7 +140,7 @@ export function ChatPage() {
       socket.off("message_read");
       socket.offAny();
     };
-  }, []);
+  }, [loadConversations]);
 
   const handleSendMessage = async ({ text, file, type }) => {
     if (!selected) return;
@@ -180,6 +187,7 @@ export function ChatPage() {
             status: msg.status || "sent",
           }))
         );
+        await loadConversations();
       } else {
         console.error("Messages should be an array got:", updated);
       }
