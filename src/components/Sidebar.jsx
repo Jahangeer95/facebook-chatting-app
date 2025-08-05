@@ -5,7 +5,7 @@ import { pageID } from "../config";
 export function Sidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}) {
   return (
     <div
-      className="w-1/5 border-r overflow-auto bg-gray-50 h-[100px]"
+      className="w-1/5 border-r overflow-auto bg-gray-50 h-screen"
       id="scrollableSidebar"
     >
       <div className="p-4 font-bold text-lg border-b bg-blue-500 text-white">

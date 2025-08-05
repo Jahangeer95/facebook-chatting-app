@@ -123,7 +123,7 @@ export function ChatPage() {
       setMessages((prev) =>
         prev.map((msg) => {
           const isSentByMe = msg.from?.id === pageID;
-          if (isSentByMe && !msg.delivered) {
+          if (isSentByMe && !msg.delivered && !msg.read) {
             return { ...msg, delivered: true, status: "delivered" }; //mark message read when event receive
           }
           return msg;
@@ -161,8 +161,7 @@ export function ChatPage() {
       socket.offAny();
     };
   }, []);
-
-
+  
   const handleSendMessage = async ({ text, file, type }) => {
     if (!selected) return;
 
