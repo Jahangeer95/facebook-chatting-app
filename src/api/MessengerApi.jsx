@@ -96,58 +96,20 @@ export const sendMessage = async ({
   return data;
 };
 
-export const fetchConversationsWithParticipants = async () => {
-  const headers = {
-    'ngrok-skip-browser-warning': 'true',
-  };
+// for getting participants
+export const fetchAllParticipants = async (after = "") => {
+  const url = new URL(`${baseURL}/fb/participants/${pageID}`);
+  if (after) url.searchParams.append("after", after);
 
-  try {
-    const convRes = await fetch(`${baseURL}/fb/conversations/${pageID}`, {
-      headers,
-    });
+  const res = await fetch(url.toString(), {
+    headers: {
+      "ngrok-skip-browser-warning": "true",
+    },
+  });
 
-    if (!convRes.ok) {
-      throw new Error("Failed to fetch conversations");
-    }
+  const data = await res.json();
+  const participants = data?.data?.participants || [];
+  const paging = data?.data?.paging || null;
 
-    const convData = await convRes.json();
-    const conversations = convData?.data || [];
-
-    const participantsRes = await fetch(`${baseURL}/fb/participants/${pageID}`, {
-      headers,
-    });
-
-    if (!participantsRes.ok) {
-      throw new Error("Failed to fetch participants");
-    }
-
-    const participantsData = await participantsRes.json();
-    const participantsList = participantsData?.data || [];
-
-    const enrichedConversations = conversations.map((conv) => {
-      const match = participantsList.find((p) => p.conversationId === conv.id);
-      return {
-        ...conv,
-        participants: match?.participants || [],
-      };
-    });
-
-    return enrichedConversations;
-  } catch (error) {
-    console.error("Error fetching conversations or participants:", error.message);
-    throw error;
-  }
+  return { participants, paging };
 };
-
-
-//to get/fetch profile pics
-export async function getUserProfilePic(userId) {
-  try {
-    const res = await fetch(`${baseURL}/fb/user/${userId}`);
-    const data = await res.json();
-    return data?.data || null; 
-  } catch (err) {
-    console.error("Failed to fetch profile image:", err);
-    return null;
-  }
-}

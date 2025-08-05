@@ -1,16 +1,14 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Sidebar, ChatList, ChatInput, ChatHeader } from "../components";
 import {
-  fetchConversationsWithParticipants,
   fetchMessages,
   sendMessage,
+  fetchAllParticipants,
 } from "../api/MessengerApi";
 import { io } from "socket.io-client";
-import { pageID } from "../config";
-import { baseURL } from "../config";
-const socket = io(`${baseURL}`, {
-  transports: ["websocket"],
-});
+import { pageID, baseURL } from "../config";
+
+const socket = io(baseURL, { transports: ["websocket"] });
 
 export function ChatPage() {
   const [conversations, setConversations] = useState([]);
@@ -18,45 +16,65 @@ export function ChatPage() {
   const [messages, setMessages] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [paging, setPaging] = useState(null); //for page information
-  const selectedRef = useRef(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [afterCursor, setAfterCursor] = useState("");
 
+  const selectedRef = useRef(null);
   useEffect(() => {
     selectedRef.current = selected;
   }, [selected]);
 
-  const loadConversations = useCallback(async () => {
-    const convs = await fetchConversationsWithParticipants();
-    const enriched = convs.map((conv) => {
-      const user = conv.participants.find((p) => p.id !== pageID);
-      const updatedAt = conv.latestMessage?.created_time || "";
+  // load conversations
+  async function loadConversations(cursor = "") {
+    const { participants, paging } = await fetchAllParticipants(cursor);
 
+    const enriched = participants.map((conv) => {
+      const user = conv.participants.find((p) => p.id !== pageID);
       return {
         ...conv,
+        conversationId: conv.id || conv.conversationId,
         displayName: user?.name || "Unknown",
         participants: conv.participants,
-        updatedAt,
+        updatedAt: conv.updated_time || "",
+        unread:conv.unread_count || " ",
       };
     });
 
-    setConversations(
-      enriched.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
-    );
-  }, []);
+    setConversations((prev) => {
+      const map = new Map();
+
+      [...prev, ...enriched].forEach((item) => {
+        map.set(item.conversationId, item);
+      });
+
+      return Array.from(map.values()).sort(
+        (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+      );
+    });
+
+    if (paging?.next) {
+      const next = new URL(paging.next).searchParams.get("after");
+      setAfterCursor(next);
+      setHasMore(true);
+    } else {
+      setHasMore(false);
+    }
+  }
 
   useEffect(() => {
     loadConversations();
-  }, [loadConversations]);
+  }, []);
 
-  //to load chat history
   useEffect(() => {
     const loadMessages = async () => {
-      if (!selected?.id) return;
+      if (!selected?.conversationId) return;
 
       const { messages: fetchedMessages, paging } = await fetchMessages(
-        selected.id
+        selected.conversationId
       );
+
       setMessages(
-        [...fetchedMessages]
+        fetchedMessages
           .reverse()
           .sort((a, b) => new Date(a.created_time) - new Date(b.created_time))
       );
@@ -76,17 +94,19 @@ export function ChatPage() {
     //refresh after each incoming or outgoing message
     socket.on("message_from_user", async () => {
       try {
-        if(selectedRef.current?.id){
-        const { messages: updatedMessages, paging } = await fetchMessages(
-          selectedRef.current.id
-        );
-        setMessages(
-          [...updatedMessages]
-            .reverse()
-            .sort((a, b) => new Date(a.created_time) - new Date(b.created_time))
-        );
-        setPaging(paging);
-      }
+        if (selectedRef.current?.conversationId) {
+          const { messages: updatedMessages, paging } = await fetchMessages(
+            selectedRef.current.conversationId
+          );
+          setMessages(
+            [...updatedMessages]
+              .reverse()
+              .sort(
+                (a, b) => new Date(a.created_time) - new Date(b.created_time)
+              )
+          );
+          setPaging(paging);
+        }
         await loadConversations();
       } catch (err) {
         console.error("Failed to refresh messages:", err);
@@ -140,7 +160,8 @@ export function ChatPage() {
       socket.off("message_read");
       socket.offAny();
     };
-  }, [loadConversations]);
+  }, []);
+
 
   const handleSendMessage = async ({ text, file, type }) => {
     if (!selected) return;
@@ -148,7 +169,6 @@ export function ChatPage() {
     const recipient = selected.participants.find((p) => p.id !== pageID);
     if (!recipient) return;
 
-    //get last message timestamp to handle 24 hours window
     const lastUserMsg = messages
       .filter((m) => m.from?.id !== pageID)
       .sort((a, b) => new Date(b.created_time) - new Date(a.created_time))[0];
@@ -176,7 +196,7 @@ export function ChatPage() {
         onOutOfWindow: () => setShowDialog(true),
       });
 
-      const updatedResponse = await fetchMessages(selected.id);
+      const updatedResponse = await fetchMessages(selected.conversationId);
 
       const updated = updatedResponse.messages || [];
 
@@ -197,13 +217,13 @@ export function ChatPage() {
   };
 
   const handlepreviousMessages = async () => {
-    if (!paging?.next || !selected?.id) return;
+    if (!paging?.next || !selected?.conversationId) return;
 
     const afterCursor = new URL(paging.next).searchParams.get("after");
     if (!afterCursor) return;
 
     const { messages: olderMessages, paging: newPaging } = await fetchMessages(
-      selected.id,
+      selected.conversationId,
       afterCursor
     );
 
@@ -229,20 +249,20 @@ export function ChatPage() {
       <Sidebar
         users={conversations}
         onSelect={setSelected}
-        selectedId={selected?.id}
-        pageID={pageID}
+        selectedId={selected?.conversationId}
+        onLoadMore={() => loadConversations(afterCursor)}
+        hasMore={hasMore}
       />
       <div className="flex flex-col flex-1 overflow-hidden">
         <ChatHeader user={selectedUser} />
         <ChatList messages={messages} onLoadMore={handlepreviousMessages} />
-
         <ChatInput onSend={handleSendMessage} disabled={!selected} />
-        {/* Alert of 24 hours window  */}
+
         {showDialog && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
             <div className="bg-white p-6 rounded shadow-lg text-center">
               <p className="text-lg font-semibold text-gray-700 mb-4">
-                The 24 hour messaging window has expired.
+                The 24-hour messaging window has expired.
               </p>
               <button
                 onClick={() => setShowDialog(false)}
