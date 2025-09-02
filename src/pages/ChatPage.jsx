@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Sidebar, ChatList, ChatInput, ChatHeader } from "../components";
+import { ChatSidebar, ChatList, ChatInput, ChatHeader } from "../components";
 import {
   fetchMessages,
   sendMessage,
@@ -36,7 +36,7 @@ export function ChatPage() {
         displayName: user?.name || "Unknown",
         participants: conv.participants,
         updatedAt: conv.updated_time || "",
-        unread:conv.unread_count || " ",
+        unread: conv.unread_count || " ",
       };
     });
 
@@ -161,7 +161,7 @@ export function ChatPage() {
       socket.offAny();
     };
   }, []);
-  
+
   const handleSendMessage = async ({ text, file, type }) => {
     if (!selected) return;
 
@@ -245,7 +245,7 @@ export function ChatPage() {
 
   return (
     <div className="flex h-screen">
-      <Sidebar
+      <ChatSidebar
         users={conversations}
         onSelect={setSelected}
         selectedId={selected?.conversationId}
@@ -254,7 +254,13 @@ export function ChatPage() {
       />
       <div className="flex flex-col flex-1 overflow-hidden">
         <ChatHeader user={selectedUser} />
-        <ChatList messages={messages} onLoadMore={handlepreviousMessages} />
+        {selectedUser?.length === 1 ? (
+          <ChatList messages={messages} onLoadMore={handlepreviousMessages} />
+        ) : (
+          <div className="flex flex-1 m-auto pt-60 text-black ">
+            Select a user to start conversation
+          </div>
+        )}
         <ChatInput onSend={handleSendMessage} disabled={!selected} />
 
         {showDialog && (

@@ -2,6 +2,8 @@ import React, { useRef} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { ChatMessage } from "./ChatMessage";
 import { groupMessagesByDate } from "../helper/GroupMessage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 export function ChatList  ({ messages, onLoadMore })  {
   const messageEndRef = useRef();
 
@@ -23,7 +25,7 @@ export function ChatList  ({ messages, onLoadMore })  {
         scrollableTarget="scroll-chat"
         loader={
           <div className="text-center text-sm text-gray-400">
-            Loading more...
+            <FontAwesomeIcon icon={faSpinner} spin size='lg' className="text-blue-700"/>
           </div>
         }
         //order message from bottom to top

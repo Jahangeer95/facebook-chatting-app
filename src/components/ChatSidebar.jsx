@@ -1,14 +1,16 @@
 import { baseURL } from "../config";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { pageID } from "../config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faS, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-export function Sidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}) {
+export function ChatSidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}) {
   return (
     <div
       className="w-1/5 border-r overflow-auto bg-gray-50 h-screen"
       id="scrollableSidebar"
     >
-      <div className="p-4 font-bold text-lg border-b bg-blue-500 text-white">
+      <div className="p-2 font-bold text-lg border-b bg-blue-400 text-white">
         Contacts
       </div>
       <InfiniteScroll
@@ -16,8 +18,8 @@ export function Sidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}) {
         next={onLoadMore}
         hasMore={hasMore}
         loader={
-          <div className="text-center py-2 text-sm text-gray-600">
-            Loading...
+          <div className="text-center p-4 text-sm text-gray-600">
+            <FontAwesomeIcon icon={faSpinner} spin size='lg' className="text-blue-700"/>
           </div>
         }
         scrollableTarget="scrollableSidebar"

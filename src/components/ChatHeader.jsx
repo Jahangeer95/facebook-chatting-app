@@ -1,6 +1,6 @@
 export function ChatHeader ({ user }) {
   return (
-    <div className="bg-blue-600 text-white p-4 text-lg font-medium">
+    <div className="bg-blue-400 text-white p-2 text-lg font-semibold">
       {user?.name || 'Select a user'}
     </div>
   );
