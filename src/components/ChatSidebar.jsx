@@ -1,8 +1,9 @@
-import { baseURL } from "../config";
+// import { baseURL } from "../config";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { pageID } from "../config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faS, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { ProfileImage } from "./ProfileImage";
 
 export function ChatSidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}) {
   return (
@@ -38,7 +39,7 @@ export function ChatSidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}
               }`}
             >
               <div className="flex items-center gap-4">
-                <img
+                {/* <img
                   crossOrigin="anonymous"
                   src={`${baseURL}/fb/user/${user?.id}`}
                   alt="Profile"
@@ -47,7 +48,8 @@ export function ChatSidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}
                     e.target.onerror = null;
                     e.target.src = "avatar.jpg";
                   }}
-                />
+                /> */}
+                <ProfileImage userId={user?.id} />
                 <div className="flex items-center justify-between w-full">
                   <span className="font-semibold">
                     {user?.name || "Unknown"}

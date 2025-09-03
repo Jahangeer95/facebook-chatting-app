@@ -254,7 +254,7 @@ export function ChatPage() {
       />
       <div className="flex flex-col flex-1 overflow-hidden">
         <ChatHeader user={selectedUser} />
-        {selectedUser?.length === 1 ? (
+        {selectedUser ? (
           <ChatList messages={messages} onLoadMore={handlepreviousMessages} />
         ) : (
           <div className="flex flex-1 m-auto pt-60 text-black ">

@@ -1,14 +1,16 @@
 
-import { baseURL,pageID } from "../config";
+import { baseURL,pageID,accessToken } from "../config";
 
 // fetch conversations
 export const fetchConversations = async () => {
   try {
-    const res = await fetch(`${baseURL}/fb/conversations/${pageID}`, {
+    const res = await fetch(`${baseURL}/fb/conversations`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': 'true'
+        'ngrok-skip-browser-warning': 'true',
+        FB_PAGE_ID:pageID,
+        FB_ACCESS_TOKEN:accessToken,
       }
     });
 
@@ -33,6 +35,8 @@ export const fetchMessages = async (conversationId, afterCursor = "") => {
       headers: {
         "Content-Type": "application/json",
         "ngrok-skip-browser-warning": "true",
+        FB_PAGE_ID:pageID,
+        FB_ACCESS_TOKEN:accessToken,
       },
     });
 
@@ -84,6 +88,10 @@ export const sendMessage = async ({
   const res = await fetch(`${baseURL}/fb/send-message`, {
     method: "POST",
     body: formData,
+    headers:{
+      FB_PAGE_ID:pageID,
+      FB_ACCESS_TOKEN:accessToken,
+    }
   });
 
   const data = await res.json();
@@ -98,12 +106,14 @@ export const sendMessage = async ({
 
 // for getting participants
 export const fetchAllParticipants = async (after = "") => {
-  const url = new URL(`${baseURL}/fb/participants/${pageID}`);
+  const url = new URL(`${baseURL}/fb/participants`);
   if (after) url.searchParams.append("after", after);
 
   const res = await fetch(url.toString(), {
     headers: {
       "ngrok-skip-browser-warning": "true",
+      FB_PAGE_ID:pageID,
+      FB_ACCESS_TOKEN:accessToken,
     },
   });
 
