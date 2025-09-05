@@ -9,7 +9,7 @@ export function Buttons() {
       <div className="flex justify-center">
         <button
           className={`p-3  mb-3 mr-4 rounded text-white ${
-            selectedType === "publish" ? "bg-blue-700 font-bold" : "bg-blue-600"
+            selectedType === "publish" ? "bg-blue-700 font-bold" : "bg-blue-500"
           }`}
           onClick={() => setSelectedType("publish")}
         >
@@ -17,7 +17,7 @@ export function Buttons() {
         </button>
         <button
           className={`p-3  mb-3 mr-4 rounded text-white ${
-            selectedType === "schedule" ? "bg-blue-700 font-bold" : "bg-blue-600"
+            selectedType === "schedule" ? "bg-blue-700 font-bold" : "bg-blue-500"
           }`}
           onClick={() => setSelectedType("schedule")}
         >
