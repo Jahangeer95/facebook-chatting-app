@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   deletePost,
-  fetchAllPosts,
+  fetchAllSchedulePosts,
   fetchPageDetail,
   updatePost,
 } from "../../api";
@@ -10,7 +10,7 @@ import { faEllipsis, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { DropDown } from "./DropDown";
 
-export function PagePosts() {
+export function SchedulePosts() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [paging, setPaging] = useState(null);
@@ -33,7 +33,8 @@ export function PagePosts() {
 
   const getPosts = async () => {
     try {
-      const { posts: initialPost, paging: initialPage } = await fetchAllPosts();
+      const { posts: initialPost, paging: initialPage } =
+        await fetchAllSchedulePosts();
       setPosts(initialPost);
       setPaging(initialPage);
     } catch (err) {
@@ -63,9 +64,8 @@ export function PagePosts() {
       return;
     }
     try {
-      const { posts: newPosts, paging: newPaging } = await fetchAllPosts(
-        paging.cursors.after
-      );
+      const { posts: newPosts, paging: newPaging } =
+        await fetchAllSchedulePosts(paging.cursors.after);
       setPosts((prev) => [...prev, ...newPosts]);
       setPaging(newPaging);
     } catch (err) {
@@ -85,19 +85,19 @@ export function PagePosts() {
     await deletePost(id);
     setPosts((prev) => prev.filter((post) => post.id !== id));
   };
-  // if (loading) {
-  //   return (
-  //     <div className="text-center mt-10">
-  //       <FontAwesomeIcon
-  //         icon={faSpinner}
-  //         spin
-  //         size="lg"
-  //         className="text-blue-700"
-  //       />
-  //       <p className="mt-2 text-gray-600">Loading Posts...</p>
-  //     </div>
-  //   );
-  // }
+  //   if (loading) {
+  //     return (
+  //       <div className="text-center mt-10">
+  //         <FontAwesomeIcon
+  //           icon={faSpinner}
+  //           spin
+  //           size="lg"
+  //           className="text-blue-700"
+  //         />
+  //         <p className="mt-2 text-gray-600">Loading Posts...</p>
+  //       </div>
+  //     );
+  //   }
 
   return (
     <div
@@ -146,12 +146,11 @@ export function PagePosts() {
                   </button>
                   {open === post.id && (
                     <div
-                      className={`absolute right-0 bg-white border shadow rounded p-2 z-50 ${
-                        posts.length > 1 &&
-                        posts.indexOf(post) === posts.length - 1
-                          ? "bottom-full mb-2"
-                          : "top-6"
-                      }`}
+                    className={`absolute right-0 bg-white border shadow rounded p-2 z-50 ${
+                      posts.length > 1 && posts.indexOf(post) === posts.length - 1
+                        ? "bottom-full mb-2"
+                        : "top-6"
+                    }`}
                     >
                       <DropDown
                         postId={post.id}

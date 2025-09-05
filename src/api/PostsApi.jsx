@@ -98,3 +98,22 @@ export const updatePost = async (postid, message) => {
     console.error("Error in posting:", error);
   }
 };
+
+//to get scheduled posts
+export const fetchAllSchedulePosts = async (after = "") => {
+  try {
+    const params = {};
+    if (after) params.after = after;
+    const res = await Api.get("/fb/page-schedule-posts", { params });
+
+    const posts = res.data?.posts || [];
+    const paging = res.data?.paging || null;
+
+    console.log("Fetched posts:", { posts, paging });
+
+    return { posts, paging };
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return { posts: [], paging: null };
+  }
+};
