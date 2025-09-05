@@ -13,7 +13,7 @@ export function Buttons() {
           }`}
           onClick={() => setSelectedType("publish")}
         >
-          Publish Posts
+          Published Posts 
         </button>
         <button
           className={`p-3  mb-3 mr-4 rounded text-white ${
@@ -21,7 +21,7 @@ export function Buttons() {
           }`}
           onClick={() => setSelectedType("schedule")}
         >
-          Schedule Posts
+          Scheduled Posts
         </button>
       </div>
 
