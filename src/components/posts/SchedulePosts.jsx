@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { DropDown } from "./DropDown";
+import { Loading } from "./Loading";
 
 export function SchedulePosts() {
   const [posts, setPosts] = useState([]);
@@ -32,6 +33,7 @@ export function SchedulePosts() {
   }, []);
 
   const getPosts = async () => {
+    setLoading(true);
     try {
       const { posts: initialPost, paging: initialPage } =
         await fetchAllSchedulePosts();
@@ -104,6 +106,12 @@ export function SchedulePosts() {
       className="w-[700px] mx-auto p-4 border overflow-auto h-[600px]"
       id="scrollposts"
     >
+      <button
+        onClick={() => getPosts()}
+        className="p-2 mb-3 mr-4 rounded text-white bg-blue-600 "
+      >
+        Refresh
+      </button>
       <InfiniteScroll
         dataLength={posts.length}
         next={hasMorePosts}
@@ -146,11 +154,12 @@ export function SchedulePosts() {
                   </button>
                   {open === post.id && (
                     <div
-                    className={`absolute right-0 bg-white border shadow rounded p-2 z-50 ${
-                      posts.length > 1 && posts.indexOf(post) === posts.length - 1
-                        ? "bottom-full mb-2"
-                        : "top-6"
-                    }`}
+                      className={`absolute right-0 bg-white border shadow rounded p-2 z-50 ${
+                        posts.length > 1 &&
+                        posts.indexOf(post) === posts.length - 1
+                          ? "bottom-full mb-2"
+                          : "top-6"
+                      }`}
                     >
                       <DropDown
                         postId={post.id}
@@ -181,15 +190,16 @@ export function SchedulePosts() {
             </div>
           ))
         ) : (
-          <div className="text-center mt-10">
-            <FontAwesomeIcon
-              icon={faSpinner}
-              spin
-              size="lg"
-              className="text-blue-700"
-            />
-            <p className="mt-2 text-gray-600">Loading Posts...</p>
-          </div>
+          // <div className="text-center mt-10">
+          //   <FontAwesomeIcon
+          //     icon={faSpinner}
+          //     spin
+          //     size="lg"
+          //     className="text-blue-700"
+          //   />
+          //   <p className="mt-2 text-gray-600">Loading Posts...</p>
+          // </div>
+          <Loading />
         )}
       </InfiniteScroll>
     </div>

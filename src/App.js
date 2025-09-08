@@ -3,6 +3,7 @@ import { ChatPage } from "./pages/ChatPage";
 import { Posts } from "./pages/Posts";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppLayout } from "./layout/AppLayout";
+import { ToastContainer } from "react-toastify";
 // const App = () => <ChatPage />;
 // export default App;
 
@@ -23,6 +24,11 @@ const App = () => {
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </>
+  );
 };
 export default App;

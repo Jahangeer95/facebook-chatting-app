@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { DropDown } from "./DropDown";
+import { Comments } from "./Comments";
+import { toast } from "react-toastify";
+import { Loading } from "./Loading";
 
 export function PagePosts() {
   const [posts, setPosts] = useState([]);
@@ -20,6 +23,7 @@ export function PagePosts() {
 
   useEffect(() => {
     const handleClick = (e) => {
+      if (document.querySelector(".modal-open")) return;
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setOpen(null);
         console.log(menuRef.current);
@@ -32,12 +36,14 @@ export function PagePosts() {
   }, []);
 
   const getPosts = async () => {
+    setLoading(true);
     try {
       const { posts: initialPost, paging: initialPage } = await fetchAllPosts();
       setPosts(initialPost);
       setPaging(initialPage);
     } catch (err) {
       console.error("Posts failed to load", err);
+      toast.error("Posts failed to load");
     } finally {
       setLoading(false);
     }
@@ -53,6 +59,7 @@ export function PagePosts() {
       console.log("Page info", res.data);
     } catch (err) {
       console.error("Page information failed to load", err);
+      toast.error("Page information failed to load");
     }
   };
   useEffect(() => {
@@ -70,6 +77,7 @@ export function PagePosts() {
       setPaging(newPaging);
     } catch (err) {
       console.log("Failed to fetch more posts", err);
+      toast.error("Failed to fetch more Posts");
     }
   };
 
@@ -104,6 +112,12 @@ export function PagePosts() {
       className="w-[700px] mx-auto p-4 border overflow-auto h-[600px]"
       id="scrollposts"
     >
+      <button
+        onClick={() => getPosts()}
+        className="p-2  mb-3 mr-4 rounded text-white bg-blue-600 "
+      >
+        Refresh
+      </button>
       <InfiniteScroll
         dataLength={posts.length}
         next={hasMorePosts}
@@ -123,7 +137,7 @@ export function PagePosts() {
         {!loading ? (
           posts.map((post) => (
             <div
-              className="bg-white p-4 rounded-lg shadow mb-4 relative"
+              className="bg-white p-4 rounded-lg shadow mb-4 relative border-t border-gray-400"
               key={post.id}
             >
               <div className="flex justify-between items-center mb-3">
@@ -179,18 +193,20 @@ export function PagePosts() {
                   )}
                 </div>
               ))}
+              <Comments postId={post.id} pageName={pageInfo?.data.name} />
             </div>
           ))
         ) : (
-          <div className="text-center mt-10">
-            <FontAwesomeIcon
-              icon={faSpinner}
-              spin
-              size="lg"
-              className="text-blue-700"
-            />
-            <p className="mt-2 text-gray-600">Loading Posts...</p>
-          </div>
+          // <div className="text-center mt-10">
+          //   <FontAwesomeIcon
+          //     icon={faSpinner}
+          //     spin
+          //     size="lg"
+          //     className="text-blue-700"
+          //   />
+          //   <p className="mt-2 text-gray-600">Loading Posts...</p>
+          // </div>
+          <Loading />
         )}
       </InfiniteScroll>
     </div>

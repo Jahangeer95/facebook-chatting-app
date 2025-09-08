@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createTextPost } from "../../api/PostsApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 export function TextPost({onClose}) {
   const [message, setMessage] = useState("");
@@ -13,7 +14,8 @@ export function TextPost({onClose}) {
     e.preventDefault();
 
     if (!message.trim()) {
-      alert("Message cannot be empty");
+      // alert("Message cannot be empty");
+      toast.warning("Message can't be empty");
       return;
     }
     if (schedule) {
@@ -31,13 +33,14 @@ export function TextPost({onClose}) {
     setLoading(true);
     try {
       await createTextPost(message, schedule, schedule ? publishTime : null);
-      alert("Post created successfully!");
+      // alert("Post created successfully!");
       setMessage("");
       setSchedule(false);
       setPublishTime("");
       onClose();
     } catch (error) {
-      alert("Failed to send post.");
+      // alert("Failed to send post.");
+      toast.error("Failed to send post.");
     } finally {
       setLoading(false);
     }
@@ -50,7 +53,7 @@ export function TextPost({onClose}) {
     >
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
         <h2 className="text-lg font-semibold text-white">
-          Post 
+          Create Post 
         </h2>
         <FontAwesomeIcon
           icon={faTimes}

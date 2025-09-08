@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createMediaPost } from "../../api/PostsApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 export function MediaPost({ onClose }) {
   const [message, setMessage] = useState("");
@@ -15,7 +16,7 @@ export function MediaPost({ onClose }) {
     if (!file || !message.trim()) {
       return alert("Please enter message and select a file.");
     }
-    //schedule time must be at least 15 minutes from now and no more than 30 days from now 
+    //schedule time must be at least 15 minutes from now and no more than 30 days from now
     if (schedule) {
       const selectedTime = new Date(publishTime);
       const minTime = new Date(Date.now() + 15 * 60 * 1000);
@@ -37,7 +38,8 @@ export function MediaPost({ onClose }) {
       setSchedule(false);
       onClose();
     } catch (error) {
-      alert("Failed to send media post.");
+      // alert("Failed to send media post.");
+      toast.error("Failed to send post.");
     } finally {
       setLoading(false);
     }
@@ -49,7 +51,7 @@ export function MediaPost({ onClose }) {
       onSubmit={handleSubmit}
     >
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
-        <h2 className="text-lg font-semibold text-white">Post</h2>
+        <h2 className="text-lg font-semibold text-white"> Create Post</h2>
         <FontAwesomeIcon
           icon={faTimes}
           className="cursor-pointer text-white"
