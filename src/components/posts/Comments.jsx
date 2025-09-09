@@ -131,6 +131,7 @@ export function Comments({ postId, pageName }) {
           onSubmit={handleSubmitComment}
           onKeyDown={handleCommentKeyDown}
           loading={loading}
+          type={"Comment"}
         />
       )}
     </div>

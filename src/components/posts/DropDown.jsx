@@ -21,7 +21,7 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
   };
 
   return (
-    <div className="flex flex-col p-2">
+    <div className={`flex flex-col p-2 ${openUpdate || openDelete ? "opacity-50 pointer-events-none":""}`}>
       <ul className="divide-y divide-gray-300">
         <li
           className="cursor-pointer hover:text-blue-600 mb-2"

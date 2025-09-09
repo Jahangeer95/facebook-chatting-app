@@ -61,6 +61,7 @@ export function CommentList({ comment, postId }) {
           onSubmit={handleReplySubmit}
           onKeyDown={handleRepliesKeyDown}
           loading={loading}
+          type={"Reply"}
         />
       )}
     </div>

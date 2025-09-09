@@ -9,6 +9,7 @@ export function CommentInput({
   onSubmit,
   onKeyDown,
   loading,
+  type,
 }) {
   const [emojiOpen, setEmojiOpen] = useState(false);
   const emojiRef = useRef(null);
@@ -69,7 +70,7 @@ export function CommentInput({
         className="px-4 py-2 rounded-full text-white bg-blue-600 "
         onClick={onSubmit}
       >
-        {loading ? "Posting...." : "Post"}
+        {loading ? "Posting...." : type === "Comment" ? "Comment" : "Reply"}
       </button>
     </div>
   );
