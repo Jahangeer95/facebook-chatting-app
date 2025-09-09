@@ -189,3 +189,20 @@ export const fetchCommentsReplies = async (commentId,after = "") => {
   }
 };
 
+//update media post
+export const updateMediaPost = async (postid,message, file) => {
+  try {
+    const formData = new FormData();
+    formData.append("message", message);
+    formData.append("file", file);
+    const res = await Api.post(`fb/page-media-posts/${postid}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("Post created sucessfully", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error in posting:", error);
+  }
+};

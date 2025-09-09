@@ -7,10 +7,13 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
   const [openDelete, setOpenDelete] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [newMessage, setNewMessage] = useState(message || " ");
+  const [file, setFile] = useState(null);
 
   const handleUpdate = () => {
-    if (onUpdate && newMessage.trim()) {
-      onUpdate(postId, newMessage);
+    if(onUpdate && file){
+      onUpdate(postId,newMessage,file)
+    }else{
+      onUpdate(postId,newMessage)
     }
     setOpenUpdate(false);
   };
@@ -21,7 +24,11 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
   };
 
   return (
-    <div className={`flex flex-col p-2 ${openUpdate || openDelete ? "opacity-50 pointer-events-none":""}`}>
+    <div
+      className={`flex flex-col p-2 ${
+        openUpdate || openDelete ? "opacity-50 pointer-events-none" : ""
+      }`}
+    >
       <ul className="divide-y divide-gray-300">
         <li
           className="cursor-pointer hover:text-blue-600 mb-2"
@@ -56,6 +63,12 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type your message here"
             />
+            <input
+              type="file"
+              className="mb-2 text-white"
+              onChange={(e) => setFile(e.target.files[0])}
+              accept="image/*,video/*"
+            />
             <div className="flex justify-center gap-2 border-t border-gray-400 p-2">
               <button
                 className="px-4 py-2 rounded bg-gray-300"
@@ -65,7 +78,7 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
               </button>
               <button
                 className="px-4 py-2 rounded bg-blue-600 text-white"
-                onClick={handleUpdate}
+                onClick={(handleUpdate)}
               >
                 Update
               </button>

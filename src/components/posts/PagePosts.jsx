@@ -3,6 +3,7 @@ import {
   deletePost,
   fetchAllPosts,
   fetchPageDetail,
+  updateMediaPost,
   updatePost,
 } from "../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -81,13 +82,28 @@ export function PagePosts() {
     }
   };
 
-  const handleUpdatePosts = async (id, newMessage) => {
-    await updatePost(id, newMessage);
-    setPosts((prev) =>
-      prev.map((post) =>
-        post.id === id ? { ...post, message: newMessage } : post
-      )
-    );
+  const handleUpdatePosts = async (id, newMessage, file) => {
+    try {
+      if (file) {
+        await updateMediaPost(id,newMessage,file);
+        setPosts((prev) =>
+          prev.map((post) =>
+            post.id === id ? { ...post, message: newMessage,attachments:file } : post
+          )
+        );
+        await getPosts();
+      } else {
+        await updatePost(id, newMessage);
+        setPosts((prev) =>
+          prev.map((post) =>
+            post.id === id ? { ...post, message: newMessage } : post
+          )
+        );
+      }
+    } catch (error) {
+      console.log("Error updating a post", error);
+      toast.error("Error updating a post");
+    }
   };
   const handleDeletePost = async (id) => {
     await deletePost(id);
