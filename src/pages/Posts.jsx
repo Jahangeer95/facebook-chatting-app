@@ -1,4 +1,4 @@
-import { Buttons } from "../components/posts/Buttons";
+// import { Buttons } from "../components/posts/Buttons";
 import { CreatePost } from "../components/posts/CreatePost";
 
 export function Posts() {
@@ -8,9 +8,9 @@ export function Posts() {
         <CreatePost />
       </div>
 
-      <div className="mx-auto p-4">
+      {/* <div className="mx-auto p-4">
         <Buttons />
-      </div>
+      </div> */}
     </div>
   );
 }
