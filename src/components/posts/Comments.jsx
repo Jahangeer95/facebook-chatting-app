@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { CommentInput } from "./CommentInput";
 import { CommentList } from "./CommentList";
+import { Insights } from "./Insights";
 
 export function Comments({ postId, pageName }) {
   const [selected, setSelected] = useState(false);
@@ -13,6 +14,7 @@ export function Comments({ postId, pageName }) {
   const [message, setMessage] = useState("");
   const [paging, setPaging] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [openInsights, setOpenInsights] = useState(false);
 
   useEffect(() => {
     if (selected) {
@@ -85,11 +87,20 @@ export function Comments({ postId, pageName }) {
 
   return (
     <div className="flex flex-col border-t border-gray-300">
-      <div className="flex justify-end mr-5 p-2 text-gray-600">
+      <div className="flex justify-between mr-5 p-2 text-gray-600">
+        <button
+          className="text-blue-600 ml-4"
+          onClick={() => setOpenInsights(true)}
+        >
+          Get Insights
+        </button>
         <button onClick={() => setSelected(!selected)}>
           {selected ? "Hide" : "Comments"}
         </button>
       </div>
+      {openInsights && (
+        <Insights postId={postId} setOpenInsights={setOpenInsights} />
+      )}
       {selected && (
         <div
           className="p-4 overflow-auto h-[350px] bg-gray-200"

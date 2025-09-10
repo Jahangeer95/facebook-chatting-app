@@ -119,22 +119,21 @@ export const fetchAllSchedulePosts = async (after = "") => {
 };
 
 //get comments of post
-export const fetchComments = async (postId,after = "") => {
+export const fetchComments = async (postId, after = "") => {
   try {
     const params = {};
     if (after) params.after = after;
-    const res = await Api.get(`/fb/page-posts/${postId}/comments`,{params});
+    const res = await Api.get(`/fb/page-posts/${postId}/comments`, { params });
 
     const comments = res.data?.data || [];
     const paging = res.data?.paging || null;
 
-
-    console.log("Fetched Comments:", { comments ,paging});
+    console.log("Fetched Comments:", { comments, paging });
 
     return { comments, paging };
   } catch (error) {
     console.error("Error fetching Comments:", error);
-    return { comments: [], paging: null  };
+    return { comments: [], paging: null };
   }
 };
 
@@ -157,7 +156,7 @@ export const addComment = async (postId, message) => {
 export const replyComment = async (postId, replyMessage, commentId) => {
   try {
     const body = {
-      "message":replyMessage,
+      message: replyMessage,
       commentId,
     };
 
@@ -170,27 +169,28 @@ export const replyComment = async (postId, replyMessage, commentId) => {
 };
 
 //get replies of post comments
-export const fetchCommentsReplies = async (commentId,after = "") => {
+export const fetchCommentsReplies = async (commentId, after = "") => {
   try {
     const params = {};
     if (after) params.after = after;
-    const res = await Api.get(`/fb/page-posts/${commentId}/comments`,{params});
+    const res = await Api.get(`/fb/page-posts/${commentId}/comments`, {
+      params,
+    });
 
     const replies = res.data?.data || [];
     const paging = res.data?.paging || null;
 
-
-    console.log("Fetched Comment Replies:", { replies ,paging});
+    console.log("Fetched Comment Replies:", { replies, paging });
 
     return { replies, paging };
   } catch (error) {
     console.error("Error fetching Comments Replies:", error);
-    return { replies: [], paging: null  };
+    return { replies: [], paging: null };
   }
 };
 
 //update media post
-export const updateMediaPost = async (postid,message, file) => {
+export const updateMediaPost = async (postid, message, file) => {
   try {
     const formData = new FormData();
     formData.append("message", message);
@@ -204,5 +204,19 @@ export const updateMediaPost = async (postid,message, file) => {
     return res.data;
   } catch (error) {
     console.error("Error in posting:", error);
+  }
+};
+
+//fetch insights
+export const getPostInsights = async (postId, timePeriod) => {
+  try {
+    const res = await Api.get(`/fb/page-posts/${postId}/insights`, {
+      params: { time_period: timePeriod },
+    });
+
+    console.log("Fetched Insights:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching insights:", error);
   }
 };
