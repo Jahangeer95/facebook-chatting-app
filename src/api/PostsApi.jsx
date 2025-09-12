@@ -220,3 +220,55 @@ export const getPostInsights = async (postId, timePeriod) => {
     console.error("Error fetching insights:", error);
   }
 };
+
+//fetch page insights
+export const getPageInsights = async () => {
+  try {
+    const res = await Api.get(`/fb/page-insights`);
+
+    console.log("Fetched Page Insights:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching Pageinsights:", error);
+  }
+};
+
+//fetch page roles
+export const getPageRoles = async (after = "") => {
+  try {
+    const params = {};
+    if (after) params.after = after;
+    const res = await Api.get(`/fb/page-roles`, { params });
+    const roles = res.data?.data || [];
+    const paging = res.data?.paging || null;
+    console.log("Fetched Page Roles:", { roles, paging });
+    return { roles, paging };
+  } catch (error) {
+    console.error("Error fetching Page Roles:", error);
+    return { roles: [], paging: null };
+  }
+};
+
+//page settings
+export const getPageSettings = async () => {
+  try {
+    const res = await Api.get(`/fb/page-settings`);
+
+    console.log("Fetched Page Setting:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching Page Settings:", error);
+  }
+};
+
+//update page settings
+export const updatePageSettings = async (setting, value) => {
+  try {
+    const res = await Api.post(`/fb/page-settings`, { [setting]: value });
+
+    console.log(`Page Setting Updated ${setting} to ${value}`);
+    return res.data;
+  } catch (error) {
+    console.error("Error updating Page Settings:", error);
+  }
+};
