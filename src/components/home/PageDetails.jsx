@@ -43,15 +43,15 @@ export function PageDetails({ formatName }) {
 
       {settingLoading ? (
         <p className="text-center m-4 text-blue-600">
-          Loading Page Settings...
+          Loading Page Indormation...
         </p>
       ) : pageInfo ? (
         <div className="space-y-2 ml-10">
           <table className="border-collapse border border-gray-300 w-full shadow">
             <thead className="bg-gray-200 text-blue-600">
               <tr>
-                <th>Settings</th>
-                <th>Values</th>
+                <th>Information</th>
+                <th>Details</th>
               </tr>
             </thead>
             <tbody>
