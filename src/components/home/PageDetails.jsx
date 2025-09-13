@@ -43,7 +43,7 @@ export function PageDetails({ formatName }) {
 
       {settingLoading ? (
         <p className="text-center m-4 text-blue-600">
-          Loading Page Indormation...
+          Loading Page Information...
         </p>
       ) : pageInfo ? (
         <div className="space-y-2 ml-10">
