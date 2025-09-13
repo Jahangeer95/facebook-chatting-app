@@ -14,7 +14,7 @@ export function MediaPost({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file || !message.trim()) {
-      return alert("Please enter message and select a file.");
+      return toast.error("Please enter message and select a file.");
     }
     //schedule time must be at least 15 minutes from now and no more than 30 days from now
     if (schedule) {
@@ -22,10 +22,10 @@ export function MediaPost({ onClose }) {
       const minTime = new Date(Date.now() + 15 * 60 * 1000);
       const maxTime = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
       if (selectedTime < minTime) {
-        return alert("Schedule time must be 15 min from now.");
+        return toast.error("Schedule time must be 15 min from now.");
       }
       if (selectedTime > maxTime) {
-        return alert("Schedule time must be 15 min from now.");
+        return toast.error("Schedule time must be 15 min from now.");
       }
     }
     setLoading(true);

@@ -23,10 +23,10 @@ export function TextPost({onClose}) {
       const minTime = new Date(Date.now() + 15 * 60 * 1000);
       const maxTime = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
       if (selectedTime < minTime) {
-        return alert("Schedule time must be 15 min from now.");
+        return toast.error("Schedule time must be 15 min from now.");
       }
       if (selectedTime > maxTime) {
-        return alert("Schedule time must be 15 min from now.");
+        return toast.error("Schedule time must be 15 min from now.");
       }
     }
 

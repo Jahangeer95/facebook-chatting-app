@@ -35,7 +35,9 @@ export function Insights({ formatName }) {
       </div>
 
       {loading ? (
-        <p className="text-center m-4 text-blue-600">Loading insights...</p>
+        <p className="text-center m-4 text-blue-600 h-[180px]">
+          Loading insights...
+        </p>
       ) : insights[0]?.data?.length > 0 ? (
         <div className=" mt-3 bg-gray-200 flex p-2 ">
           {insights[0].data.map((item) => (
@@ -73,7 +75,7 @@ export function Insights({ formatName }) {
           ))}
         </div>
       ) : (
-        <p className="text-center m-auto">No insights available.</p>
+        <p className="text-center m-auto h-[180px]">No insights available.</p>
       )}
     </div>
   );

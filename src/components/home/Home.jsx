@@ -1,6 +1,7 @@
 import { PageUsers } from "./PageUsers";
 import { Settings } from "./Settings";
 import { Insights } from "./Insights";
+import { PageDetails } from "./PageDetails";
 
 export function Home() {
   function formatName(name) {
@@ -15,7 +16,10 @@ export function Home() {
           <Insights formatName={formatName} />
           <Settings />
         </div>
-        <PageUsers formatName={formatName} />
+        <div>
+          <PageUsers formatName={formatName} />
+          <PageDetails formatName={formatName} />
+        </div>
       </div>
     </div>
   );
