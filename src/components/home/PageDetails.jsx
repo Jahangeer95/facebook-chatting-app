@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 export function PageDetails({ formatName }) {
   const [pageInfo, setPageInfo] = useState(null);
   const [settingLoading, setSettingLoading] = useState(false);
+  const [editInfo, setEditInfo] = useState({});
 
   const getPageDetails = async () => {
     setSettingLoading(true);
@@ -35,6 +36,13 @@ export function PageDetails({ formatName }) {
       toast.error("Failed to update setting");
     }
   };
+
+  const handleUpdate = async (setting, value) => {
+    setEditInfo((prev) => ({
+      ...prev,
+      [setting]: value,
+    }));
+  };
   return (
     <div className="w-[600px] ml-10">
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
@@ -64,14 +72,23 @@ export function PageDetails({ formatName }) {
                     {["about", "description", "phone", "website"].includes(
                       item
                     ) ? (
-                      <>
+                      <div className="flex flex-1">
                         <input
                           type="text"
                           defaultValue={value}
                           className="border border-gray-400 w-full p-1"
-                          onBlur={(e) => updateDetails([item, e.target.value])}
+                          // onBlur={(e) => updateDetails([item, e.target.value])}
+                          onChange={(e) => handleUpdate(item, e.target.value)}
                         />
-                      </>
+                        <button
+                          className="ml-[5px] p-1 bg-blue-700 rounded text-white"
+                          onClick={() =>
+                            updateDetails([item, editInfo[item] ?? value])
+                          }
+                        >
+                          Update
+                        </button>
+                      </div>
                     ) : item === "link" ? (
                       <a
                         href={value}

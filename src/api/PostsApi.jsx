@@ -281,9 +281,9 @@ export const updatePageDetails = async ([setting, value]) => {
     };
     const res = await Api.post(`/fb/page-detail`, body);
 
-    console.log(`Page Setting Updated ${setting} to ${value}`);
+    console.log(`Page datail Updated ${setting} : ${value}`);
     return res.data;
   } catch (error) {
-    console.error("Error updating Page Settings:", error);
+    console.error("Error updating Page Details:", error);
   }
 };
