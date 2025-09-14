@@ -55,8 +55,8 @@ export function PageDetails({ formatName }) {
               </tr>
             </thead>
             <tbody>
-              {Object.entries(pageInfo).map(([item, value], index) => (
-                <tr key={index} className="border-b mb-10">
+              {Object.entries(pageInfo).map(([item, value]) => (
+                <tr key={item} className="border-b mb-10">
                   <td className="border px-2 py-1 font-semibold">
                     {formatName(item)}
                   </td>
