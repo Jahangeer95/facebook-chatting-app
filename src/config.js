@@ -3,6 +3,10 @@
 
 import axios from "axios";
 
+// export const baseURL = "https://backend-whatsapp-chat-production.up.railway.app/";
+// export const pageID = "796037320257871";
+// export const accessToken="EAAKoMbXdYFABPXJv8f1eMaXnVqLa6dHIrysFtHqEZCyVAegPGqg6B9ZAEpCaAgVeZBZCJ9JYTIkCyjhkhGIBsOp2qwbi3KdZCqYzsHoYFhWZCJfwZCPGcJdkizDTcPrWkMYy5gNO76y01jWhIxTZAJgcX0yclUVk0oiZCZCXoPvhw7PfBuzgEIbVhMnX4aZAzlN3LlY1hkjzhByjozjttQblEzZBJewalQZDZD"
+
 export const baseURL = "https://backend-whatsapp-chat-production.up.railway.app/";
 export const pageID = "750201798171865";
 export const accessToken="EAAH6cPpiKYUBPGtdS3riAZBGNcCv4HePVbxxbTNNwDh4ujrvUZA8N4awh90XvNJP6pyNip1vwK4spfz87x2l9IOkJ1h5oUYbPXcSbo23ZBHBvuCg9MCLV0lycYUYqV3ghj8Q6eMTaPs6ILhBTwIXy0NSIIZCLjdfuxkTPaIe3mZCyiXZBgVXU9bVZAcDZB8QBwVU6wmd0AZDZD "

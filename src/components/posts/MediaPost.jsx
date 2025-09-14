@@ -31,7 +31,7 @@ export function MediaPost({ onClose }) {
     setLoading(true);
     try {
       await createMediaPost(message, file, schedule ? publishTime : null);
-      alert("Media post sent successfully!");
+      // alert("Media post sent successfully!");
       setMessage("");
       setFile(null);
       setPublishTime("");

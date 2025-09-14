@@ -21,6 +21,7 @@ export function SchedulePosts() {
 
   useEffect(() => {
     const handleClick = (e) => {
+      if (document.querySelector(".modal-open")) return;
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setOpen(null);
         console.log(menuRef.current);
