@@ -1,17 +1,9 @@
-import { baseURL, pageID, accessToken, Api } from "../config";
+import { Api } from "../config";
 
 // fetch conversations
 export const fetchConversations = async () => {
   try {
-    const res = await Api.get(`/fb/conversations`, {
-      // method: "GET",
-      // headers: {
-      //   "Content-Type": "application/json",
-      //   "ngrok-skip-browser-warning": "true",
-      //   FB_PAGE_ID: pageID,
-      //   FB_ACCESS_TOKEN: accessToken,
-      // },
-    });
+    const res = await Api.get(`/fb/conversations`);
 
     const data = res.data;
     return data?.data || [];
@@ -24,23 +16,9 @@ export const fetchConversations = async () => {
 // fetch messages for a conversation
 export const fetchMessages = async (conversationId, afterCursor = "") => {
   try {
-    // const url = new URL(`${baseURL}/fb/messages/${conversationId}`);
-    // if (afterCursor) {
-    //   url.searchParams.append("after", afterCursor);
-    // }
     const params = {};
     if (afterCursor) params.after = afterCursor;
     const res = await Api.get(`/fb/messages/${conversationId}`, { params });
-
-    // const res = await fetch(url.toString(), {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "ngrok-skip-browser-warning": "true",
-    //     FB_PAGE_ID: pageID,
-    //     FB_ACCESS_TOKEN: accessToken,
-    //   },
-    // });
 
     const data = res.data;
     console.log("Fetched messages:", {
@@ -88,21 +66,10 @@ export const sendMessage = async ({
   }
   try {
     const res = await Api.post(`/fb/send-message`, formData, {
-      // method: "POST",
-      // body: formData,
       headers: {
-        // FB_PAGE_ID: pageID,
-        // FB_ACCESS_TOKEN: accessToken,
         "Content-Type": "multipart/form-data",
       },
     });
-
-    // const data = await res.data;
-
-    // if (!res.ok) {
-    //   console.error("Failed to send message:", data);
-    //   throw new Error(data.error?.message || "Failed to send message");
-    // }
 
     return res.data;
   } catch (error) {
@@ -112,17 +79,6 @@ export const sendMessage = async ({
 
 // for getting participants
 export const fetchAllParticipants = async (after = "") => {
-  // const url = new URL(`${baseURL}/fb/participants`);
-  // if (after) url.searchParams.append("after", after);
-
-  // const res = await fetch(url.toString(),
-  //  {
-  //   headers: {
-  //     "ngrok-skip-browser-warning": "true",
-  //     FB_PAGE_ID:pageID,
-  //     FB_ACCESS_TOKEN:accessToken,
-  //   },
-  // });\
   try {
     const params = {};
     if (after) params.after = after;

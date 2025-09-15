@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { accessToken, Api, baseURL, pageID } from "../config";
+import { Api } from "../config";
 
 export function ProfileImage({ userId }) {
   const [image, setImage] = useState("avatar.jpg");
@@ -10,14 +10,8 @@ export function ProfileImage({ userId }) {
     const loadImage = async () => {
       try {
         const img = await Api.get(`/fb/user/${userId}`, {
-          // headers: {
-          //   "ngrok-skip-browser-warning": "true",
-          //   FB_PAGE_ID: pageID,
-          //   FB_ACCESS_TOKEN: accessToken,
-          // },
           responseType: "blob",
         });
-        // const blob = await img.blob();
         setImage(URL.createObjectURL(img.data));
       } catch (err) {
         console.error("Image failed to load", err);
