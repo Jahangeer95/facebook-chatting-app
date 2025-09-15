@@ -38,9 +38,9 @@ export function Insights({ formatName }) {
         <p className="text-center m-4 text-blue-600 h-[180px]">
           Loading insights...
         </p>
-      ) : insights[0]?.data?.length > 0 ? (
+      ) : insights?.data?.length > 0 ? (
         <div className=" mt-3 bg-gray-200 flex p-2 ">
-          {insights[0].data.map((item) => (
+          {insights.data.map((item) => (
             <div
               key={item.name}
               className="border p-2 rounded bg-white m-2  shadow"
@@ -68,7 +68,7 @@ export function Insights({ formatName }) {
                   <FontAwesomeIcon icon={faUsers} className="text-green-400" />
                 )}
                 <span className="font-bold ml-auto">
-                  {item.values?.[0]?.value}
+                  {item.values?.value}
                 </span>
               </div>
             </div>
