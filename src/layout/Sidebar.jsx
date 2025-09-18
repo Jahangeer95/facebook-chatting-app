@@ -1,9 +1,9 @@
-import { faCommentDots, faHome, faNewspaper } from "@fortawesome/free-solid-svg-icons";
+import { faCommentDots, faHome, faNewspaper, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 export function Sidebar() {
   return (
-    <div className="w-1/5 border-r border-gray-300 shadow-sm overflow-auto bg-blue-900 h-screen">
+    <div className="w-1/5 border-r border-gray-300 shadow-sm overflow-auto bg-blue-900 h-screen flex flex-col">
       <ul className="divide-y divide-gray-300">
       <li>
           <NavLink
@@ -42,6 +42,21 @@ export function Sidebar() {
           >
             <FontAwesomeIcon icon={faNewspaper}/>
             Posts
+          </NavLink>
+        </li>
+      </ul>
+      <ul className="mt-auto divide-y divide-gray-300">
+      <li className="border-t">
+          <NavLink
+            to={"/login"}
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center gap-2 p-3 bg-blue-500 text-white font-bold border-l-4 border-white"
+                : "flex items-center gap-2 p-3 text-white hover:bg-blue-700"
+            }
+          >
+            <FontAwesomeIcon icon={faUser} />
+            Login
           </NavLink>
         </li>
       </ul>
