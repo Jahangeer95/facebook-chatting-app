@@ -11,7 +11,7 @@ export function Settings() {
       const response = await getPageSettings();
       setPageSetting(response);
     } catch (err) {
-      toast.error("Failed to load roles");
+      toast.error("Failed to load settings");
     } finally {
       setSettingLoading(false);
     }

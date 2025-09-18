@@ -1,10 +1,19 @@
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { loginUser } from "../api/Login";
+import { toast } from "react-toastify";
 
 export function Login() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const login = async () => {
+    try {
+      await loginUser(email, password);
+    } catch (error) {
+      toast.error("Failed to send post.");
+    }
+  };
   return (
     <div className="flex justify-center items-center border h-screen bg-gray-100">
       <div className="w-96 shadow-lg bg-white rounded-md p-8">
@@ -38,7 +47,10 @@ export function Login() {
             required
           />
           <div className="text-center">
-            <button className="px-4 py-2 bg-blue-400 rounded text-white mt-2 hover:bg-blue-800 transition">
+            <button
+              className="px-4 py-2 bg-blue-400 rounded text-white mt-2 hover:bg-blue-800 transition"
+              onClick={login}
+            >
               Login
             </button>
           </div>
