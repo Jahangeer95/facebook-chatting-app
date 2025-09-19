@@ -21,3 +21,20 @@ export const Api=axios.create({
     },
     timeout:30000
 })
+
+Api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response) {
+
+      if (error.response.status === 401) {
+          // redirect to login
+        window.location.href = "/";
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
