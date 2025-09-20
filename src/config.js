@@ -38,3 +38,17 @@ Api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+Api.interceptors.request.use(
+  (request) => {
+    console.log(request)
+    const token = localStorage.getItem("user_auth_token");
+    if (token) {
+      request.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return request;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);

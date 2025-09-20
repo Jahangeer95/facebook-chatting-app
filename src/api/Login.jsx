@@ -10,6 +10,7 @@ console.log({res})
     const token = res.headers['user_auth_token'];
     console.log("User Token:", token);
     console.log("User:", res.data);
+    localStorage.setItem("user_auth_token",token)
     return { data: res.data, token };
     }
   } catch (error) {
