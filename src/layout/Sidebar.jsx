@@ -7,7 +7,7 @@ export function Sidebar() {
       <ul className="divide-y divide-gray-300">
       <li>
           <NavLink
-            to={"/"}
+            to={"/home"}
             className={({ isActive }) =>
                 isActive
                   ? "flex items-center gap-2 p-3 bg-blue-500 text-white font-bold border-l-4 border-white"
@@ -48,7 +48,7 @@ export function Sidebar() {
       <ul className="mt-auto divide-y divide-gray-300">
       <li className="border-t">
           <NavLink
-            to={"/login"}
+            to={"/"}
             className={({ isActive }) =>
               isActive
                 ? "flex items-center gap-2 p-3 bg-blue-500 text-white font-bold border-l-4 border-white"

@@ -4,7 +4,7 @@ import { Posts } from "./pages/Posts";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppLayout } from "./layout/AppLayout";
 import { ToastContainer } from "react-toastify";
-// import { Home } from "./components/home/Home";
+import { Home } from "./components/home/Home";
 import { Login } from "./pages/Login";
 import { Pages } from "./components/page/Pages";
 // const App = () => <ChatPage />;
@@ -35,6 +35,10 @@ const App = () => {
         {
           path: "pages",
           element: <Pages />,
+        },
+        {
+          path: "home",
+          element: <Home />,
         },
       ],
     },
