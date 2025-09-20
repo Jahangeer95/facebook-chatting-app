@@ -18,7 +18,7 @@ export function Pages() {
           className="p-3 bg-blue-600 rounded-lg hover:bg-blue-700 text-white hover:scale-105"
           onClick={() => setSelected("get")}
         >
-          Get Pages
+          View Pages
         </button>
       </div>
       {selected === "create" && <CreatePage setSelected={setSelected} />}
