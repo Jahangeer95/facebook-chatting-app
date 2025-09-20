@@ -6,6 +6,7 @@ import { AppLayout } from "./layout/AppLayout";
 import { ToastContainer } from "react-toastify";
 // import { Home } from "./components/home/Home";
 import { Login } from "./pages/Login";
+import { Pages } from "./components/page/Pages";
 // const App = () => <ChatPage />;
 // export default App;
 
@@ -17,7 +18,7 @@ const App = () => {
       children: [
         {
           path: "/",
-          element:<Login/> ,
+          element: <Login />,
         },
         {
           path: "messenger",
@@ -30,6 +31,10 @@ const App = () => {
         {
           path: "login",
           element: <Login />,
+        },
+        {
+          path: "pages",
+          element: <Pages />,
         },
       ],
     },

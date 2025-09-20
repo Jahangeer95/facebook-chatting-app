@@ -3,13 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { loginUser } from "../api/Login";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate=useNavigate();
   const login = async () => {
     try {
       await loginUser(email, password);
+      navigate("/pages")
     } catch (error) {
       toast.error("Failed to send post.");
     }
