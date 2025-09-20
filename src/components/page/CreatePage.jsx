@@ -14,7 +14,7 @@ export function CreatePage({ setSelected }) {
   const handleCreate = async () => {
     try {
       await createPage(pageName, pageId, accessToken);
-      toast.success("Page created");
+      // toast.success("Page created");
       setSelected(false);
       setAccessToken("");
       setPageId("");

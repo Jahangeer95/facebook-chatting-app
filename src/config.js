@@ -44,7 +44,7 @@ Api.interceptors.request.use(
     console.log(request)
     const token = localStorage.getItem("user_auth_token");
     if (token) {
-      request.headers["Authorization"] = `Bearer ${token}`;
+      request.headers["user_auth_token"] = token;
     }
     return request;
   },

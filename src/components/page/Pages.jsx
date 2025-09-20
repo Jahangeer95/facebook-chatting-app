@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CreatePage } from "./CreatePage";
+import { PageList } from "./PageList";
 
 export function Pages() {
   const [selected, setSelected] = useState("");
@@ -21,6 +22,7 @@ export function Pages() {
         </button>
       </div>
       {selected === "create" && <CreatePage setSelected={setSelected} />}
+      {selected === "get" && <PageList setSelected={setSelected} />}
     </div>
   );
 }
