@@ -11,9 +11,18 @@ export function Login() {
   const navigate = useNavigate();
   const login = async () => {
     try {
-      const res = await loginUser(email, password);
-      if (res.data) {
-        navigate("/pages");
+      if (!email.trim() || !password.trim()) {
+        if (!email.trim()) {
+          toast.error("Email is empty.");
+        }
+        if (!password.trim()) {
+          toast.error("Password is empty.");
+        }
+      } else {
+        const res = await loginUser(email, password);
+        if (res.data) {
+          navigate("/pages");
+        }
       }
     } catch (error) {
       toast.error("Failed to login.");
