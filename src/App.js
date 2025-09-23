@@ -14,12 +14,12 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <Login />,
+    },
+    {
+      path: "/",
       element: <AppLayout />,
       children: [
-        {
-          path: "/",
-          element: <Login />,
-        },
         {
           path: "messenger",
           element: <ChatPage />,
