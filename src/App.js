@@ -17,7 +17,11 @@ const App = () => {
       element: <Login />,
     },
     {
-      path: "/",
+      path: "pages",
+      element: <Pages />,
+    },
+    {
+      path: "/:pageID",
       element: <AppLayout />,
       children: [
         {
@@ -28,14 +32,10 @@ const App = () => {
           path: "posts",
           element: <Posts />,
         },
-        {
-          path: "login",
-          element: <Login />,
-        },
-        {
-          path: "pages",
-          element: <Pages />,
-        },
+        // {
+        //   path: "pages",
+        //   element: <Pages />,
+        // },
         {
           path: "home",
           element: <Home />,

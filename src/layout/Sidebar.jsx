@@ -1,13 +1,14 @@
 import { faCommentDots, faHome, faNewspaper, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 export function Sidebar() {
+  const { pageID } = useParams();
   return (
     <div className="w-1/5 border-r border-gray-300 shadow-sm overflow-auto bg-blue-900 h-screen flex flex-col">
       <ul className="divide-y divide-gray-300">
       <li>
           <NavLink
-            to={"/home"}
+            to={`/${pageID}/home`}
             className={({ isActive }) =>
                 isActive
                   ? "flex items-center gap-2 p-3 bg-blue-500 text-white font-bold border-l-4 border-white"
@@ -20,7 +21,7 @@ export function Sidebar() {
         </li>
         <li>
           <NavLink
-            to={"/messenger"}
+            to={`/${pageID}/messenger`}
             className={({ isActive }) =>
                 isActive
                   ? "flex items-center gap-2 p-3 bg-blue-500 text-white font-bold border-l-4 border-white"
@@ -33,7 +34,7 @@ export function Sidebar() {
         </li>
         <li>
           <NavLink
-            to={"/posts"}
+            to={`/${pageID}/posts`}
             className={({ isActive }) =>
                 isActive
                   ? "flex items-center gap-2 p-3 bg-blue-500 text-white font-bold border-l-4 border-white"

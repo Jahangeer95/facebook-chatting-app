@@ -1,13 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getPages } from "../../api/Login";
-import { Modal } from "../modal/Modal";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-export function PageList({ setSelected }) {
+export function PageList() {
   const [loading, setLoading] = useState(false);
   const [pages, setPages] = useState([]);
+  const navigate = useNavigate();
 
   const getPage = async () => {
     setLoading(true);
@@ -25,56 +26,64 @@ export function PageList({ setSelected }) {
     getPage();
   }, []);
   return (
-    <Modal onClose={() => setSelected(false)}>
-      <div className="w-96">
-        <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
-          <h2 className="text-lg font-semibold text-white">Pages</h2>
-          <FontAwesomeIcon
-            icon={faTimes}
-            className="cursor-pointer text-white"
-            onClick={() => setSelected(false)}
-          />
-        </div>
-
-        {loading ? (
-          <p className="text-white text-center m-4">
-            Loading Available Pages...
-          </p>
-        ) : pages ? (
-          <div className=" space-y-2 mt-3">
-            {pages?.data?.pages?.map((item) => (
-              <div
-                key={item._id}
-                className="flex border p-3 rounded bg-gray-50 mb-2"
-              >
-                <div>
-                  <h1 className="font-semibold text-gray-800 mr-2 text-sm">
-                    {item.page_name}
-                  </h1>
-                  <h2 className="font-semibold text-gray-500 mr-2 text-sm">
-                    {item.page_id}
-                  </h2>
-                </div>
-
-                <button className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto">
-                  View
-                </button>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>No Page available.</p>
-        )}
-
-        <div className="flex justify-center gap-2 border-t border-gray-400 p-2">
-          <button
-            className="px-4 py-2 rounded bg-gray-100"
-            onClick={() => setSelected(false)}
-          >
-            Cancel
-          </button>
-        </div>
+    <div className="w-[500px]">
+      <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
+        <h2 className="text-lg font-semibold ">Pages</h2>
+        <FontAwesomeIcon
+          icon={faTimes}
+          className="cursor-pointer text-white"
+          // onClick={() => setSelected(false)}
+        />
       </div>
-    </Modal>
+
+      {loading ? (
+        <p className="text-white text-center m-4">Loading Available Pages...</p>
+      ) : pages ? (
+        <div className=" space-y-2 mt-3">
+          <table className="border-collapse border border-gray-300 w-full rounded-lg">
+            <thead className="bg-gray-200 text-blue-600">
+              <tr>
+                <th className="border px-2 py-1">Pages</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pages?.data?.pages?.map((item) => (
+                <tr
+                  key={item._id}
+                  className="flex border p-3 rounded bg-gray-50 mb-2"
+                >
+                  <td>
+                    <h1 className="font-semibold text-gray-800 mr-2 text-sm">
+                      {item.page_name}
+                    </h1>
+                    <h2 className="font-semibold text-gray-500 mr-2 text-sm">
+                      {item.page_id}
+                    </h2>
+                  </td>
+
+                  <button
+                    className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto"
+                    onClick={() => navigate(`/${item.page_id}/home`)}
+                  >
+                    View
+                  </button>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p>No Page available.</p>
+      )}
+
+      {/* <div className="flex justify-center gap-2 border-t border-gray-400 p-2">
+        <button
+          className="px-4 py-2 rounded bg-gray-100"
+          // onClick={() => setSelected(false)}
+        >
+          Cancel
+        </button>
+      </div> */}
+    </div>
   );
 }

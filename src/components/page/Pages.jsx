@@ -6,23 +6,23 @@ export function Pages() {
   const [selected, setSelected] = useState("");
 
   return (
-    <div className="flex justify-center items-center border h-screen bg-white">
-      <div className="flex space-x-4 rounded-md shadow-md p-6">
+    // <div className="flex justify-center items-center border h-screen bg-white">
+      <div className="flex flex-col bg-white items-center rounded-md p-6">
         <button
-          className="p-3 bg-blue-600 rounded-lg hover:bg-blue-700 text-white hover:scale-105"
+          className="p-3 bg-blue-600 rounded-lg hover:bg-blue-700 text-white hover:scale-105 w-28"
           onClick={() => setSelected("create")}
         >
           Create Page
         </button>
-        <button
+        {/* <button
           className="p-3 bg-blue-600 rounded-lg hover:bg-blue-700 text-white hover:scale-105"
           onClick={() => setSelected("get")}
         >
           View Pages
-        </button>
-      </div>
+        </button> */}
+      {/* </div> */}
       {selected === "create" && <CreatePage setSelected={setSelected} />}
-      {selected === "get" && <PageList setSelected={setSelected} />}
+      <PageList/>
     </div>
   );
 }
