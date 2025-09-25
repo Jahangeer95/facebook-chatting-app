@@ -6,7 +6,8 @@ import {
   fetchAllParticipants,
 } from "../api/MessengerApi";
 import { io } from "socket.io-client";
-import { pageID, baseURL } from "../config";
+import {baseURL } from "../config";
+import { useParams } from "react-router-dom";
 
 const socket = io(baseURL, { transports: ["websocket"] });
 
@@ -18,6 +19,7 @@ export function ChatPage() {
   const [paging, setPaging] = useState(null); //for page information
   const [hasMore, setHasMore] = useState(true);
   const [afterCursor, setAfterCursor] = useState("");
+  const {pageID}=useParams();
 
   const selectedRef = useRef(null);
   useEffect(() => {

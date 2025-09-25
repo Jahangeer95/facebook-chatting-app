@@ -50,7 +50,7 @@ export function PageList() {
               {pages?.data?.pages?.map((item) => (
                 <tr
                   key={item._id}
-                  className="flex border p-3 rounded bg-gray-50 mb-2"
+                  className="flex border p-3 rounded bg-gray-50 mb-2 justify-between"
                 >
                   <td>
                     <h1 className="font-semibold text-gray-800 mr-2 text-sm">
@@ -60,13 +60,17 @@ export function PageList() {
                       {item.page_id}
                     </h2>
                   </td>
-
+                   <td>
                   <button
                     className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto"
-                    onClick={() => navigate(`/${item.page_id}/home`)}
+                    onClick={() => {
+                      localStorage.setItem("fb_page_id",item.page_id)
+                      localStorage.setItem("fb_access_token",item.access_token)
+                      navigate(`/${item.page_id}/home`)}}
                   >
                     View
                   </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

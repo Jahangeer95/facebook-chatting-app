@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Api } from "../config";
 
 export function ProfileImage({ userId }) {
-  const [image, setImage] = useState("avatar.jpg");
+  const [image, setImage] = useState("/avatar.jpg");
   useEffect(() => {
     if (!userId) {
       return;
@@ -15,7 +15,7 @@ export function ProfileImage({ userId }) {
         setImage(URL.createObjectURL(img.data));
       } catch (err) {
         console.error("Image failed to load", err);
-        setImage("avatar.jpg");
+        setImage("/avatar.jpg");
       }
     };
     loadImage();
@@ -25,7 +25,7 @@ export function ProfileImage({ userId }) {
       src={image}
       alt="Profile"
       className="w-10 h-10 rounded-full object-cover"
-      onError={() => setImage("avatar.jpg")}
+      onError={() => setImage("/avatar.jpg")}
     />
   );
 }

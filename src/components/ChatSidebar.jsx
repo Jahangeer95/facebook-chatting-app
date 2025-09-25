@@ -1,11 +1,13 @@
 // import { baseURL } from "../config";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { pageID } from "../config";
+// import { pageID } from "../config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { ProfileImage } from "./ProfileImage";
+import { useParams } from "react-router-dom";
 
 export function ChatSidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}) {
+  const {pageID}=useParams();
   return (
     <div
       className="w-1/5 border-r overflow-auto bg-gray-50 h-screen"
