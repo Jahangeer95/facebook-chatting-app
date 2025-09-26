@@ -1,6 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getPages } from "../../api/Login";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -27,21 +25,16 @@ export function PageList() {
   }, []);
   return (
     <div className="w-[500px]">
-      <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
+      <div className=" mb-4 border-b border-gray-400 p-2">
         <h2 className="text-lg font-semibold ">Pages</h2>
-        <FontAwesomeIcon
-          icon={faTimes}
-          className="cursor-pointer text-white"
-          // onClick={() => setSelected(false)}
-        />
       </div>
 
       {loading ? (
-        <p className="text-white text-center m-4">Loading Available Pages...</p>
+        <p className="text-center m-4">Loading Available Pages...</p>
       ) : pages ? (
-        <div className=" space-y-2 mt-3">
-          <table className="border-collapse border border-gray-300 w-full rounded-lg">
-            <thead className="bg-gray-200 text-blue-600">
+        <div className=" space-y-2 mt-3 border border-gray-300 ">
+          <table className="border-collapse w-full rounded-lg">
+            <thead className="bg-gray-50 text-blue-600">
               <tr>
                 <th className="border px-2 py-1">Pages</th>
               </tr>
@@ -50,7 +43,7 @@ export function PageList() {
               {pages?.data?.pages?.map((item) => (
                 <tr
                   key={item._id}
-                  className="flex border p-3 rounded bg-gray-50 mb-2 justify-between"
+                  className="flex border p-3 rounded justify-between hover:bg-gray-100"
                 >
                   <td>
                     <h1 className="font-semibold text-gray-800 mr-2 text-sm">
@@ -62,7 +55,7 @@ export function PageList() {
                   </td>
                    <td>
                   <button
-                    className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto"
+                    className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto hover:scale-105"
                     onClick={() => {
                       localStorage.setItem("fb_page_id",item.page_id)
                       localStorage.setItem("fb_access_token",item.access_token)

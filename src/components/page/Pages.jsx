@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CreatePage } from "./CreatePage";
 import { PageList } from "./PageList";
+import { Users } from "./Users";
 
 export function Pages() {
   const [selected, setSelected] = useState("");
@@ -22,7 +23,11 @@ export function Pages() {
         </button> */}
       {/* </div> */}
       {selected === "create" && <CreatePage setSelected={setSelected} />}
+      <div className="flex m-auto">
       <PageList/>
+      <Users/>
+      </div>
+      
     </div>
   );
 }

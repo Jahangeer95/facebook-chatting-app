@@ -1,5 +1,6 @@
 import { Api } from "../config";
 
+//user login
 export const loginUser = async (email, password) => {
   try {
     const body = { email, password };
@@ -17,6 +18,7 @@ export const loginUser = async (email, password) => {
   }
 };
 
+//to save details of page in db
 export const createPage = async (pageName, pageId, accessToken) => {
   try {
     const body = {
@@ -33,12 +35,25 @@ export const createPage = async (pageName, pageId, accessToken) => {
   }
 };
 
+//to fetch pages of user
 export const getPages = async () => {
   try {
     const res = await Api.get(`user/pages`);
     console.log({ res });
     console.log("Result:", res.data);
     return res.data;
+  } catch (error) {
+    console.error("Error :", error);
+  }
+};
+
+//to fetch users
+export const getUsers = async () => {
+  try {
+    const res = await Api.get(`user`);
+    console.log("Users",{ res });
+    console.log("Users:", res.data.data);
+    return res.data.data;
   } catch (error) {
     console.error("Error :", error);
   }
