@@ -22,7 +22,7 @@ export function Users() {
     getUser();
   }, []);
   return (
-    <div className="w-[500px] mx-10">
+    <div className="w-[500px]">
       <div className="mb-4 border-b border-gray-400 p-2">
         <h2 className="text-lg font-semibold ">Users</h2>
       </div>
