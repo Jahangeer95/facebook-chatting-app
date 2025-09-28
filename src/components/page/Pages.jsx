@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CreatePage } from "./CreatePage";
 import { PageList } from "./PageList";
 import { Users } from "./Users";
+import { CreateUser } from "./CreateUser";
 
 export function Pages() {
   const [selected, setSelected] = useState("");
@@ -26,7 +27,7 @@ export function Pages() {
         >
           Create User
         </button>
-        {selected === "user"}
+        {selected === "user" && <CreateUser setSelected={setSelected}/>}
         <Users />
       </div>
       {/* </div> */}

@@ -51,10 +51,26 @@ export const getPages = async () => {
 export const getUsers = async () => {
   try {
     const res = await Api.get(`user`);
-    console.log("Users",{ res });
+    console.log("Users", { res });
     console.log("Users:", res.data.data);
     return res.data.data;
   } catch (error) {
     console.error("Error :", error);
+  }
+};
+
+//createUser
+export const createUser = async (username, email, password, role) => {
+  try {
+    const body = { username, email, password, role };
+    const res = await Api.post(`user`, body);
+    console.log("User created", res.data);
+    return res.data;
+  } catch (error) {
+    if (error.response) {
+      console.error("Error Status:", error.response.status);
+      console.error("Error Data:", error.response.data);
+    }
+    console.error("Error :", error.message);
   }
 };

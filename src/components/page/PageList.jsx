@@ -57,8 +57,8 @@ export function PageList() {
                   <button
                     className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto hover:scale-105"
                     onClick={() => {
-                      localStorage.setItem("fb_page_id",item.page_id)
-                      localStorage.setItem("fb_access_token",item.access_token)
+                      sessionStorage.setItem("fb_page_id",item.page_id)
+                      sessionStorage.setItem("fb_access_token",item.access_token)
                       navigate(`/${item.page_id}/home`)}}
                   >
                     View

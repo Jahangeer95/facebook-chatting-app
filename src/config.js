@@ -46,11 +46,11 @@ Api.interceptors.request.use(
     if (token) {
       request.headers["user_auth_token"] = token;
     }
-    const pageID = localStorage.getItem("fb_page_id");
+    const pageID = sessionStorage.getItem("fb_page_id");
     if (token) {
       request.headers["fb_page_id"] = pageID;
     }
-    const accessToken = localStorage.getItem("fb_access_token");
+    const accessToken = sessionStorage.getItem("fb_access_token");
     if (token) {
       request.headers["fb_access_token"] = accessToken;
     }
