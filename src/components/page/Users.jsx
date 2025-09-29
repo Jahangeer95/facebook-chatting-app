@@ -51,8 +51,10 @@ export function Users() {
                   <td className="px-2 py-2 text-sm border">{item.role}</td>
                   <td className="px-2 py-2 text-sm border">
                     {item.pages.length > 0
-                      ? item.pages.map((page, index) => (
-                          <div key={index}>{page}</div>
+                      ? item.pages.map((page) => (
+                          <div key={page._id}>
+                           <p className="font-semibold"> {page.page_name}</p>
+                            </div>
                         ))
                       : "No pages"}
                   </td>
