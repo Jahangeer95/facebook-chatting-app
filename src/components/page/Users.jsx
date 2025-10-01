@@ -13,7 +13,7 @@ export function Users() {
       console.log("Data of users", data);
       setUsers(data || []);
     } catch (err) {
-      toast.error("Failed to load insights");
+      toast.error("Failed to load users");
     } finally {
       setLoading(false);
     }
@@ -50,6 +50,7 @@ export function Users() {
                   <td className="px-2 py-2 text-sm border">{item.email}</td>
                   <td className="px-2 py-2 text-sm border">{item.role}</td>
                   <td className="px-2 py-2 text-sm border">
+                    {/* user pages */}
                     {item.pages.length > 0
                       ? item.pages.map((page) => (
                           <div key={page._id}>

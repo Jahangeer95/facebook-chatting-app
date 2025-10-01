@@ -21,6 +21,7 @@ export function Login() {
       } else {
         const res = await loginUser(email, password);
         if (res.data) {
+          sessionStorage.setItem("user", JSON.stringify(res.data));
           navigate("/pages");
         }
       }

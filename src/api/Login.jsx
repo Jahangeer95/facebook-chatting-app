@@ -74,3 +74,19 @@ export const createUser = async (username, email, password, role) => {
     console.error("Error :", error.message);
   }
 };
+
+//add user
+export const addUsersToPage = async (pageId, userId) => {
+  try {
+    if (!userId) return;
+    const res = await Api.post(`/user/pages/${pageId}`, { userId });
+    console.log("User added", res.data);
+    return res.data;
+  } catch (error) {
+    if (error.response) {
+      console.error("Error Status:", error.response.status);
+      console.error("Error Data:", error.response.data);
+    }
+    console.error("Error :", error.message);
+  }
+};

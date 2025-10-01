@@ -1,4 +1,4 @@
-import { getPages } from "../../api/Login";
+import { addUsersToPage, getPages, getUsers } from "../../api/Login";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,10 @@ export function PageList() {
   const [loading, setLoading] = useState(false);
   const [pages, setPages] = useState([]);
   const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  console.log("Logged In User:", user);
+
 
   const getPage = async () => {
     setLoading(true);
@@ -20,8 +24,34 @@ export function PageList() {
       setLoading(false);
     }
   };
+
+  //fetchUsers
+  const getAllUsers = async () => {
+    setLoading(true);
+    try {
+      const data = await getUsers();
+      console.log("Data of users", data);
+      setUsers(data || []);
+    } catch (err) {
+      toast.error("Failed to load users");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addUserToPage = async (pageId, userId) => {
+    if (!userId) return;
+    try {
+      await addUsersToPage(pageId, userId);
+      getUsers();
+    } catch (err) {
+      toast.error("Failed to add user");
+    }
+  };
+
   useEffect(() => {
     getPage();
+    getAllUsers();
   }, []);
   return (
     <div className="w-[500px]">
@@ -53,16 +83,36 @@ export function PageList() {
                       {item.page_id}
                     </h2>
                   </td>
-                   <td>
-                  <button
-                    className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto hover:scale-105"
-                    onClick={() => {
-                      sessionStorage.setItem("fb_page_id",item.page_id)
-                      sessionStorage.setItem("fb_access_token",item.access_token)
-                      navigate(`/${item.page_id}/home`)}}
-                  >
-                    View
-                  </button>
+                  <td>
+                    <button
+                      className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto hover:scale-105"
+                      onClick={() => {
+                        sessionStorage.setItem("fb_page_id", item.page_id);
+                        sessionStorage.setItem(
+                          "fb_access_token",
+                          item.access_token
+                        );
+                        navigate(`/${item.page_id}/home`);
+                      }}
+                    >
+                      View
+                    </button>
+                    {/* add users to page */}
+                    {user?.role === "ADMIN" && (
+                      <select
+                        onChange={(e) =>
+                          addUserToPage(item._id, e.target.value)
+                        }
+                        className="border rounded border-blue-400 p-2 ml-2 w-[200px]"
+                      >
+                        <option value="" className="justify-between border-b">Add User</option>
+                        {users.map((u) => (
+                          <option key={u._id} value={u._id}>
+                            {u.username}   |   {u.role}
+                          </option>
+                        ))}
+                      </select>
+                    )}
                   </td>
                 </tr>
               ))}
