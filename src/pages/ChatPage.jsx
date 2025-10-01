@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { ChatSidebar, ChatList, ChatInput, ChatHeader } from "../components";
 import {
   fetchMessages,
@@ -27,7 +27,7 @@ export function ChatPage() {
   }, [selected]);
 
   // load conversations
-  async function loadConversations(cursor = "") {
+  const loadConversations=useCallback(async(cursor = "")=> {
     const { participants, paging } = await fetchAllParticipants(cursor);
 
     const enriched = participants.map((conv) => {
@@ -61,11 +61,11 @@ export function ChatPage() {
     } else {
       setHasMore(false);
     }
-  }
+  },[pageID])
 
   useEffect(() => {
     loadConversations();
-  }, []);
+  }, [loadConversations]);
 
   useEffect(() => {
     const loadMessages = async () => {
@@ -162,7 +162,7 @@ export function ChatPage() {
       socket.off("message_read");
       socket.offAny();
     };
-  }, []);
+  }, [pageID,loadConversations]);
 
   const handleSendMessage = async ({ text, file, type }) => {
     if (!selected) return;
