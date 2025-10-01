@@ -32,6 +32,7 @@ export const createPage = async (pageName, pageId, accessToken) => {
     return res.data;
   } catch (error) {
     console.error("Error :", error);
+    throw new Error(error.response?.data);
   }
 };
 

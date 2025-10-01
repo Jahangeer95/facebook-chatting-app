@@ -21,7 +21,7 @@ export function CreatePage({ setSelected }) {
       setPageName("");
       navigate("/pages");
     } catch (error) {
-      toast.error("Failed to create a page");
+      toast.error(error.message);
     }
   };
   return (
