@@ -103,7 +103,7 @@ export function PageList() {
                         onChange={(e) =>
                           addUserToPage(item._id, e.target.value)
                         }
-                        className="border rounded border-blue-400 p-2 ml-2 w-[200px]"
+                        className="border rounded border-blue-400 p-2 ml-2 w-[120px]"
                       >
                         <option value="" className="justify-between border-b">Add User</option>
                         {users.map((u) => (

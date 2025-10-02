@@ -93,3 +93,39 @@ export const addUsersToPage = async (pageId, userId) => {
     console.error("Error :", error.message);
   }
 };
+
+//update user role
+export const updateUserRole = async (userId,role) => {
+  try {
+    if (!userId) return;
+    const res = await Api.patch(`/user/${userId}`, { role: role });
+    console.log("User role updated", res.data);
+    return res.data;
+  } catch (error) {
+    if (error.response) {
+      console.error("Error Status:", error.response.status);
+      console.error("Error Data:", error.response.data);
+    }
+    console.error("Error :", error.message);
+    console.error("Error :", error);
+    throw new Error(error.response?.data);
+  }
+};
+
+//delete user
+export const deleteUser = async (userId) => {
+  try {
+    if (!userId) return;
+    const res = await Api.delete(`/user/${userId}`);
+    console.log("User deleted", res.data);
+    return res.data;
+  } catch (error) {
+    if (error.response) {
+      console.error("Error Status:", error.response.status);
+      console.error("Error Data:", error.response.data);
+    }
+    // console.error("Error :", error.message);
+    console.error("Error :", error);
+    throw new Error(error.response?.data?.error);
+  }
+};
