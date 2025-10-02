@@ -70,10 +70,12 @@ export const createUser = async (username, email, password, role) => {
   } catch (error) {
     if (error.response) {
       console.error("Error Status:", error.response.status);
-      console.error("Error Data:", error.response.data);
+      console.error("Error Data:", error.response.data?.message);
     }
-    console.error("Error :", error.message);
+    console.error("Error :", error);
+    throw new Error(error.response?.data?.message);
   }
+  
 };
 
 //add user

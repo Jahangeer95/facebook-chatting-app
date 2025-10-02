@@ -12,21 +12,21 @@ export function CreateUser({ setSelected }) {
   const [role, setRole] = useState("");
 
   const handleCreate = async () => {
-    //check username length
-    if (username.length < 5) {
-      toast.error("Username must be atleast 5 characters long");
-      return;
-    }
-    //check email format
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      toast.error("Please enter a valid email address");
-      return;
-    }
-    // check password length
-    if (password.length < 7) {
-      toast.error("Password must be atleast 7 characters long");
-      return;
-    }
+    // //check username length
+    // if (username.length < 5) {
+    //   toast.error("Username must be atleast 5 characters long");
+    //   return;
+    // }
+    // //check email format
+    // if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    //   toast.error("Please enter a valid email address");
+    //   return;
+    // }
+    // // check password length
+    // if (password.length < 7) {
+    //   toast.error("Password must be atleast 7 characters long");
+    //   return;
+    // }
     try {
       await createUser(username, email, password, role);
       setSelected(false);
@@ -35,7 +35,7 @@ export function CreateUser({ setSelected }) {
       setPassword("");
       setRole("");
     } catch (error) {
-      toast.error("Failed to create a page");
+      toast.error(error.message);
     }
   };
   return (
