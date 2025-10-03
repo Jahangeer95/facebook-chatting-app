@@ -11,9 +11,7 @@ export function Pages() {
   console.log("Logged In User:", user);
 
   return (
-    // <div className="flex justify-center items-center border h-screen bg-white">
     <div className="flex justify-center bg-white items-start rounded-md p-6 gap-6">
-      {/* {user?.role === "ADMIN" && ( */}
       <div className="m-2 flex flex-col">
         {user?.role === "ADMIN" && (
           <button
@@ -38,7 +36,6 @@ export function Pages() {
         {selected === "user" && <CreateUser setSelected={setSelected} />}
         <Users />
       </div>
-      {/* </div> */}
     </div>
   );
 }
