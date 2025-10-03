@@ -129,3 +129,20 @@ export const deleteUser = async (userId) => {
     throw new Error(error.response?.data?.error);
   }
 };
+
+//delete page data
+export const deletePageData = async (pageId) => {
+  try {
+    if (!pageId) return;
+    const res = await Api.delete(`/user/pages/${pageId}`);
+    console.log("Page data deleted successfully", res.data);
+    return res.data;
+  } catch (error) {
+    if (error.response) {
+      console.error("Error Status:", error.response.status);
+      console.error("Error Data:", error.response.data);
+    }
+    console.error("Error :", error.message);
+    throw new Error(error.response?.data?.error);
+  }
+};

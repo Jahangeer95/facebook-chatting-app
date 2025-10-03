@@ -1,4 +1,4 @@
-import { addUsersToPage, getPages, getUsers } from "../../api/Login";
+import { addUsersToPage, deletePageData, getPages, getUsers } from "../../api/Login";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -48,6 +48,16 @@ export function PageList() {
       toast.error("Failed to add user");
     }
   };
+
+   //delete a user
+    const handleDelete = async (userId) => {
+      try {
+        await deletePageData(userId);
+        getPage();
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
 
   useEffect(() => {
     getPage();
@@ -112,6 +122,14 @@ export function PageList() {
                           </option>
                         ))}
                       </select>
+                    )}
+                    {user?.role === "ADMIN" && (
+                      <button
+                        className="p-2 m-2 bg-blue-600 rounded hover:bg-blue-700 text-white hover:scale-105 w-fit"
+                        onClick={() => handleDelete(item._id)}
+                      >
+                        Delete
+                      </button>
                     )}
                   </td>
                 </tr>

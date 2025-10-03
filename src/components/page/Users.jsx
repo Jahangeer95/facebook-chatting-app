@@ -60,7 +60,8 @@ export function Users() {
                 <th className="border px-2 py-1">Email</th>
                 <th className="border px-2 py-1">Role</th>
                 <th className="border px-2 py-1">Pages</th>
-                <th className="border px-2 py-1">Action</th>
+                {user?.role === "ADMIN" && (
+                <th className="border px-2 py-1">Action</th>)}
               </tr>
             </thead>
             <tbody>
