@@ -2,6 +2,7 @@ import { addUsersToPage, deletePageData, getPages, getUsers } from "../../api/Lo
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { DeletePage } from "./DeletePage";
 
 export function PageList() {
   const [loading, setLoading] = useState(false);
@@ -10,6 +11,8 @@ export function PageList() {
   const [users, setUsers] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
   console.log("Logged In User:", user);
+  const [selectedPageId, setSelectedPageId] = useState("");
+  const [openDelete, setOpenDelete] = useState(false);
 
 
   const getPage = async () => {
@@ -50,9 +53,11 @@ export function PageList() {
   };
 
    //delete a user
-    const handleDelete = async (userId) => {
+    const handleDelete = async (pageId) => {
       try {
-        await deletePageData(userId);
+        await deletePageData(pageId);
+        setOpenDelete(false);
+        setSelectedPageId("");
         getPage();
       } catch (error) {
         toast.error(error.message);
@@ -123,10 +128,11 @@ export function PageList() {
                         ))}
                       </select>
                     )}
+                    {/* Delete page */}
                     {user?.role === "ADMIN" && (
                       <button
                         className="p-2 m-2 bg-blue-600 rounded hover:bg-blue-700 text-white hover:scale-105 w-fit"
-                        onClick={() => handleDelete(item._id)}
+                        onClick={() =>{ setSelectedPageId(item._id); setOpenDelete(true)}}
                       >
                         Delete
                       </button>
@@ -149,6 +155,9 @@ export function PageList() {
           Cancel
         </button>
       </div> */}
+      {openDelete &&selectedPageId &&(
+        <DeletePage setOpenDelete={setOpenDelete} pageId={selectedPageId} handleDelete={handleDelete}/>
+      )}
     </div>
   );
 }
