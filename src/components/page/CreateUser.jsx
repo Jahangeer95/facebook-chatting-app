@@ -80,14 +80,20 @@ export function CreateUser({ setSelected }) {
         />
 
         <label className="font-bold mb-1 text-white">Role :</label>
-        <input
-          type="text"
-          placeholder="Enter role"
+        <select
+          // type="text"
+          // placeholder="Enter role"
           className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded"
           value={role}
           onChange={(e) => setRole(e.target.value)}
           required
-        />
+        >
+          <option value="">Select Role</option>
+          <option value="ADMIN">ADMIN</option>
+          <option value="MANAGER">MANAGER</option>
+          <option value="MODERATOR">MODERATOR</option>
+          <option value="EDITOR">EDITOR</option>
+        </select>
 
         <div className="flex justify-center gap-2 border-t border-gray-400 p-2">
           <button
