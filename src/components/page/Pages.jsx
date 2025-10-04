@@ -3,6 +3,7 @@ import { CreatePage } from "./CreatePage";
 import { PageList } from "./PageList";
 import { Users } from "./Users";
 import { CreateUser } from "./CreateUser";
+import { LogoutButton } from "../../helper/LogoutButton";
 
 export function Pages() {
   const [selected, setSelected] = useState("");
@@ -11,7 +12,9 @@ export function Pages() {
   console.log("Logged In User:", user);
 
   return (
-    <div className="flex justify-center bg-white items-start rounded-md p-6 gap-6">
+    <div>
+      <LogoutButton/>
+    <div className="flex justify-center bg-white items-start rounded-md p-2 gap-4">
       <div className="m-2 flex flex-col">
         {user?.role === "ADMIN" && (
           <button
@@ -36,6 +39,7 @@ export function Pages() {
         {selected === "user" && <CreateUser setSelected={setSelected} />}
         <Users />
       </div>
+    </div>
     </div>
   );
 }
