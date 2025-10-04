@@ -41,7 +41,8 @@ export const deletePost = async (postid) => {
     return { data };
   } catch (error) {
     console.error("Error deleting posts:", error);
-    return { data: [] };
+    throw new Error(error.response?.data?.message);
+    // return { data: [] };
   }
 };
 
@@ -63,6 +64,7 @@ export const createTextPost = async (
     return res.data;
   } catch (error) {
     console.error("Error in posting:", error);
+    throw new Error(error.response?.data?.message);
   }
 };
 
@@ -84,6 +86,7 @@ export const createMediaPost = async (message, file, publishTime = null) => {
     return res.data;
   } catch (error) {
     console.error("Error in posting:", error);
+    throw new Error(error.response?.data?.message);
   }
 };
 

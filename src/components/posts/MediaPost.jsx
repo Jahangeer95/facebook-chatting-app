@@ -39,7 +39,7 @@ export function MediaPost({ onClose }) {
       onClose();
     } catch (error) {
       // alert("Failed to send media post.");
-      toast.error("Failed to send post.");
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }

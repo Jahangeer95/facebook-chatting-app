@@ -40,7 +40,7 @@ export function TextPost({onClose}) {
       onClose();
     } catch (error) {
       // alert("Failed to send post.");
-      toast.error("Failed to send post.");
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }

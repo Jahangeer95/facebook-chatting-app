@@ -26,7 +26,7 @@ export function Login() {
         }
       }
     } catch (error) {
-      toast.error("Failed to login.");
+      toast.error(error.message || "Failed to login.");
     }
   };
   return (

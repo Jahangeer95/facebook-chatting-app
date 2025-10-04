@@ -85,10 +85,12 @@ export function PagePosts() {
   const handleUpdatePosts = async (id, newMessage, file) => {
     try {
       if (file) {
-        await updateMediaPost(id,newMessage,file);
+        await updateMediaPost(id, newMessage, file);
         setPosts((prev) =>
           prev.map((post) =>
-            post.id === id ? { ...post, message: newMessage,attachments:file } : post
+            post.id === id
+              ? { ...post, message: newMessage, attachments: file }
+              : post
           )
         );
         await getPosts();
@@ -106,8 +108,12 @@ export function PagePosts() {
     }
   };
   const handleDeletePost = async (id) => {
-    await deletePost(id);
-    setPosts((prev) => prev.filter((post) => post.id !== id));
+    try {
+      await deletePost(id);
+      setPosts((prev) => prev.filter((post) => post.id !== id));
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   // if (loading) {
   //   return (

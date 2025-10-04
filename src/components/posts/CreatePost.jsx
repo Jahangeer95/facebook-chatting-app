@@ -9,6 +9,8 @@ export function CreatePost() {
   const [open, setOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("");
   const menuRef = useRef(null);
+  //current user
+  const user = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
     const handleClick = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -30,12 +32,13 @@ export function CreatePost() {
     <div className="relative w-full mt-3">
       <div className="absolute top-0 right-0">
         <div className="text-end relative" ref={menuRef}>
+        {(user?.role === "ADMIN" ||user?.role === "MANAGER" || user?.role === "EDITOR")  && (
           <button
             className="p-3 bg-blue-700 rounded  mr-4 text-white"
             onClick={() => setOpen(!open)}
           >
             Create Post
-          </button>
+          </button>)}
           {open && (
             <div className="absolute right-10 mt-1 w-44 bg-white border rounded shadow-lg z-50">
               <PostDropDown onSelect={handleSelect} />

@@ -8,12 +8,14 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [newMessage, setNewMessage] = useState(message || " ");
   const [file, setFile] = useState(null);
+  //current user
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   const handleUpdate = () => {
-    if(onUpdate && file){
-      onUpdate(postId,newMessage,file)
-    }else{
-      onUpdate(postId,newMessage)
+    if (onUpdate && file) {
+      onUpdate(postId, newMessage, file);
+    } else {
+      onUpdate(postId, newMessage);
     }
     setOpenUpdate(false);
   };
@@ -36,12 +38,14 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
         >
           Update
         </li>
-        <li
-          className="cursor-pointer hover:text-blue-600 mb-2"
-          onClick={() => setOpenDelete(true)}
-        >
-          Delete
-        </li>
+        {(user?.role === "ADMIN" || user?.role === "MANAGER") && (
+          <li
+            className="cursor-pointer hover:text-blue-600 mb-2"
+            onClick={() => setOpenDelete(true)}
+          >
+            Delete
+          </li>
+        )}
       </ul>
 
       {/* update */}
@@ -78,7 +82,7 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
               </button>
               <button
                 className="px-4 py-2 rounded bg-blue-600 text-white"
-                onClick={(handleUpdate)}
+                onClick={handleUpdate}
               >
                 Update
               </button>
