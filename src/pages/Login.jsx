@@ -22,7 +22,18 @@ export function Login() {
         const res = await loginUser(email, password);
         if (res.data) {
           sessionStorage.setItem("user", JSON.stringify(res.data));
-          navigate("/pages");
+          const token = localStorage.getItem("user_auth_token");
+          //save user id
+          localStorage.setItem("user_id", res.data._id);
+          console.log("userId", res.data._id);
+
+          //check if auth is present only then navigate to pages
+          if (token) {
+            navigate("/pages");
+          }
+          else{
+            toast.error("Login failed auth token is missing")
+          }
         }
       }
     } catch (error) {
