@@ -107,7 +107,12 @@ export function PageList() {
                           "fb_access_token",
                           item.access_token
                         );
+                        if(user?.role=== "ADMIN" || user?.role=== "MANAGER"){
                         navigate(`/${item.page_id}/home`);
+                        }
+                        else if(user?.role=== "EDITOR" || user?.role=== "MODERATOR"){
+                          navigate(`/${item.page_id}/posts`);
+                        }
                       }}
                     >
                       View
