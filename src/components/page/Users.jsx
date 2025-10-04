@@ -1,12 +1,15 @@
 import { deleteUser, getUsers, updateUserRole } from "../../api/Login";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { DeletePage } from "./DeletePage";
 
 export function Users() {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
   console.log("Logged In User:", user);
+  const [selectedUserId, setSelectedUserId] = useState("");
+  const [openDelete, setOpenDelete] = useState(false);
 
   const getUser = async () => {
     setLoading(true);
@@ -28,6 +31,8 @@ export function Users() {
   const handleDelete = async (userId) => {
     try {
       await deleteUser(userId);
+      setOpenDelete(false);
+      setSelectedUserId("");
       getUser();
     } catch (error) {
       toast.error(error.message);
@@ -75,18 +80,21 @@ export function Users() {
                   <td className="px-2 py-2 text-sm border">{item.email}</td>
                   <td className="px-2 py-2 text-sm flex justify-between items-center">
                     <p className="w-[100px]">{item.role}</p>
-                    {(user?.role === "ADMIN" || user?.role === "MANAGER") && (item.role!== "ADMIN") && (
-                      <select
-                        onChange={(e) => handleUpdate(item._id, e.target.value)}
-                        className="border rounded border-blue-400 p-2 ml-2 w-[100px]"
-                      >
-                        <option value="">UPDATE</option>
-                        <option value="ADMIN">ADMIN</option>
-                        <option value="MANAGER">MANAGER</option>
-                        <option value="MODERATOR">MODERATOR</option>
-                        <option value="EDITOR">EDITOR</option>
-                      </select>
-                    )}
+                    {(user?.role === "ADMIN" || user?.role === "MANAGER") &&
+                      item.role !== "ADMIN" && (
+                        <select
+                          onChange={(e) =>
+                            handleUpdate(item._id, e.target.value)
+                          }
+                          className="border rounded border-blue-400 p-2 ml-2 w-[100px]"
+                        >
+                          <option value="">UPDATE</option>
+                          <option value="ADMIN">ADMIN</option>
+                          <option value="MANAGER">MANAGER</option>
+                          <option value="MODERATOR">MODERATOR</option>
+                          <option value="EDITOR">EDITOR</option>
+                        </select>
+                      )}
                   </td>
                   <td className="px-2 py-2 text-sm border">
                     {/* user pages */}
@@ -102,7 +110,10 @@ export function Users() {
                     {user?.role === "ADMIN" && item.role !== "ADMIN" && (
                       <button
                         className="p-2 m-2 bg-blue-600 rounded hover:bg-blue-700 text-white hover:scale-105 w-fit"
-                        onClick={() => handleDelete(item._id)}
+                        onClick={() => {
+                          setSelectedUserId(item._id);
+                          setOpenDelete(true);
+                        }}
                       >
                         Delete
                       </button>
@@ -115,6 +126,14 @@ export function Users() {
         </div>
       ) : (
         <p>No Page available.</p>
+      )}
+
+      {openDelete && selectedUserId && (
+        <DeletePage
+          setOpenDelete={setOpenDelete}
+          pageId={selectedUserId}
+          handleDelete={handleDelete}
+        />
       )}
     </div>
   );
