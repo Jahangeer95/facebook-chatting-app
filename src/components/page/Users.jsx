@@ -75,7 +75,7 @@ export function Users() {
                   <td className="px-2 py-2 text-sm border">{item.email}</td>
                   <td className="px-2 py-2 text-sm flex justify-between items-center">
                     <p className="w-[100px]">{item.role}</p>
-                    {(user?.role === "ADMIN" || user?.role === "MANAGER") && (
+                    {(user?.role === "ADMIN" || user?.role === "MANAGER") && (item.role!== "ADMIN") && (
                       <select
                         onChange={(e) => handleUpdate(item._id, e.target.value)}
                         className="border rounded border-blue-400 p-2 ml-2 w-[100px]"

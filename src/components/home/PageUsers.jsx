@@ -1,4 +1,4 @@
-import { faSpinner, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner} from "@fortawesome/free-solid-svg-icons";
 import { getPageRoles } from "../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
