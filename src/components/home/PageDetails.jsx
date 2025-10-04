@@ -44,7 +44,7 @@ export function PageDetails({ formatName }) {
     }));
   };
   return (
-    <div className="w-[600px] ml-10">
+    <div className="w-[500px] ml-5">
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
         <h1 className="text-2xl font-semibold text-blue-700">Page Details</h1>
       </div>
@@ -64,24 +64,24 @@ export function PageDetails({ formatName }) {
             </thead>
             <tbody>
               {Object.entries(pageInfo).map(([item, value]) => (
-                <tr key={item} className="border-b mb-10">
-                  <td className="border px-2 py-1 font-semibold">
+                <tr key={item} className=" mb-5">
+                  <td className="border px-2 py-2 ">
                     {formatName(item)}
                   </td>
-                  <td className="border px-2 py-1 flex">
+                  <td className="border px-2 py-2 flex">
                     {["about", "description", "phone", "website"].includes(
                       item
                     ) ? (
-                      <div className="flex flex-1">
+                      <div className="flex flex-1 gap-2">
                         <input
                           type="text"
                           defaultValue={value}
-                          className="border border-gray-400 w-full p-1"
+                          className="border border-blue-400 rounded w-full p-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
                           // onBlur={(e) => updateDetails([item, e.target.value])}
                           onChange={(e) => handleUpdate(item, e.target.value)}
                         />
                         <button
-                          className="ml-[5px] p-1 bg-blue-700 rounded text-white"
+                          className="ml-[10px] p-1 bg-blue-600 rounded text-white"
                           onClick={() =>
                             updateDetails([item, editInfo[item] ?? value])
                           }

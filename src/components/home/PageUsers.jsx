@@ -48,7 +48,7 @@ export function PageUsers({ formatName }) {
   };
 
   return (
-    <div className=" w-[600px] ml-10 ">
+    <div className=" w-[500px] ml-5 ">
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
         <h1 className="text-2xl font-semibold text-blue-700">Page Users</h1>
       </div>
@@ -86,7 +86,7 @@ export function PageUsers({ formatName }) {
                     <tr key={item.id} className="border">
                       <td className="px-4 py-2 font-bold text-gray-800">
                         <span>
-                          <FontAwesomeIcon icon={faUser} /> {item.name}
+                         {item.name}
                         </span>
                       </td>
                       <td className="px-4 py-2 text-sm text-gray-600 border whitespace-pre-line">
