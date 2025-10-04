@@ -147,3 +147,17 @@ export const deletePageData = async (pageId) => {
     throw new Error(error.response?.data?.error);
   }
 };
+
+//to fetch user details
+export const getUserDetail = async (userId) => {
+  try {
+    const res = await Api.get(`user/${userId}`);
+    console.log("Users", { res });
+    console.log("Users:", res.data.data);
+    if(res.status=== 200){
+    return res.data.data;
+    }
+  } catch (error) {
+    console.error("Error :", error);
+  }
+};

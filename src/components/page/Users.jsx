@@ -57,8 +57,8 @@ export function Users() {
       {loading ? (
         <p className="text-center m-4">Loading Available Users...</p>
       ) : users ? (
-        <div className=" space-y-2 mt-3 border border-gray-300">
-          <table className="border-collapse  w-full rounded-lg">
+        <div className=" space-y-2 mt-3 border border-gray-300 rounded-md">
+          <table className="border-collapse  w-full rounded-md">
             <thead className="bg-gray-50 text-blue-600">
               <tr>
                 <th className="border px-2 py-1">Username</th>
@@ -109,7 +109,7 @@ export function Users() {
                   <td>
                     {user?.role === "ADMIN" && item.role !== "ADMIN" && (
                       <button
-                        className="p-2 m-2 bg-blue-600 rounded hover:bg-blue-700 text-white hover:scale-105 w-fit"
+                        className="p-2 m-2 bg-red-500 rounded hover:bg-red-600 text-white hover:scale-105 w-fit"
                         onClick={() => {
                           setSelectedUserId(item._id);
                           setOpenDelete(true);
