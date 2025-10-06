@@ -3,7 +3,6 @@ import {
   faHome,
   faNewspaper,
   faRightFromBracket,
-  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, useParams } from "react-router-dom";
