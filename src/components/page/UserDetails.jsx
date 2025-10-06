@@ -20,7 +20,7 @@ export function UserDetail() {
   };
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
   return (
     <div className="w-[500px] mt-6 mb-5 mx-auto">
       <div className="mb-4 border-b border-gray-400 p-2">
