@@ -2,10 +2,12 @@ import {
   faCommentDots,
   faHome,
   faNewspaper,
+  faRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, useParams } from "react-router-dom";
+import { logoutUser } from "../helper/Logout";
 export function Sidebar() {
   const { pageID } = useParams();
   //current user
@@ -58,17 +60,14 @@ export function Sidebar() {
       </ul>
       <ul className="mt-auto divide-y divide-gray-300">
         <li className="border-t">
-          <NavLink
-            to={`/pages`}
-            className={({ isActive }) =>
-              isActive
-                ? "flex items-center gap-2 p-3 bg-blue-500 text-white font-bold border-l-4 border-white"
-                : "flex items-center gap-2 p-3 text-white hover:bg-blue-700"
+          <button
+            onClick={logoutUser}
+            className={"flex items-center gap-2 p-3 text-white font-bold hover:bg-blue-700 w-full"
             }
           >
-            <FontAwesomeIcon icon={faUser} />
-            Login
-          </NavLink>
+            <FontAwesomeIcon icon={faRightFromBracket} />
+            Logout
+          </button>
         </li>
       </ul>
     </div>
