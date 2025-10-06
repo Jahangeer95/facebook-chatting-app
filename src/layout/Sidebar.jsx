@@ -14,7 +14,7 @@ export function Sidebar() {
   return (
     <div className="w-1/5 border-r border-gray-300 shadow-sm overflow-auto bg-blue-900 h-screen flex flex-col">
       <ul className="divide-y divide-gray-300">
-        {user?.role === "ADMIN" && (
+        {(user?.role === "ADMIN" || user?.role === "MANAGER" )  && (
           <li>
             <NavLink
               to={`/${pageID}/home`}

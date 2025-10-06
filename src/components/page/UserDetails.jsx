@@ -6,21 +6,22 @@ export function UserDetail() {
   const [loading, setLoading] = useState(false);
   const [user, setUsers] = useState(null);
   const userId = localStorage.getItem("user_id");
-  const getUser = async () => {
-    setLoading(true);
-    try {
-      const data = await getUserDetail(userId);
-      console.log("User details", data);
-      setUsers(data);
-    } catch (err) {
-      toast.error("Failed to load user detail");
-    } finally {
-      setLoading(false);
-    }
-  };
+ 
   useEffect(() => {
+    const getUser = async () => {
+      setLoading(true);
+      try {
+        const data = await getUserDetail(userId);
+        console.log("User details", data);
+        setUsers(data);
+      } catch (err) {
+        toast.error("Failed to load user detail");
+      } finally {
+        setLoading(false);
+      }
+    };
     getUser();
-  }, [getUser]);
+  }, [userId]);
   return (
     <div className="w-[500px] mt-6 mb-5 mx-auto">
       <div className="mb-4 border-b border-gray-400 p-2">
