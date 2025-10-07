@@ -4,22 +4,24 @@ import { useState } from "react";
 import { Modal } from "../modal/Modal";
 import { createPage } from "../../api/Login";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-export function CreatePage({ setSelected }) {
+export function CreatePage({ setSelected,refreshPages }) {
   const [pageName, setPageName] = useState("");
   const [pageId, setPageId] = useState("");
   const [accessToken, setAccessToken] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const handleCreate = async () => {
     try {
       await createPage(pageName, pageId, accessToken);
       toast.success("Page created successfully");
+      //refresh pages list after page creation
+      await refreshPages();
       setSelected(false);
       setAccessToken("");
       setPageId("");
       setPageName("");
-      navigate("/pages");
+      // navigate("/pages");
     } catch (error) {
       toast.error(error.message);
     }

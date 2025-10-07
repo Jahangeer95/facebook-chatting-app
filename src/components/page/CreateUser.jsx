@@ -5,7 +5,7 @@ import { Modal } from "../modal/Modal";
 import { createUser } from "../../api/Login";
 import { toast } from "react-toastify";
 
-export function CreateUser({ setSelected }) {
+export function CreateUser({ setSelected,refreshUsers }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,6 +30,7 @@ export function CreateUser({ setSelected }) {
     try {
       await createUser(username, email, password, role);
       toast.success("User created successfully");
+      refreshUsers();
       setSelected(false);
       setUsername("");
       setEmail("");

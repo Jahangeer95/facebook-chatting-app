@@ -4,50 +4,53 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { DeletePage } from "./DeletePage";
 
-export function PageList() {
+export function PageList({pages,fetchPage,refreshUsers,users}) {
   const [loading, setLoading] = useState(false);
-  const [pages, setPages] = useState([]);
+  // const [pages, setPages] = useState([]);
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
   console.log("Logged In User:", user);
   const [selectedPageId, setSelectedPageId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
 
 
-  const getPage = async () => {
-    setLoading(true);
-    try {
-      const data = await getPages();
-      console.log("Data", data);
-      setPages(data || []);
-    } catch (err) {
-      toast.error("Failed to load insights");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const getPage = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const data = await getPages();
+  //     console.log("Data", data);
+  //     setPages(data || []);
+  //   } catch (err) {
+  //     toast.error("Failed to load insights");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   //fetchUsers
-  const getAllUsers = async () => {
-    setLoading(true);
-    try {
-      const data = await getUsers();
-      console.log("Data of users", data);
-      setUsers(data || []);
-    } catch (err) {
-      toast.error("Failed to load users");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const getAllUsers = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const data = await getUsers();
+  //     console.log("Data of users", data);
+  //     setUsers(data || []);
+  //   } catch (err) {
+  //     toast.error("Failed to load users");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const addUserToPage = async (pageId, userId) => {
     if (!userId) return;
     try {
       await addUsersToPage(pageId, userId);
       toast.success("User added successfully");
-      getUsers();
+      // getAllUsers();
+      setLoading(true);
+      refreshUsers();
+      setLoading(false);
     } catch (err) {
       toast.error("Failed to add user");
     }
@@ -60,15 +63,16 @@ export function PageList() {
         toast.success("Page deleted successfully");
         setOpenDelete(false);
         setSelectedPageId("");
-        getPage();
+        fetchPage();
       } catch (error) {
         toast.error(error.message);
       }
     };
 
   useEffect(() => {
-    getPage();
-    getAllUsers();
+    // getPage();
+    // getAllUsers();
+    refreshUsers();
   }, []);
   return (
     <div className="w-[500px]">
@@ -78,7 +82,7 @@ export function PageList() {
 
       {loading ? (
         <p className="text-center m-4">Loading Available Pages...</p>
-      ) : pages ? (
+      ) : pages?.data?.pages?.length ? (
         <div className=" space-y-2 mt-3 border border-gray-300 rounded-md ">
           <table className="border-collapse w-full rounded-md">
             <thead className="bg-gray-50 text-blue-600">
@@ -128,7 +132,7 @@ export function PageList() {
                         className="border rounded border-blue-400 p-2 ml-2 w-[120px]"
                       >
                         <option value="" className="justify-between border-b">Add User</option>
-                        {users.map((u) => (
+                        {Array.isArray(users)&&users.map((u) => (
                           <option key={u._id} value={u._id}>
                             {u.username}   |   {u.role}
                           </option>

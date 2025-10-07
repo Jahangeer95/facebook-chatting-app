@@ -3,28 +3,29 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { DeletePage } from "./DeletePage";
 
-export function Users() {
+export function Users({users,refreshUsers}) {
   const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
   console.log("Logged In User:", user);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
 
-  const getUser = async () => {
-    setLoading(true);
-    try {
-      const data = await getUsers();
-      console.log("Data of users", data);
-      setUsers(data || []);
-    } catch (err) {
-      toast.error("Failed to load users");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const getUser = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const data = await getUsers();
+  //     console.log("Data of users", data);
+  //     setUsers(data || []);
+  //   } catch (err) {
+  //     toast.error("Failed to load users");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   useEffect(() => {
-    getUser();
+    // getUser();
+    refreshUsers();
   }, []);
 
   //delete a user
@@ -34,7 +35,10 @@ export function Users() {
       toast.success("User deleted successfully");
       setOpenDelete(false);
       setSelectedUserId("");
-      getUser();
+      // getUser();
+      setLoading(true);
+      refreshUsers();
+      setLoading(false);
     } catch (error) {
       toast.error(error.message);
     }
@@ -45,7 +49,8 @@ export function Users() {
     try {
       await updateUserRole(userId, role);
       toast.success("User role updated successfully");
-      getUser();
+      // getUser();
+      refreshUsers();
     } catch (error) {
       toast.error(error.message || "Failed to update role of user");
     }
