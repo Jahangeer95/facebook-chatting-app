@@ -46,16 +46,18 @@ export function PageList() {
     if (!userId) return;
     try {
       await addUsersToPage(pageId, userId);
+      toast.success("User added successfully");
       getUsers();
     } catch (err) {
       toast.error("Failed to add user");
     }
   };
 
-   //delete a user
+   //delete a page
     const handleDelete = async (pageId) => {
       try {
         await deletePageData(pageId);
+        toast.success("Page deleted successfully");
         setOpenDelete(false);
         setSelectedPageId("");
         getPage();

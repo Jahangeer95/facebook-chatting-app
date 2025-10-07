@@ -31,6 +31,7 @@ export function Users() {
   const handleDelete = async (userId) => {
     try {
       await deleteUser(userId);
+      toast.success("User deleted successfully");
       setOpenDelete(false);
       setSelectedUserId("");
       getUser();
@@ -43,6 +44,7 @@ export function Users() {
   const handleUpdate = async (userId, role) => {
     try {
       await updateUserRole(userId, role);
+      toast.success("User role updated successfully");
       getUser();
     } catch (error) {
       toast.error(error.message || "Failed to update role of user");

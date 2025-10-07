@@ -29,6 +29,7 @@ export function CreateUser({ setSelected }) {
     // }
     try {
       await createUser(username, email, password, role);
+      toast.success("User created successfully");
       setSelected(false);
       setUsername("");
       setEmail("");
