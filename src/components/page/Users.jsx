@@ -11,20 +11,7 @@ export function Users({users,refreshUsers}) {
   const [selectedUserId, setSelectedUserId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
 
-  // const getUser = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const data = await getUsers();
-  //     console.log("Data of users", data);
-  //     setUsers(data || []);
-  //   } catch (err) {
-  //     toast.error("Failed to load users");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   useEffect(() => {
-    // getUser();
     refreshUsers();
   }, []);
 
@@ -35,7 +22,6 @@ export function Users({users,refreshUsers}) {
       toast.success("User deleted successfully");
       setOpenDelete(false);
       setSelectedUserId("");
-      // getUser();
       setLoading(true);
       refreshUsers();
       setLoading(false);
@@ -49,7 +35,6 @@ export function Users({users,refreshUsers}) {
     try {
       await updateUserRole(userId, role);
       toast.success("User role updated successfully");
-      // getUser();
       refreshUsers();
     } catch (error) {
       toast.error(error.message || "Failed to update role of user");

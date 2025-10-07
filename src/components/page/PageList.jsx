@@ -6,41 +6,12 @@ import { DeletePage } from "./DeletePage";
 
 export function PageList({pages,fetchPage,refreshUsers,users}) {
   const [loading, setLoading] = useState(false);
-  // const [pages, setPages] = useState([]);
   const navigate = useNavigate();
-  // const [users, setUsers] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
   console.log("Logged In User:", user);
   const [selectedPageId, setSelectedPageId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
 
-
-  // const getPage = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const data = await getPages();
-  //     console.log("Data", data);
-  //     setPages(data || []);
-  //   } catch (err) {
-  //     toast.error("Failed to load insights");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  //fetchUsers
-  // const getAllUsers = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const data = await getUsers();
-  //     console.log("Data of users", data);
-  //     setUsers(data || []);
-  //   } catch (err) {
-  //     toast.error("Failed to load users");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const addUserToPage = async (pageId, userId) => {
     if (!userId) return;
@@ -70,8 +41,6 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
     };
 
   useEffect(() => {
-    // getPage();
-    // getAllUsers();
     refreshUsers();
   }, []);
   return (
