@@ -1,4 +1,4 @@
-import { deleteUser, getUsers, updateUserRole } from "../../api/Login";
+import { deleteUser, updateUserRole } from "../../api/Login";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { DeletePage } from "./DeletePage";

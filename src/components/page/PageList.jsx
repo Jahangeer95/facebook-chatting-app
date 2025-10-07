@@ -1,4 +1,4 @@
-import { addUsersToPage, deletePageData, getPages, getUsers } from "../../api/Login";
+import { addUsersToPage, deletePageData } from "../../api/Login";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
