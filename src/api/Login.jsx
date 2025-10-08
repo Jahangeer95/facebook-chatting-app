@@ -109,7 +109,7 @@ export const updateUserRole = async (userId,role) => {
     }
     console.error("Error :", error.message);
     console.error("Error :", error);
-    throw new Error(error.response?.data);
+    throw new Error(error.response?.data.message);
   }
 };
 

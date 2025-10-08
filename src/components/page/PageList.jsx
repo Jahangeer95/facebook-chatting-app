@@ -35,7 +35,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
         setOpenDelete(false);
         setSelectedPageId("");
         fetchPage();
-        refreshUsers();
+        await refreshUsers();
       } catch (error) {
         toast.error(error.message);
       }
