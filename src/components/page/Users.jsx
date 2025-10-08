@@ -13,7 +13,7 @@ export function Users({users,refreshUsers}) {
 
   useEffect(() => {
     refreshUsers();
-  }, []);
+  }, [refreshUsers]);
 
   //delete a user
   const handleDelete = async (userId) => {

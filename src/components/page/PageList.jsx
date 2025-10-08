@@ -42,7 +42,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
 
   useEffect(() => {
     refreshUsers();
-  }, []);
+  }, [refreshUsers]);
   return (
     <div className="w-[500px]">
       <div className=" mb-4 border-b border-gray-400 p-2">
