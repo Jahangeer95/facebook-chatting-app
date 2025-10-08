@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CreatePage } from "./CreatePage";
 import { PageList } from "./PageList";
 import { Users } from "./Users";
@@ -16,7 +16,7 @@ export function Pages() {
   const [pages, setPages] = useState([]);
   const [users, setUsers] = useState([]);
 
-  const getPage = async () => {
+  const getPage =useCallback( async () => {
     try {
       const data = await getPages();
       console.log("Data", data);
@@ -24,9 +24,9 @@ export function Pages() {
     } catch (err) {
       toast.error("Failed to load insights");
     }
-  };
+  },[]);
 
-  const getAllUsers = async () => {
+  const getAllUsers = useCallback( async () => {
     try {
       const data = await getUsers();
       console.log("Data of users", data);
@@ -34,12 +34,12 @@ export function Pages() {
     } catch (err) {
       toast.error("Failed to load users");
     }
-  };
+  },[]);
 
   useEffect(() => {
     getPage();
     getAllUsers();
-  }, []);
+  }, [getAllUsers,getPage]);
 
   return (
     <div>
