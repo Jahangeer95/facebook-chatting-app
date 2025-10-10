@@ -49,7 +49,7 @@ export function Users({users,refreshUsers}) {
       {loading ? (
         <p className="text-center m-4">Loading Available Users...</p>
       ) : users ? (
-        <div className=" space-y-2 mt-3 border border-gray-300 rounded-md">
+        <div className="overflow-x-auto space-y-2 mt-3 border border-gray-300 rounded-md">
           <table className="border-collapse  w-full rounded-md">
             <thead className="bg-gray-50 text-blue-600">
               <tr>
@@ -78,7 +78,7 @@ export function Users({users,refreshUsers}) {
                           onChange={(e) =>
                             handleUpdate(item._id, e.target.value)
                           }
-                          className="border rounded border-blue-400 p-2 ml-2 w-[100px]"
+                          className="border rounded border-blue-400 p-2 ml-2 w-[100px] sm:w-[120px]"
                         >
                           <option value="">UPDATE</option>
                           <option value="ADMIN">ADMIN</option>

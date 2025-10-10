@@ -23,14 +23,14 @@ export function UserDetail() {
     getUser();
   }, [userId]);
   return (
-    <div className="w-[500px] mt-6 mb-5 mx-auto">
+    <div className="w-full max-w-md mt-6 mb-5 mx-auto px-3 sm:px-4 md:px-6">
       <div className="mb-4 border-b border-gray-400 p-2">
-        <h2 className="text-xl font-bold text-blue-600">Current User</h2>
+        <h2 className="text-xl font-bold text-blue-600 text-center sm:text-left">Current User</h2>
       </div>
       {loading ? (
         <p className="text-center m-4 text-gray-500">Loading User Details...</p>
       ) : user ? (
-        <div className="space-y-3 mt-3 border border-gray-300 rounded-md">
+        <div className="space-y-3 mt-3 border border-gray-300 rounded-md shadow-sm">
           <table className="w-full border-collapse rounded-md">
             <thead className="bg-gray-50 text-blue-600">
               <tr>

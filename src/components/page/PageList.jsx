@@ -45,7 +45,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
     refreshUsers();
   }, [refreshUsers]);
   return (
-    <div className="w-[500px]">
+    <div className="w-full md:w-full">
       <div className=" mb-4 border-b border-gray-400 p-2">
         <h2 className="text-lg font-semibold ">Pages</h2>
       </div>
@@ -53,8 +53,8 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
       {loading ? (
         <p className="text-center m-4">Loading Available Pages...</p>
       ) : pages?.data?.pages?.length ? (
-        <div className=" space-y-2 mt-3 border border-gray-300 rounded-md ">
-          <table className="border-collapse w-full rounded-md">
+        <div className="overflow-x-auto space-y-2 mt-3 rounded-md w-full md:pl-5">
+          <table className="min-w-full border-collapse  rounded-md">
             <thead className="bg-gray-50 text-blue-600">
               <tr>
                 <th className="border px-2 py-1">Pages</th>
@@ -74,7 +74,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                       {item.page_id}
                     </h2>
                   </td>
-                  <td>
+                  <td className="flex">
                     <button
                       className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto hover:scale-105"
                       onClick={() => {
@@ -99,7 +99,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                         onChange={(e) =>
                           addUserToPage(item._id, e.target.value)
                         }
-                        className="border rounded border-blue-400 p-2 ml-2 w-[120px]"
+                        className="border rounded border-blue-400 p-2 ml-2 w-full sm:w-33 md:w-40 text-sm focus:outline-none"
                       >
                         <option value="" className="justify-between border-b">Add User</option>
                         {Array.isArray(users)&&users.map((u) => (

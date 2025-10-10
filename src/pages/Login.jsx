@@ -41,7 +41,7 @@ export function Login() {
     }
   };
   return (
-    <div className="flex justify-center items-center border h-screen bg-gray-100">
+    <div className="flex justify-center items-center border min-h-screen bg-gray-100">
       <div className="w-96 shadow-lg bg-white rounded-md p-8">
         <h1 className="text-center text-3xl block font-semibold mb-2">Login</h1>
         <div>
@@ -74,7 +74,7 @@ export function Login() {
           />
           <div className="text-center">
             <button
-              className="px-4 py-2 bg-blue-400 rounded text-white mt-2 hover:bg-blue-800 transition"
+              className="px-4 py-2 bg-blue-400 rounded text-white mt-2 hover:bg-blue-800 transition w-full sm:w-auto"
               onClick={login}
             >
               Login

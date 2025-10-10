@@ -45,14 +45,14 @@ export function Pages() {
     <div>
       <LogoutButton />
       <UserDetail />
-      <div className="flex justify-center bg-white items-start rounded-md p-2 gap-4">
-        <div className="m-2 flex flex-col">
+      <div className="flex flex-col sm:flex-row justify-center bg-white items-start rounded-md p-2 gap-4  sm:m-5 sm:items-center">
+        <div className="m-2 flex flex-col  w-full md:w-1/2">
           {user?.role === "ADMIN" && (
             <button
               className="p-2 bg-blue-600 rounded hover:bg-blue-700 text-white hover:scale-105 w-fit"
               onClick={() => setSelected("create")}
             >
-              Create Page
+             Link Page
             </button>
           )}
           {selected === "create" && (
@@ -60,7 +60,7 @@ export function Pages() {
           )}
           <PageList pages={pages} fetchPage={getPage} refreshUsers={getAllUsers} users={users}/>
         </div>
-        <div className="m-2 flex flex-col">
+        <div className="m-2 flex flex-col  w-full md:w-1/2">
           {user?.role === "ADMIN" && (
             <button
               className="p-2 bg-blue-600 rounded hover:bg-blue-700 text-white hover:scale-105 w-fit"

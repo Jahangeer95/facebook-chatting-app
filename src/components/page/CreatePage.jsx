@@ -30,7 +30,7 @@ export function CreatePage({ setSelected,refreshPages }) {
     <Modal onClose={() => setSelected(false)}>
       <div className="w-96">
         <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
-          <h2 className="text-lg font-semibold text-white">Create Page</h2>
+          <h2 className="text-lg font-semibold text-white">Link Page</h2>
           <FontAwesomeIcon
             icon={faTimes}
             className="cursor-pointer text-white"
