@@ -6,7 +6,7 @@ export function DeletePage({ setOpenDelete, handleDelete,pageId }) {
   return (
     <div>
         <Modal onClose={() => setOpenDelete(false)}>
-          <div className="w-96">
+          <div className="w-full">
             <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
               <h2 className="text-lg font-semibold text-white">
                 Delete Confirmation

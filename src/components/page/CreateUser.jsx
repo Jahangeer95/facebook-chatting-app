@@ -42,16 +42,16 @@ export function CreateUser({ setSelected,refreshUsers }) {
   };
   return (
     <Modal onClose={() => setSelected(false)}>
-      <div className="w-96">
+      <div className="w-[300px] mx-auto sm:w-[400px] md:w-[400px] lg:w-[400px]">
         <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
-          <h2 className="text-lg font-semibold text-white">Create User</h2>
+          <h2 className="text-lg font-semibold text-white sm:text-xl">Create User</h2>
           <FontAwesomeIcon
             icon={faTimes}
-            className="cursor-pointer text-white"
+            className="cursor-pointer text-white text-sm sm:text-base"
             onClick={() => setSelected("")}
           />
         </div>
-        <label className="font-bold mb-1 text-white">Username :</label>
+        <label className="font-bold mb-1 text-white text-sm sm:text-base">Username :</label>
         <input
           type="text"
           placeholder="Enter username"
@@ -61,31 +61,31 @@ export function CreateUser({ setSelected,refreshUsers }) {
           required
         />
 
-        <label className="font-bold mb-1 text-white">Email :</label>
+        <label className="font-bold mb-1 text-white text-sm sm:text-base">Email :</label>
         <input
           type="email"
           placeholder="Enter email"
-          className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded"
+          className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded text-sm sm:text-base"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
 
-        <label className="font-bold mb-1 text-white">Password :</label>
+        <label className="font-bold mb-1 text-white text-sm sm:text-base">Password :</label>
         <input
           type="password"
           placeholder="Enter password"
-          className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded"
+          className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded text-sm sm:text-base"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
 
-        <label className="font-bold mb-1 text-white">Role :</label>
+        <label className="font-bold mb-1 text-white text-sm sm:text-base">Role :</label>
         <select
           // type="text"
           // placeholder="Enter role"
-          className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded"
+          className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded text-sm sm:text-base"
           value={role}
           onChange={(e) => setRole(e.target.value)}
           required
@@ -97,15 +97,15 @@ export function CreateUser({ setSelected,refreshUsers }) {
           <option value="EDITOR">EDITOR</option>
         </select>
 
-        <div className="flex justify-center gap-2 border-t border-gray-400 p-2">
+        <div className="flex flex-col sm:flex-row justify-center gap-2 border-t border-gray-400 p-2">
           <button
-            className="px-4 py-2 rounded bg-gray-300"
+            className="px-7 py-2 rounded bg-gray-300 w-full sm:w-auto hover:bg-gray-400 transition"
             onClick={() => setSelected(false)}
           >
             Cancel
           </button>
           <button
-            className="px-4 py-2 rounded bg-blue-600 text-white"
+            className="px-7 py-2 rounded bg-blue-600 text-white w-full sm:w-auto hover:bg-blue-700 transition"
             onClick={handleCreate}
           >
             Create
