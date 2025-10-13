@@ -26,7 +26,7 @@ export function Buttons() {
       </div>
 
       <div 
-      className="md:w-[700px] mx-auto p-4 border overflow-auto w-full"
+      className="md:max-w-[750px] mx-auto p-4 border overflow-auto w-full"
       id="scrollposts">
         {/* <div className="w-full max-w-2xl"> */}
           {selectedType === "publish" && <PagePosts />}
