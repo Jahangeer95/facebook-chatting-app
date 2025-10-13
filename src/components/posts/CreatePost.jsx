@@ -30,7 +30,7 @@ export function CreatePost() {
   const closeForm = () => setSelectedType("");
   return (
     <div className="relative w-full mt-3">
-      <div className="absolute top-0 right-0">
+      <div className="object-right-top mb-4">
         <div className="text-end relative" ref={menuRef}>
         {(user?.role === "ADMIN" ||user?.role === "MANAGER" || user?.role === "EDITOR")  && (
           <button
