@@ -104,8 +104,6 @@ export function SchedulePosts() {
 
   return (
     <div
-      className="w-[700px] mx-auto p-4 border overflow-auto h-[600px]"
-      id="scrollposts"
     >
       <button
         onClick={() => getPosts()}
