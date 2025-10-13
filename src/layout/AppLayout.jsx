@@ -11,6 +11,7 @@ export function AppLayout() {
       <div className="flex flex-1">
         <Sidebar isSidebarOpen={isSidebarOpen}/>
       
+        {/* overlay closes sidebar when background is clicked */}
       {isSidebarOpen &&(
         <div className="fixed inset-0 bg-black bg-opacity-40 md:hidden" onClick={()=> setIsSidebarOpen(false)}></div>
       )}
