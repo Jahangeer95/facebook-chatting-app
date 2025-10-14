@@ -19,12 +19,12 @@ export function Home() {
 
   return (
     <div className="p-5 h-screen">
-      <div className="flex m-2">
-        <div>
+      <div className=" m-2 flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 space-y-6">
           <Insights formatName={formatName} />
           <Settings />
         </div>
-        <div>
+        <div className="flex-1 space-y-6">
           <PageUsers formatName={formatName} />
           <PageDetails formatName={formatName} />
         </div>

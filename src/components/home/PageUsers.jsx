@@ -48,9 +48,9 @@ export function PageUsers({ formatName }) {
   };
 
   return (
-    <div className=" w-[500px] ml-5 ">
+    <div className="w-full md:max-w-[500px] rounded-lg shadow p-3">
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
-        <h1 className="text-2xl font-semibold text-blue-700">Page Users</h1>
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-700">Page Users</h1>
       </div>
       <div className="w-full mt-3 overflow-auto h-[200px]" id="scrollusers">
         <InfiniteScroll
@@ -72,13 +72,13 @@ export function PageUsers({ formatName }) {
           {rolesLoading ? (
             <p className="text-center m-4 text-blue-600">Loading Roles...</p>
           ) : pageRoles.length > 0 ? (
-            <div className="space-y-2 ml-10 shadow">
-              <table className="border-collapse border border-gray-300 w-full rounded-lg">
-                <thead className="bg-gray-200 text-blue-600">
+            <div className=" shadow-md rounded-lg overflow-x-auto">
+              <table className="border-collapse border border-gray-300 w-full text-sm sm:text-base">
+                <thead className="bg-blue-100 text-blue-600">
                   <tr>
-                    <th className="border px-2 py-1">User Name</th>
-                    <th className="border px-2 py-1">Tasks</th>
-                    <th className="border px-2 py-1">is Active</th>
+                    <th className="border px-2 py-2">User Name</th>
+                    <th className="border px-2 py-2">Tasks</th>
+                    <th className="border px-2 py-2">is Active</th>
                   </tr>
                 </thead>
                 <tbody>

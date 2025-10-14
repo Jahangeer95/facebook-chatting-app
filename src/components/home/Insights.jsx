@@ -29,9 +29,9 @@ export function Insights({ formatName }) {
   }, []);
 
   return (
-    <div className="w-[500px] mb-5">
+    <div className="w-full md:max-w-[500px] mb-5 rounded-lg shadow p-6">
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
-        <h1 className="text-2xl font-semibold text-blue-700">Page Insights</h1>
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-700">Page Insights</h1>
       </div>
 
       {loading ? (

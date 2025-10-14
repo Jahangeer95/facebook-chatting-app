@@ -32,9 +32,9 @@ export function Settings() {
   };
 
   return (
-    <div className="w-[500px] mb-10 ">
+    <div className="w-full mb-10 md:max-w-[500px] rounded-lg shadow p-3 bg-white">
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2 ">
-        <h1 className="text-2xl font-semibold text-blue-700">Page Settings</h1>
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-700">Page Settings</h1>
       </div>
 
       {settingLoading ? (
@@ -42,11 +42,11 @@ export function Settings() {
           Loading Page Settings...
         </p>
       ) : pageSetting?.data?.length > 0 ? (
-        <div className="space-y-2">
-          <table className="border-collapse border border-gray-300 w-full shadow">
-            <thead className="bg-gray-200 text-blue-600">
+        <div className="space-y-2 shadow-md rounded-lg overflow-x-auto">
+          <table className="border-collapse border border-gray-300 w-full shadow text-sm sm:text-base">
+            <thead className="bg-blue-100 text-blue-600">
               <tr>
-                <th>Settings</th>
+                <th className="p-2">Settings</th>
               </tr>
             </thead>
             <tbody>

@@ -44,9 +44,9 @@ export function PageDetails({ formatName }) {
     }));
   };
   return (
-    <div className="w-[500px] ml-5">
+    <div className="w-full md:max-w-[500px]  rounded-lg shadow p-3 bg-white min-h-fit">
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
-        <h1 className="text-2xl font-semibold text-blue-700">Page Details</h1>
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-700">Page Details</h1>
       </div>
 
       {settingLoading ? (
@@ -54,17 +54,17 @@ export function PageDetails({ formatName }) {
           Loading Page Information...
         </p>
       ) : pageInfo ? (
-        <div className="space-y-2 ml-10">
-          <table className="border-collapse border border-gray-300 w-full shadow">
-            <thead className="bg-gray-200 text-blue-600">
+        <div className="space-y-2 overflow-x-auto rounded-lg mb-10">
+          <table className="border-collapse border border-gray-300 w-full shadow-sm text-sm sm:text-base">
+            <thead className="bg-blue-100 text-blue-600">
               <tr>
-                <th>Information</th>
-                <th>Details</th>
+                <th className="border px-2 py-2">Information</th>
+                <th className="border px-2 py-2">Details</th>
               </tr>
             </thead>
             <tbody>
               {Object.entries(pageInfo).map(([item, value]) => (
-                <tr key={item} className=" mb-5">
+                <tr key={item} className="">
                   <td className="border px-2 py-2 ">
                     {formatName(item)}
                   </td>
@@ -72,11 +72,11 @@ export function PageDetails({ formatName }) {
                     {["about", "description", "phone", "website"].includes(
                       item
                     ) ? (
-                      <div className="flex flex-1 gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center w-full">
                         <input
                           type="text"
                           defaultValue={value}
-                          className="border border-blue-400 rounded w-full p-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                          className="border border-blue-400 rounded-md w-full sm:w-[70%] p-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400"
                           // onBlur={(e) => updateDetails([item, e.target.value])}
                           onChange={(e) => handleUpdate(item, e.target.value)}
                         />
