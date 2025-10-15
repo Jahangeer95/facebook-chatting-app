@@ -6,7 +6,7 @@ import { useState } from "react";
 export function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-screen flex flex-col overflow-auto">
       <Header onToggleSidebar={()=>setIsSidebarOpen(!isSidebarOpen)}/>
       <div className="flex flex-1">
         <Sidebar isSidebarOpen={isSidebarOpen}/>

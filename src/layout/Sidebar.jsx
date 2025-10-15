@@ -1,4 +1,5 @@
 import {
+  faBullhorn,
   faCommentDots,
   faHome,
   faNewspaper,
@@ -54,6 +55,19 @@ export function Sidebar({isSidebarOpen}) {
           >
             <FontAwesomeIcon icon={faNewspaper} />
             Posts
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to={`/${pageID}/campaigns`}
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center gap-2 p-3 bg-blue-500 text-white font-bold border-l-4 border-white"
+                : "flex items-center gap-2 p-3 text-white hover:bg-blue-700"
+            }
+          >
+            <FontAwesomeIcon icon={faBullhorn} />
+             Campaigns
           </NavLink>
         </li>
       </ul>
