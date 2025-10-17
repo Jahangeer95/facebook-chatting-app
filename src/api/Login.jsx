@@ -20,20 +20,32 @@ export const loginUser = async (email, password) => {
 };
 
 //to save details of page in db
-export const createPage = async (pageName, pageId, accessToken) => {
+export const createPage = async (adId, pageId, accessToken) => {
   try {
-    const body = {
-      page_name: pageName,
-      page_id: pageId,
-      access_token: accessToken,
-    };
+    let body={};
+    if (adId) {
+       body = {
+        ad_token_id: adId,
+        page_id: pageId,
+        access_token: accessToken,
+      };
+    }else{
+      body = {
+        page_id: pageId,
+        access_token: accessToken,
+      };
+    }
     const res = await Api.post(`user/pages`, body);
     console.log({ res });
     console.log("Result:", res.data);
     return res.data;
   } catch (error) {
     console.error("Error :", error);
-    throw new Error(error.response?.error?.message ||error.response?.data?.message|| error.message);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
   }
 };
 
@@ -76,7 +88,6 @@ export const createUser = async (username, email, password, role) => {
     console.error("Error :", error);
     throw new Error(error.response?.data?.message);
   }
-  
 };
 
 //add user
@@ -96,7 +107,7 @@ export const addUsersToPage = async (pageId, userId) => {
 };
 
 //update user role
-export const updateUserRole = async (userId,role) => {
+export const updateUserRole = async (userId, role) => {
   try {
     if (!userId) return;
     const res = await Api.patch(`/user/${userId}`, { role: role });
@@ -154,8 +165,8 @@ export const getUserDetail = async (userId) => {
     const res = await Api.get(`user/${userId}`);
     console.log("Users", { res });
     console.log("Users:", res.data.data);
-    if(res.status=== 200){
-    return res.data.data;
+    if (res.status === 200) {
+      return res.data.data;
     }
   } catch (error) {
     console.error("Error :", error);

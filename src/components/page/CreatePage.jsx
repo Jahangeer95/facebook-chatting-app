@@ -7,20 +7,20 @@ import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
 
 export function CreatePage({ setSelected,refreshPages }) {
-  const [pageName, setPageName] = useState("");
+  const [adId, setadId] = useState("");
   const [pageId, setPageId] = useState("");
   const [accessToken, setAccessToken] = useState("");
   // const navigate = useNavigate();
   const handleCreate = async () => {
     try {
-      await createPage(pageName, pageId, accessToken);
+      await createPage(adId, pageId, accessToken);
       toast.success("Page created successfully");
       //refresh pages list after page creation
       await refreshPages();
       setSelected(false);
       setAccessToken("");
       setPageId("");
-      setPageName("");
+      setadId("");
       // navigate("/pages");
     } catch (error) {
       toast.error(error.message);
@@ -38,15 +38,15 @@ export function CreatePage({ setSelected,refreshPages }) {
           />
         </div>
         <label htmlFor="name" className="font-bold mb-1 text-white text-sm sm:text-base">
-          Page Name :
+           Ad ID :
         </label>
         <input
           id="name"
           type="text"
           placeholder="Page Name"
           className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded text-sm sm:text-base"
-          onChange={(e) => setPageName(e.target.value)}
-          required
+          onChange={(e) => setadId(e.target.value)}
+          // required
         />
         <label htmlFor="id" className="font-bold mb-1 text-white">
           Page Id :
