@@ -6,7 +6,7 @@ import { createPage } from "../../api/Login";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
 
-export function CreatePage({ setSelected,refreshPages }) {
+export function CreatePage({ setSelected,refreshPages,refreshUsers }) {
   const [adId, setadId] = useState("");
   const [pageId, setPageId] = useState("");
   const [accessToken, setAccessToken] = useState("");
@@ -17,6 +17,7 @@ export function CreatePage({ setSelected,refreshPages }) {
       toast.success("Page created successfully");
       //refresh pages list after page creation
       await refreshPages();
+      await refreshUsers();
       setSelected(false);
       setAccessToken("");
       setPageId("");

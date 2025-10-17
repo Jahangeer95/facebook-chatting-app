@@ -56,7 +56,7 @@ export function Pages() {
             </button>
           )}
           {selected === "create" && (
-            <CreatePage setSelected={setSelected} refreshPages={getPage} />
+            <CreatePage setSelected={setSelected} refreshPages={getPage} refreshUsers={getAllUsers}/>
           )}
           <PageList pages={pages} fetchPage={getPage} refreshUsers={getAllUsers} users={users}/>
         </div>
