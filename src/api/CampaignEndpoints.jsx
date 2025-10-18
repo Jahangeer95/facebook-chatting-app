@@ -1,13 +1,13 @@
 import { Api } from "../config";
 
 //create campaign
-export const createCampaign = async (name, objective, ad_category,status) => {
+export const createCampaign = async (name, objective, ad_category, status) => {
   try {
     const body = {
       name: name,
       objective: objective,
       ad_category: ad_category,
-      status:status
+      status: status,
     };
     const res = await Api.post(`fb-ad/campaigns`, body);
     console.log({ res });
@@ -20,5 +20,19 @@ export const createCampaign = async (name, objective, ad_category,status) => {
         error.response?.data?.message ||
         error.message
     );
+  }
+};
+
+//to fetch campaigns
+export const getCampaigns = async () => {
+  try {
+    const res = await Api.get(`fb-ad/campaigns`);
+    if (res.status === 200) {
+      console.log({ res });
+      console.log("Result:", res.data.data);
+      return res.data.data;
+    }
+  } catch (error) {
+    console.error("Error :", error);
   }
 };

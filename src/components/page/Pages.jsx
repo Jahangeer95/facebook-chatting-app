@@ -22,7 +22,7 @@ export function Pages() {
       console.log("Data", data);
       setPages(data || []);
     } catch (err) {
-      toast.error("Failed to load insights");
+      toast.error("Failed to load pages");
     }
   },[]);
 
