@@ -25,7 +25,7 @@ export function ChatList  ({ messages, onLoadMore })  {
         scrollableTarget="scroll-chat"
         loader={
           <div className="text-center text-sm text-gray-400">
-            <FontAwesomeIcon icon={faSpinner} spin size='lg' className="text-blue-700"/>
+            <FontAwesomeIcon icon={faSpinner} spin size='sm' className="text-blue-700"/>
           </div>
         }
         //order message from bottom to top
