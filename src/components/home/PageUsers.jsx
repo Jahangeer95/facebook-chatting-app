@@ -73,7 +73,7 @@ export function PageUsers({ formatName }) {
             <p className="text-center m-4 text-blue-600">Loading Roles...</p>
           ) : pageRoles.length > 0 ? (
             <div className=" shadow-md rounded-lg overflow-x-auto">
-              <table className="border-collapse border border-gray-300 w-full text-sm sm:text-base">
+              <table className="border-collapse border border-gray-300 w-full text-sm sm:text-xs">
                 <thead className="bg-blue-100 text-blue-600">
                   <tr>
                     <th className="border px-2 py-2">User Name</th>
@@ -89,7 +89,7 @@ export function PageUsers({ formatName }) {
                          {item.name}
                         </span>
                       </td>
-                      <td className="px-4 py-2 text-sm text-gray-600 border whitespace-pre-line">
+                      <td className="px-4 py-2 text-xs text-gray-600 border whitespace-pre-line">
                         {formatName(item.tasks.join("\n"))}
                       </td>
                       <td

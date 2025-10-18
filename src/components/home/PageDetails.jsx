@@ -54,8 +54,8 @@ export function PageDetails({ formatName }) {
           Loading Page Information...
         </p>
       ) : pageInfo ? (
-        <div className="space-y-2 overflow-x-auto rounded-lg mb-10">
-          <table className="border-collapse border border-gray-300 w-full shadow-sm text-sm sm:text-base">
+        <div className="space-y-2 overflow-x-auto rounded-lg ">
+          <table className="border-collapse border border-gray-300 w-full shadow-sm text-sm sm:xs">
             <thead className="bg-blue-100 text-blue-600">
               <tr>
                 <th className="border px-2 py-2">Information</th>

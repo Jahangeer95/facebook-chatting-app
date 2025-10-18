@@ -43,7 +43,7 @@ export function Settings() {
         </p>
       ) : pageSetting?.data?.length > 0 ? (
         <div className="space-y-2 shadow-md rounded-lg overflow-x-auto">
-          <table className="border-collapse border border-gray-300 w-full shadow text-sm sm:text-base">
+          <table className="border-collapse border border-gray-300 w-full shadow text-sm sm:text-xs">
             <thead className="bg-blue-100 text-blue-600">
               <tr>
                 <th className="p-2">Settings</th>
@@ -52,7 +52,7 @@ export function Settings() {
             <tbody>
               {pageSetting?.data.map((item, index) => (
                 <tr key={index}>
-                  <td className="border px-2 py-1 flex">
+                  <td className="border px-2 py-2 flex">
                     {item.setting.split("_").join(" ")}
                     {typeof item.value === "boolean" ? (
                       <input
