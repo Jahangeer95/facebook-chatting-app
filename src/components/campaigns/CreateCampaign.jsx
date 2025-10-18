@@ -80,7 +80,7 @@ export function CreateCampaigns({ setSelected }) {
           <option value="HOUSING">HOUSING</option>
           <option value="FINANCIAL_PRODUCTS_SERVICES">FINANCIAL PRODUCTS SERVICES</option>
           <option value="EMPLOYMENT">EMPLOYMENT</option>
-          <option value="ISSUES_ELECTIONS_POLITICS">ISSUES_ELECTIONS_POLITICS</option>
+          <option value="ISSUES_ELECTIONS_POLITICS">ISSUES ELECTIONS POLITICS</option>
           <option value="NONE">NONE</option>
         </select>
 

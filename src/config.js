@@ -57,9 +57,10 @@ Api.interceptors.request.use(
     const adTokenId=sessionStorage.getItem("fb_ad_account_id");
     if (adTokenId) {
       request.headers["fb_ad_account_id"] = adTokenId;
-    }else{
-      request.headers["fb_ad_account_id"] = "";
     }
+    // else{
+    //   request.headers["fb_ad_account_id"] = "";
+    // }
     console.log("request header:", request.headers);
     return request;
   },
