@@ -4,7 +4,7 @@ import { ChatMessage } from "./ChatMessage";
 import { groupMessagesByDate } from "../helper/GroupMessage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-export function ChatList  ({ messages, onLoadMore })  {
+export function ChatList  ({ messages, onLoadMore,hasMoreMessages })  {
   const messageEndRef = useRef();
 
   //group messages by date
@@ -20,13 +20,18 @@ export function ChatList  ({ messages, onLoadMore })  {
       <InfiniteScroll
         dataLength={messages.length}
         next={onLoadMore}
-        hasMore={true}
+        hasMore={hasMoreMessages}
         inverse={true}
         scrollableTarget="scroll-chat"
         loader={
           <div className="text-center text-sm text-gray-400">
             <FontAwesomeIcon icon={faSpinner} spin size='sm' className="text-blue-700"/>
           </div>
+        }
+        endMessage={
+          !hasMoreMessages &&(
+            <div className="text-center text-sm text-gray-400">No more Messages</div>
+          )
         }
         //order message from bottom to top
         className="flex flex-col-reverse"

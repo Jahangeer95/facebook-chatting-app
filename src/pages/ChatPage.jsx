@@ -17,9 +17,10 @@ export function ChatPage() {
   const [messages, setMessages] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [paging, setPaging] = useState(null); //for page information
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(true); //for contacts in sidebar
   const [afterCursor, setAfterCursor] = useState("");
   const {pageID}=useParams();
+  const [hasMoreMessages, setHasMoreMessages] = useState(true); 
 
   const selectedRef = useRef(null);
   useEffect(() => {
@@ -70,7 +71,11 @@ export function ChatPage() {
   useEffect(() => {
     const loadMessages = async () => {
       if (!selected?.conversationId) return;
-
+      //clear old messages and paging when a new chat is selected
+        setMessages([]); 
+        setPaging(null);
+        setAfterCursor("");
+        setHasMoreMessages(true);
       const { messages: fetchedMessages, paging } = await fetchMessages(
         selected.conversationId
       );
@@ -240,6 +245,14 @@ export function ChatPage() {
       );
     });
 
+    // check if there are more messages to load
+    if (newPaging?.next) {
+      const next = new URL(newPaging.next).searchParams.get("after");
+      setAfterCursor(next);
+      setHasMoreMessages(true);
+    } else {
+      setHasMoreMessages(false);
+    }
     setPaging(newPaging);
   };
 
@@ -257,7 +270,7 @@ export function ChatPage() {
       <div className="flex flex-col flex-1 overflow-hidden">
         <ChatHeader user={selectedUser} />
         {selectedUser ? (
-          <ChatList messages={messages} onLoadMore={handlepreviousMessages} />
+          <ChatList messages={messages} onLoadMore={handlepreviousMessages} hasMoreMessages={hasMoreMessages} />
         ) : (
           <div className="flex flex-1 m-auto pt-60 text-black ">
             Select a user to start conversation
