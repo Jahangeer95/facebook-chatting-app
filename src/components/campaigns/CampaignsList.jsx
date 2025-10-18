@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export function CampaignsList({ campaigns }) {
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   return (
     <div className="w-full bg-white shadow-sm border border-gray-200 rounded-lg p-5 mt-10">
