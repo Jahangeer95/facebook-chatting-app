@@ -13,7 +13,7 @@ export function AppLayout() {
       
         {/* overlay closes sidebar when background is clicked */}
       {isSidebarOpen &&(
-        <div className="fixed inset-0 bg-black bg-opacity-40 md:hidden" onClick={()=> setIsSidebarOpen(false)}></div>
+        <div className="fixed inset-0 bg-black bg-opacity-40 md:hidden z-40" onClick={()=> setIsSidebarOpen(false)}></div>
       )}
       <div className="flex-1 bg-white overflow-auto">
       <Outlet />
