@@ -24,7 +24,7 @@ export function Campaigns() {
 
   return (
     <div className="p-6 space-y-6 max-h-screen">
-      
+      {/* buttons */}
       <div className="flex gap-5 mb-4">
         <button
           className={`px-3 py-2 rounded hover:bg-blue-700 text-white  ${
@@ -52,6 +52,7 @@ export function Campaigns() {
         </button>
       </div>
       
+      {/* content */}
       <div className="border p-4 rounded bg-white">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">
@@ -102,6 +103,7 @@ export function Campaigns() {
             <CreateCampaigns setSelected={setSelected} />
           </div>
         )}
+        {/* List to dispaly data */}
         {selectedType === "campaign" && <CampaignsList campaigns={campaigns} />}
         {selectedType === "adsets" && <CampaignsList campaigns={campaigns} />}
         {selectedType === "ads" && <CampaignsList campaigns={campaigns} />}
