@@ -47,13 +47,20 @@ Api.interceptors.request.use(
       request.headers["user_auth_token"] = token;
     }
     const pageID = sessionStorage.getItem("fb_page_id");
-    if (token) {
+    if (pageID) {
       request.headers["fb_page_id"] = pageID;
     }
     const accessToken = sessionStorage.getItem("fb_access_token");
-    if (token) {
+    if (accessToken) {
       request.headers["fb_access_token"] = accessToken;
     }
+    const adTokenId=sessionStorage.getItem("fb_ad_account_id");
+    if (adTokenId) {
+      request.headers["fb_ad_account_id"] = adTokenId;
+    }else{
+      request.headers["fb_ad_account_id"] = "";
+    }
+    console.log("request header:", request.headers);
     return request;
   },
   (error) => {

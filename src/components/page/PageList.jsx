@@ -83,6 +83,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                           "fb_access_token",
                           item.access_token
                         );
+                        sessionStorage.setItem("fb_ad_account_id", item.ad_token_id);
                         if(user?.role=== "ADMIN" || user?.role=== "MANAGER"){
                         navigate(`/${item.page_id}/home`);
                         }
