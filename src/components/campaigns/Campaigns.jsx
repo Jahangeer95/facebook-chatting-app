@@ -3,6 +3,7 @@ import { CreateCampaigns } from "./CreateCampaign";
 import { toast } from "react-toastify";
 import { getCampaigns } from "../../api/CampaignEndpoints";
 import { CampaignsList } from "./CampaignsList";
+import { CreateAdsets } from "./CreateAdsets";
 
 export function Campaigns() {
   const [selected, setSelected] = useState("");
@@ -72,7 +73,7 @@ export function Campaigns() {
           ) : selectedType === "adsets" ? (
             <button
               className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
-              onClick={() => setSelected("createCampaign")}
+              onClick={() => setSelected("createAdset")}
             >
               Create Adsets
             </button>
@@ -88,13 +89,13 @@ export function Campaigns() {
 
         {selected === "createCampaign" && (
           <div className="mb-4">
-            <CreateCampaigns setSelected={setSelected} />
+            <CreateCampaigns refreshCampaign={getCampaign} setSelected={setSelected} />
           </div>
         )}
 
-        {selected === "createAdsets" && (
+        {selected === "createAdset" && (
           <div className="mb-4">
-            <CreateCampaigns setSelected={setSelected} />
+            <CreateAdsets campaigns={campaigns} setSelected={setSelected} />
           </div>
         )}
 

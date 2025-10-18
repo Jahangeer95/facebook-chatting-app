@@ -5,7 +5,7 @@ import { Modal } from "../modal/Modal";
 import { toast } from "react-toastify";
 import { createCampaign } from "../../api/CampaignEndpoints";
 
-export function CreateCampaigns({ setSelected }) {
+export function CreateCampaigns({ setSelected ,refreshCampaign}) {
   const [name, setName] = useState("");
   const [objective, setObjective] = useState("");
   const [adCategory, setAdCategory] = useState("");
@@ -15,6 +15,7 @@ export function CreateCampaigns({ setSelected }) {
     try {
       await createCampaign(name, objective, adCategory, status);
       toast.success("Campaign created successfully")
+      refreshCampaign();
       setSelected(false);
       setName("");
       setObjective("");
