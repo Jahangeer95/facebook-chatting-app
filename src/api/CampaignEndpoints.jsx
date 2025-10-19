@@ -73,3 +73,26 @@ export const createAdset = async (
     );
   }
 };
+
+
+export const updateCampaign = async (campaign_id,name, objective, ad_category, status) => {
+  try {
+    const body = {
+      name: name,
+      objective: objective,
+      ad_category: ad_category,
+      status: status,
+    };
+    const res = await Api.post(`fb-ad/campaigns/${campaign_id}`, body);
+    console.log({ res });
+    console.log("Result:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};

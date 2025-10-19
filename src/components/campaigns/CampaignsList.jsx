@@ -1,10 +1,17 @@
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { UpdateCampaigns } from "./UpdateCampaign";
 
-export function CampaignsList({ campaigns, hasMoreCampaigns,paging,campaignsLoading }) {
- 
-
+export function CampaignsList({
+  campaigns,
+  hasMoreCampaigns,
+  paging,
+  campaignsLoading,
+  refreshCampaign
+}) {
+  const [selectedCampaign, setSelectedCampaign] = useState("");
   return (
     <div className="w-full bg-white shadow-sm border border-gray-200 rounded-lg p-5 mt-10">
       <div className="w-full mt-3 overflow-auto h-[150px]" id="scrollCampaign">
@@ -43,6 +50,9 @@ export function CampaignsList({ campaigns, hasMoreCampaigns,paging,campaignsLoad
                     <th className="border px-2 py-2 font-semibold text-left">
                       Created Time
                     </th>
+                    <th className="border px-2 py-2 font-semibold text-left">
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -61,6 +71,15 @@ export function CampaignsList({ campaigns, hasMoreCampaigns,paging,campaignsLoad
                       <td className="px-2 py-2 text-gray-500">
                         {new Date(item.created_time).toLocaleString()}
                       </td>
+                      {/* button to update campaign */}
+                      <td className="px-2 py-2 text-gray-500">
+                      <button
+                        className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                        onClick={() => setSelectedCampaign(item)}
+                      >
+                        Update
+                      </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -71,6 +90,14 @@ export function CampaignsList({ campaigns, hasMoreCampaigns,paging,campaignsLoad
           )}
         </InfiniteScroll>
       </div>
+      {/*calling update form */}
+      {selectedCampaign && (
+        <UpdateCampaigns
+          selectedCampaign={selectedCampaign}
+          setSelected={setSelectedCampaign}
+          refreshCampaign={refreshCampaign}
+        />
+      )}
     </div>
   );
 }

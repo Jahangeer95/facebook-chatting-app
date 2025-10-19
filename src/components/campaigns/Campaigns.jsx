@@ -131,7 +131,7 @@ export function Campaigns() {
           </div>
         )}
         {/* List to dispaly data */}
-        {selectedType === "campaign" && <CampaignsList campaigns={campaigns} hasMoreCampaigns={hasMoreCampaigns} paging={paging} campaignsLoading={campaignsLoading} />}
+        {selectedType === "campaign" && <CampaignsList campaigns={campaigns} hasMoreCampaigns={hasMoreCampaigns} paging={paging} campaignsLoading={campaignsLoading} refreshCampaign={getCampaign} />}
         {selectedType === "adsets" && <CampaignsList campaigns={campaigns} />}
         {selectedType === "ads" && <CampaignsList campaigns={campaigns} />}
       </div>
