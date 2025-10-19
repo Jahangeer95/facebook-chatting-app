@@ -29,10 +29,47 @@ export const getCampaigns = async () => {
     const res = await Api.get(`fb-ad/campaigns`);
     if (res.status === 200) {
       console.log({ res });
-      console.log("Result:", res.data.data);
-      return res.data.data;
+      const {data,paging}=res.data;
+      console.log("Campaign data:", data);
+      console.log("Paging:", paging);
+      return {data,paging};
     }
   } catch (error) {
     console.error("Error :", error);
+    return { data: [], paging: null };
+  }
+};
+
+//create adset
+export const createAdset = async (
+  name,
+  campaignId,
+  dailyBudget,
+  status,
+  bidStrategy,
+  optimizationGoal,
+  billingEvent
+) => {
+  try {
+    const body = {
+      name: name,
+      campaign_id: campaignId,
+      daily_budget: dailyBudget,
+      status: status,
+      bid_strategy: bidStrategy,
+      optimization_goal:optimizationGoal,
+      billing_event:billingEvent,
+    };
+    const res = await Api.post(`fb-ad/adsets`, body);
+    console.log({ res });
+    console.log("Result:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
   }
 };
