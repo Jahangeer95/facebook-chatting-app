@@ -42,24 +42,9 @@ export const getCampaigns = async () => {
 
 //create adset
 export const createAdset = async (
-  name,
-  campaignId,
-  dailyBudget,
-  status,
-  bidStrategy,
-  optimizationGoal,
-  billingEvent
+body
 ) => {
   try {
-    const body = {
-      name: name,
-      campaign_id: campaignId,
-      daily_budget: dailyBudget,
-      status: status,
-      bid_strategy: bidStrategy,
-      optimization_goal:optimizationGoal,
-      billing_event:billingEvent,
-    };
     const res = await Api.post(`fb-ad/adsets`, body);
     console.log({ res });
     console.log("Result:", res.data);
@@ -74,7 +59,7 @@ export const createAdset = async (
   }
 };
 
-
+//delete updateCampaign
 export const updateCampaign = async (campaign_id,name, objective, ad_category, status) => {
   try {
     const body = {
@@ -84,6 +69,23 @@ export const updateCampaign = async (campaign_id,name, objective, ad_category, s
       status: status,
     };
     const res = await Api.post(`fb-ad/campaigns/${campaign_id}`, body);
+    console.log({ res });
+    console.log("Result:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};
+
+//delete campaign
+export const deleteCampaign = async (campaign_id) => {
+  try {
+    const res = await Api.delete(`fb-ad/campaigns/${campaign_id}`);
     console.log({ res });
     console.log("Result:", res.data);
     return res.data;

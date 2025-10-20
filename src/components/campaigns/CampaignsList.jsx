@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { UpdateCampaigns } from "./UpdateCampaign";
+import { deleteCampaign } from "../../api/CampaignEndpoints";
+import { toast } from "react-toastify";
 
 export function CampaignsList({
   campaigns,
@@ -12,6 +14,17 @@ export function CampaignsList({
   refreshCampaign,
 }) {
   const [selectedCampaign, setSelectedCampaign] = useState("");
+   const handleDelete = async (id) => {
+      try {
+        await deleteCampaign(
+         id
+        );
+        toast.success("Campaign deleted successfully");
+        refreshCampaign();
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
   return (
     <div className="w-full bg-white shadow-sm border border-gray-200 rounded-lg p-5 mt-10">
       <div className="w-full mt-3 overflow-auto h-[150px]" id="scrollCampaign">
@@ -57,7 +70,10 @@ export function CampaignsList({
                       Created Time
                     </th>
                     <th className="border px-2 py-2 font-semibold text-left">
-                      Action
+                      Update
+                    </th>
+                    <th className="border px-2 py-2 font-semibold text-left">
+                      Delete
                     </th>
                   </tr>
                 </thead>
@@ -90,6 +106,14 @@ export function CampaignsList({
                           onClick={() => setSelectedCampaign(item)}
                         >
                           Update
+                        </button>
+                      </td>
+                      <td className="px-2 py-2 text-gray-500">
+                        <button
+                          className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          Delete
                         </button>
                       </td>
                     </tr>
