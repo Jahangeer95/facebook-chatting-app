@@ -9,7 +9,7 @@ export function CampaignsList({
   hasMoreCampaigns,
   paging,
   campaignsLoading,
-  refreshCampaign
+  refreshCampaign,
 }) {
   const [selectedCampaign, setSelectedCampaign] = useState("");
   return (
@@ -48,6 +48,12 @@ export function CampaignsList({
                       Objective
                     </th>
                     <th className="border px-2 py-2 font-semibold text-left">
+                      Buying Type
+                    </th>
+                    <th className="border px-2 py-2 font-semibold text-left">
+                      Ad Category
+                    </th>
+                    <th className="border px-2 py-2 font-semibold text-left">
                       Created Time
                     </th>
                     <th className="border px-2 py-2 font-semibold text-left">
@@ -68,17 +74,23 @@ export function CampaignsList({
                       <td className="px-2 py-2 text-gray-600">
                         {item.objective}
                       </td>
+                      <td className="px-2 py-2 text-gray-600">
+                        {item.buying_type}
+                      </td>
+                      <td className="px-2 py-2 text-gray-600">
+                        {item.special_ad_categories}
+                      </td>
                       <td className="px-2 py-2 text-gray-500">
                         {new Date(item.created_time).toLocaleString()}
                       </td>
                       {/* button to update campaign */}
                       <td className="px-2 py-2 text-gray-500">
-                      <button
-                        className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-                        onClick={() => setSelectedCampaign(item)}
-                      >
-                        Update
-                      </button>
+                        <button
+                          className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                          onClick={() => setSelectedCampaign(item)}
+                        >
+                          Update
+                        </button>
                       </td>
                     </tr>
                   ))}
