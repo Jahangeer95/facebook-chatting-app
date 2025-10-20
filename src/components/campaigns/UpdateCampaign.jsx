@@ -13,7 +13,7 @@ export function UpdateCampaigns({
   const [name, setName] = useState(selectedCampaign.name || "");
   const [objective, setObjective] = useState(selectedCampaign.objective || "");
   const [adCategory, setAdCategory] = useState(
-    selectedCampaign.adCategory || ""
+    selectedCampaign.special_ad_categories?.[0] || ""
   );
   const [status, setStatus] = useState(selectedCampaign.status || "");
 
@@ -23,7 +23,7 @@ export function UpdateCampaigns({
         selectedCampaign.id,
         name,
         objective,
-        adCategory,
+        [adCategory],
         status
       );
       toast.success("Campaign updated successfully");
