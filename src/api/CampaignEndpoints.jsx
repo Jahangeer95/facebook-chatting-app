@@ -98,3 +98,39 @@ export const deleteCampaign = async (campaign_id) => {
     );
   }
 };
+
+
+//delete adset
+export const deleteAdset = async (adset_id) => {
+  try {
+    const res = await Api.delete(`fb-ad/adsets/${adset_id}`);
+    console.log({ res });
+    console.log("Result:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};
+
+// fetch adsets
+export const getAdsets = async (id) => {
+  try {
+    const res = await Api.get(`fb-ad/adsets/${id}`);
+    if (res.status === 200) {
+      console.log({ res });
+      const {data,paging}=res.data;
+      console.log("Adset data:", data);
+      console.log("Paging:", paging);
+      return {data,paging};
+    }
+  } catch (error) {
+    console.error("Error :", error);
+    return { data: [], paging: null };
+  }
+};
+
