@@ -66,7 +66,7 @@ export const updateCampaign = async (campaign_id,name, objective, ad_category, s
     const body = {
       name: name,
       objective: objective,
-      ad_category: ad_category,
+      special_ad_categories: ad_category,
       status: status,
     };
     const res = await Api.post(`fb-ad/campaigns/${campaign_id}`, body);
@@ -135,3 +135,45 @@ export const getAdsets = async (id) => {
   }
 };
 
+
+//upload image for adcreative
+export const uploadAdImage=async(imageFile)=>{
+  try {
+    if (!imageFile) throw new Error("No image file selected");
+    const formData = new FormData();
+    formData.append("file", imageFile);
+    const res = await Api.post(`fb-ad/ad-images`, formData,{
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log({ res });
+    return res.data;
+  } catch (error) {
+    console.error("Error in uploading image :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+}
+//create adcreative
+export const createAdCreatives = async (name, page_id, message, link, headline, call_to_action_type,image_hash ) => {
+  try {
+    const body = {
+      name, page_id, message, link, headline, call_to_action_type,image_hash
+    };
+    const res = await Api.post(`fb-ad/adcreatives`, body);
+    console.log({ res });
+    console.log("Result:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};
