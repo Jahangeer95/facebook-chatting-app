@@ -5,22 +5,24 @@ import { Modal } from "../modal/Modal";
 import { toast } from "react-toastify";
 import { createCampaign } from "../../api/CampaignEndpoints";
 
-export function CreateCampaigns({ setSelected ,refreshCampaign}) {
+export function CreateCampaigns({ setSelected, refreshCampaign }) {
   const [name, setName] = useState("");
   const [objective, setObjective] = useState("");
   const [adCategory, setAdCategory] = useState("");
   const [status, setStatus] = useState("");
+  const [buyingType, setBuyingType] = useState("");
 
   const handleCreate = async () => {
     try {
-      await createCampaign(name, objective, adCategory, status);
-      toast.success("Campaign created successfully")
+      await createCampaign(name, objective, adCategory, status,buyingType);
+      toast.success("Campaign created successfully");
       refreshCampaign();
       setSelected(false);
       setName("");
       setObjective("");
       setAdCategory("");
       setStatus("");
+      setBuyingType("");
     } catch (error) {
       toast.error(error.message);
     }
@@ -79,9 +81,13 @@ export function CreateCampaigns({ setSelected ,refreshCampaign}) {
         >
           <option value="">Select Ad Category</option>
           <option value="HOUSING">HOUSING</option>
-          <option value="FINANCIAL_PRODUCTS_SERVICES">FINANCIAL PRODUCTS SERVICES</option>
+          <option value="FINANCIAL_PRODUCTS_SERVICES">
+            FINANCIAL PRODUCTS SERVICES
+          </option>
           <option value="EMPLOYMENT">EMPLOYMENT</option>
-          <option value="ISSUES_ELECTIONS_POLITICS">ISSUES ELECTIONS POLITICS</option>
+          <option value="ISSUES_ELECTIONS_POLITICS">
+            ISSUES ELECTIONS POLITICS
+          </option>
           <option value="NONE">NONE</option>
         </select>
 
@@ -99,6 +105,20 @@ export function CreateCampaigns({ setSelected ,refreshCampaign}) {
           <option value="">Select Status</option>
           <option value="ACTIVE">ACTIVE</option>
           <option value="PAUSED">PAUSED</option>
+        </select>
+
+        <label className="font-bold mb-1 text-white text-sm sm:text-base">
+          Buying Type :
+        </label>
+        <select
+          className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded text-sm sm:text-base"
+          value={buyingType}
+          onChange={(e) => setBuyingType(e.target.value)}
+          required
+        >
+          <option value="">Select Buying Type</option>
+          <option value="AUCTION">AUCTION</option>
+          <option value="RESERVED">RESERVED</option>
         </select>
 
         <div className="flex flex-col sm:flex-row justify-center gap-2 border-t border-gray-400 p-2">

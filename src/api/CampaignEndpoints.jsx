@@ -1,13 +1,14 @@
 import { Api } from "../config";
 
 //create campaign
-export const createCampaign = async (name, objective, ad_category, status) => {
+export const createCampaign = async (name, objective, ad_category, status, buyingType) => {
   try {
     const body = {
       name: name,
       objective: objective,
       ad_category: ad_category,
       status: status,
+      buying_type:buyingType,
     };
     const res = await Api.post(`fb-ad/campaigns`, body);
     console.log({ res });
