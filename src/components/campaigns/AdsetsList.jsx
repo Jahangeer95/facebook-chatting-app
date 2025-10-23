@@ -49,7 +49,7 @@ export function AdsetsList({
           ) : adsets?.length ? (
             <div className="overflow-x-auto space-y-2 mt-3 rounded-md w-full md:pl-5 ">
               <table className="min-w-full border-collapse rounded-md ">
-                <thead className="bg-blue-100 text-blue-600">
+                <thead className="bg-blue-100 text-blue-600 text-sm">
                   <tr>
                     <th className="border px-2 py-2 font-semibold text-left">
                       Name
@@ -70,13 +70,16 @@ export function AdsetsList({
                       Campaign Id
                     </th>
                     <th className="border px-2 py-2 font-semibold text-left">
-                      Targeting 
+                      Targeting
                     </th>
                     <th className="border px-2 py-2 font-semibold text-left">
                       Update
                     </th>
                     <th className="border px-2 py-2 font-semibold text-left">
                       Delete
+                    </th>
+                    <th className="border px-2 py-2 font-semibold text-left">
+                      Ads
                     </th>
                   </tr>
                 </thead>
@@ -86,26 +89,38 @@ export function AdsetsList({
                       key={item.id}
                       className="border p-3 rounded hover:bg-gray-100 text-xs"
                     >
+                      {/* Name */}
                       <td className="px-2 py-1 font-medium text-gray-800">
                         {item.name}
                       </td>
+                      {/* status */}
                       <td className="px-2 py-2 text-gray-600">{item.status}</td>
+
+                      {/* budget */}
                       <td className="px-2 py-2 text-gray-600">
                         {item.daily_budget}
                       </td>
+                      {/* start date */}
                       <td className="px-2 py-2 text-gray-600">
-                      {new Date(item.start_time).toLocaleString()}
+                        {new Date(item.start_time).toLocaleString()}
                       </td>
+
+                      {/* end date */}
                       <td className="px-2 py-2 text-gray-600">
-                      {new Date(item.end_time).toLocaleString()}
+                        {new Date(item.end_time).toLocaleString()}
                       </td>
+
+                      {/* campaign id */}
                       <td className="px-2 py-2 text-gray-500">
                         {item.campaign_id}
                       </td>
+
+                      {/* targeting countries */}
                       <td className="px-2 py-2 text-gray-600">
-                        
+                        {item.targeting?.geo_locations?.countries?.join(", ")}
                       </td>
-                      {/* button to update campaign */}
+
+                      {/* button to update campaign adset*/}
                       <td className="px-2 py-2 text-gray-500">
                         <button
                           className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
@@ -122,15 +137,21 @@ export function AdsetsList({
                           Delete
                         </button>
                       </td>
+                      <td className="px-2 py-2 text-gray-500">
+                        <button
+                          className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                          onClick={() => {}}
+                        >
+                          View Ads
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           ) : (
-            <p className="text-gray-600">
-              No Adset is available for {selectedAdset}
-            </p>
+            <p className="text-gray-600">No Adset is available</p>
           )}
         </InfiniteScroll>
       </div>
