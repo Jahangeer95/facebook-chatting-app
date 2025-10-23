@@ -177,3 +177,39 @@ export const createAdCreatives = async (name, page_id, message, link, headline, 
     );
   }
 };
+
+//to fetch adcreatives
+export const getAdCreatives = async () => {
+  try {
+    const res = await Api.get(`fb-ad/adcreatives`);
+    if (res.status === 200) {
+      console.log({ res });
+      const {data,paging}=res.data;
+      console.log("Campaign data:", data);
+      console.log("Paging:", paging);
+      return {data,paging};
+    }
+  } catch (error) {
+    console.error("Error :", error);
+    return { data: [], paging: null };
+  }
+};
+
+//update adset
+export const updateAdset = async (adsetId,
+body
+) => {
+  try {
+    const res = await Api.post(`fb-ad/adsets/${adsetId}`, body);
+    console.log({ res });
+    console.log("Adset updated sucessfully:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error in updating adset:", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};
