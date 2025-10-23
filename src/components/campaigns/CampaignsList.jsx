@@ -153,7 +153,7 @@ export function CampaignsList({
                       </td>
                       <td className="px-2 py-2 text-gray-600">{item.status}</td>
                       <td className="px-2 py-2 text-gray-600">
-                        {item.objective}
+                        {item.objective.replace("_"," ")}
                       </td>
                       <td className="px-2 py-2 text-gray-600">
                         {item.buying_type}
