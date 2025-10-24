@@ -77,6 +77,7 @@ export function CampaignsList({
         </button>
 
         <AdsetsList
+          campaigns={campaigns}
           adsets={adset}
           hasMoreAdsets={hasMoreAdsets}
           paging={adsetPaging}

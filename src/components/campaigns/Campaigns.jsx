@@ -3,7 +3,9 @@ import { CreateCampaigns } from "./CreateCampaign";
 import { toast } from "react-toastify";
 import { getCampaigns } from "../../api/CampaignEndpoints";
 import { CampaignsList } from "./CampaignsList";
-// import { CreateAdsets } from "./CreateAdsets";
+import { CreateAdsets } from "./CreateAdsets";
+import { CreateAdsCreatives } from "./CreateAdsCreatives";
+import { AdCreativesList } from "./AdsCreativesList";
 
 export function Campaigns() {
   const [selected, setSelected] = useState("");
@@ -15,13 +17,13 @@ export function Campaigns() {
   const getCampaign = useCallback(async () => {
     setCampaignsLoading(true);
     try {
-      const {data,paging} = await getCampaigns();
+      const { data, paging } = await getCampaigns();
       console.log("Data", data);
       setcampaigns(data || []);
       setPaging(paging);
     } catch (err) {
       toast.error("Failed to load insights");
-    }finally {
+    } finally {
       setCampaignsLoading(false);
     }
   }, []);
@@ -45,10 +47,10 @@ export function Campaigns() {
 
       setPaging(newPaging);
     } catch (err) {
-      console.log("Failed to fetch more users", err);
-      toast.error("Failed to fetch more users");
+      console.log("Failed to fetch more campaigns", err);
+      toast.error("Failed to fetch more campaigns");
     }
-  },[paging]);
+  }, [paging]);
   return (
     <div className="p-6 space-y-6 max-h-screen">
       {/* buttons */}
@@ -70,15 +72,23 @@ export function Campaigns() {
           Adsets
         </button>
         <button
-          className={`px-3 py-2 rounded text-white ${
+          className={`px-3 py-2 rounded hover:bg-blue-700 text-white ${
             selectedType === "ads" ? "bg-blue-600" : "bg-gray-400"
           }`}
           onClick={() => setSelectedType("ads")}
         >
           Ads
         </button>
+        <button
+          className={`px-3 py-2 rounded hover:bg-blue-700 text-white ${
+            selectedType === "adscreatives" ? "bg-blue-600" : "bg-gray-400"
+          }`}
+          onClick={() => setSelectedType("adscreatives")}
+        >
+          AdsCreatives
+        </button>
       </div>
-      
+
       {/* content */}
       <div className="border p-4 rounded bg-white">
         <div className="flex justify-between items-center mb-4">
@@ -87,7 +97,9 @@ export function Campaigns() {
               ? "Campaigns"
               : selectedType === "adsets"
               ? "Adsets"
-              : "Ads"}
+              : selectedType === "ads"
+              ? "Ads"
+              : "Adscreatives"}
           </h2>
           {selectedType === "campaign" ? (
             <button
@@ -103,25 +115,35 @@ export function Campaigns() {
             >
               Create Adsets
             </button>
-          ) : (
+          ) : selectedType === "ads" ?(
             <button
               className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
               onClick={() => setSelected("createCampaign")}
             >
               Create Ads
             </button>
+          ):(
+            <button
+            className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
+            onClick={() => setSelected("adscreatives")}
+          >
+            Create AdsCreatives
+          </button>
           )}
         </div>
 
         {selected === "createCampaign" && (
           <div className="mb-4">
-            <CreateCampaigns refreshCampaign={getCampaign} setSelected={setSelected} />
+            <CreateCampaigns
+              refreshCampaign={getCampaign}
+              setSelected={setSelected}
+            />
           </div>
         )}
 
         {selected === "createAdset" && (
           <div className="mb-4">
-            <CreateCampaigns campaigns={campaigns} setSelected={setSelected} />
+            <CreateAdsets campaigns={campaigns} setSelected={setSelected} />
           </div>
         )}
 
@@ -130,10 +152,25 @@ export function Campaigns() {
             <CreateCampaigns setSelected={setSelected} />
           </div>
         )}
+
+         {selected === "adscreatives" && (
+          <div className="mb-4">
+            <CreateAdsCreatives setSelected={setSelected} />
+          </div>
+        )}
         {/* List to dispaly data */}
-        {selectedType === "campaign" && <CampaignsList campaigns={campaigns} hasMoreCampaigns={hasMoreCampaigns} paging={paging} campaignsLoading={campaignsLoading} refreshCampaign={getCampaign} />}
-        {selectedType === "adsets" && <CampaignsList campaigns={campaigns} />}
-        {selectedType === "ads" && <CampaignsList campaigns={campaigns} />}
+        {selectedType === "campaign" && (
+          <CampaignsList
+            campaigns={campaigns}
+            hasMoreCampaigns={hasMoreCampaigns}
+            paging={paging}
+            campaignsLoading={campaignsLoading}
+            refreshCampaign={getCampaign}
+          />
+        )}
+        {selectedType === "adsets"}
+        {selectedType === "ads" }
+        {selectedType === "adscreatives" && (<AdCreativesList/>)}
       </div>
     </div>
   );

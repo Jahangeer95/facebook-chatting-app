@@ -2,11 +2,12 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { UpdateCampaigns } from "./UpdateCampaign";
 import { deleteAdset } from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
+import { UpdateAdsets } from "./UpdateAdset";
 
 export function AdsetsList({
+  campaigns,
   adsets,
   hasMoreAdsets,
   paging,
@@ -157,8 +158,9 @@ export function AdsetsList({
       </div>
       {/*calling update form */}
       {selectedAdset && (
-        <UpdateCampaigns
-          selectedCampaign={selectedAdset}
+        <UpdateAdsets
+          campaigns={campaigns}
+          selectedAdset={selectedAdset}
           setSelected={setSelectedAdset}
           refreshAdsets={refreshAdsets}
         />
