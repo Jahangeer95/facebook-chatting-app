@@ -148,7 +148,7 @@ export const uploadAdImage=async(imageFile)=>{
       },
     });
     console.log({ res });
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.error("Error in uploading image :", error);
     throw new Error(
@@ -206,6 +206,23 @@ body
     return res.data;
   } catch (error) {
     console.error("Error in updating adset:", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};
+
+//delete adset
+export const deleteAdcreative = async (adcreativeId) => {
+  try {
+    const res = await Api.delete(`fb-ad/adcreatives/${adcreativeId}`);
+    console.log({ res });
+    console.log("Result of delete adcreative:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error in deleting adcreative :", error);
     throw new Error(
       error.response?.error?.message ||
         error.response?.data?.message ||
