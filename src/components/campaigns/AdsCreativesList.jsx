@@ -1,58 +1,58 @@
-import { useCallback, useEffect, useState } from "react";
-import { deleteAdcreative, getAdCreatives } from "../../api/CampaignEndpoints";
+// import { useCallback, useEffect, useState } from "react";
+import { deleteAdcreative } from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-export function AdCreativesList() {
-  const [creatives, setCreatives] = useState([]);
-  const [creativesLoading, setCreativesLoading] = useState(false);
-  const [paging, setPaging] = useState(null);
-  const getCreatives = useCallback(async () => {
-    setCreativesLoading(true);
-    try {
-      const { data, paging } = await getAdCreatives();
-      console.log("Data", data);
-      setCreatives(data || []);
-      setPaging(paging);
-    } catch (err) {
-      toast.error("Failed to load creatives");
-    } finally {
-      setCreativesLoading(false);
-    }
-  }, []);
-  useEffect(() => {
-    getCreatives();
-  }, [getCreatives]);
+export function AdCreativesList({creatives, hasMoreCreatives, paging, creativesLoading, refreshCreatives}) {
+  // const [creatives, setCreatives] = useState([]);
+  // const [creativesLoading, setCreativesLoading] = useState(false);
+  // const [creativePaging, setCreativePaging] = useState(null);
+  // const getCreatives = useCallback(async () => {
+  //   setCreativesLoading(true);
+  //   try {
+  //     const { data, paging } = await getAdCreatives();
+  //     console.log("Data", data);
+  //     setCreatives(data || []);
+  //     setPaging(paging);
+  //   } catch (err) {
+  //     toast.error("Failed to load creatives");
+  //   } finally {
+  //     setCreativesLoading(false);
+  //   }
+  // }, []);
+  // useEffect(() => {
+  //   getCreatives();
+  // }, [getCreatives]);
 
-  //to load more creatives
-  const hasMoreCreatives = useCallback(async () => {
-    if (!paging?.next) {
-      return;
-    }
-    try {
-      const res = await fetch(paging.next);
-      const data = await res.json();
-      const newCreatives = data?.data || [];
-      const newPaging = data?.paging || null;
-      setCreatives((prev) => {
-        const newReplies = [...prev, ...newCreatives];
-        return Array.from(new Map(newReplies.map((r) => [r.id, r])).values());
-      });
+  // //to load more creatives
+  // const hasMoreCreatives = useCallback(async () => {
+  //   if (!paging?.next) {
+  //     return;
+  //   }
+  //   try {
+  //     const res = await fetch(paging.next);
+  //     const data = await res.json();
+  //     const newCreatives = data?.data || [];
+  //     const newPaging = data?.paging || null;
+  //     setCreatives((prev) => {
+  //       const newReplies = [...prev, ...newCreatives];
+  //       return Array.from(new Map(newReplies.map((r) => [r.id, r])).values());
+  //     });
 
-      setPaging(newPaging);
-    } catch (err) {
-      console.log("Failed to fetch more creatives", err);
-      toast.error("Failed to fetch more creatives");
-    }
-  }, [paging]);
+  //     setPaging(newPaging);
+  //   } catch (err) {
+  //     console.log("Failed to fetch more creatives", err);
+  //     toast.error("Failed to fetch more creatives");
+  //   }
+  // }, [paging]);
 
   //to delete ad creative
   const handleDelete = async (id) => {
     try {
       await deleteAdcreative(id);
-      getCreatives();
+      refreshCreatives();
       toast.success("Creatives deleted successfully");
     } catch (error) {
       toast.error(error.message);
