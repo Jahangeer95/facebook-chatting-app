@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { createAdCreatives, uploadAdImage } from "../../api/CampaignEndpoints";
 import { useParams } from "react-router-dom";
 
-export function CreateAdsCreatives({ setSelected }) {
+export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
   const { pageID } = useParams();
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -145,6 +145,7 @@ export function CreateAdsCreatives({ setSelected }) {
         image
       );
       toast.success("AdCreative created successfully");
+      refreshCreatives();
       setName("");
       setMessage("");
       setLink("");
