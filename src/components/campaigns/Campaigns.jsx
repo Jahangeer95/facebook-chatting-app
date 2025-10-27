@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { CreateCampaigns } from "./CreateCampaign";
 import { toast } from "react-toastify";
-import { getCampaigns } from "../../api/CampaignEndpoints";
+import {
+  fetchAdset,
+  getAdCreatives,
+  getCampaigns,
+} from "../../api/CampaignEndpoints";
 import { CampaignsList } from "./CampaignsList";
 import { CreateAdsets } from "./CreateAdsets";
 import { CreateAdsCreatives } from "./CreateAdsCreatives";
 import { AdCreativesList } from "./AdsCreativesList";
+import { ViewAdsets } from "./ViewAdsets";
 
 export function Campaigns() {
   const [selected, setSelected] = useState("");
@@ -13,6 +18,12 @@ export function Campaigns() {
   const [selectedType, setSelectedType] = useState("campaign");
   const [campaignsLoading, setCampaignsLoading] = useState(false);
   const [paging, setPaging] = useState(null);
+  const [creatives, setCreatives] = useState([]);
+  const [creativesLoading, setCreativesLoading] = useState(false);
+  const [creativePaging, setCreativePaging] = useState(null);
+  const [adset, setAdsets] = useState([]);
+  const [adsetLoading, setAdsetLoading] = useState(false);
+  const [adsetPaging, setAdsetPaging] = useState(null);
 
   const getCampaign = useCallback(async () => {
     setCampaignsLoading(true);
@@ -27,9 +38,41 @@ export function Campaigns() {
       setCampaignsLoading(false);
     }
   }, []);
+  //fetch creatives
+  const getCreatives = useCallback(async () => {
+    setCreativesLoading(true);
+    try {
+      const { data, paging } = await getAdCreatives();
+      console.log("Data", data);
+      setCreatives(data || []);
+      setCreativePaging(paging);
+    } catch (err) {
+      toast.error("Failed to load creatives");
+    } finally {
+      setCreativesLoading(false);
+    }
+  }, []);
+
+  //fetch adsets
+  const getAdset = useCallback(async () => {
+    setAdsetLoading(true);
+    try {
+      const { data, paging } = await fetchAdset();
+      console.log("Data", data);
+      setAdsets(data || []);
+      setAdsetPaging(paging);
+    } catch (err) {
+      toast.error("Failed to load Adsets");
+    } finally {
+      setAdsetLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     getCampaign();
-  }, [getCampaign]);
+    getCreatives();
+    getAdset();
+  }, [getCampaign, getCreatives,getAdset]);
 
   const hasMoreCampaigns = useCallback(async () => {
     if (!paging?.next) {
@@ -51,6 +94,50 @@ export function Campaigns() {
       toast.error("Failed to fetch more campaigns");
     }
   }, [paging]);
+
+  //to load more creatives
+  const hasMoreCreatives = useCallback(async () => {
+    if (!creativePaging?.next) {
+      return;
+    }
+    try {
+      const res = await fetch(creativePaging.next);
+      const data = await res.json();
+      const newCreatives = data?.data || [];
+      const newPaging = data?.paging || null;
+      setCreatives((prev) => {
+        const newReplies = [...prev, ...newCreatives];
+        return Array.from(new Map(newReplies.map((r) => [r.id, r])).values());
+      });
+
+      setCreativePaging(newPaging);
+    } catch (err) {
+      console.log("Failed to fetch more creatives", err);
+      toast.error("Failed to fetch more creatives");
+    }
+  }, [creativePaging]);
+
+  //pagination for adsets
+  const hasMoreAdsets = useCallback(async () => {
+    if (!adsetPaging?.next) {
+      return;
+    }
+    try {
+      const res = await fetch(adsetPaging.next);
+      const data = await res.json();
+      const newAdsets = data?.data || [];
+      const newPaging = data?.paging || null;
+      setAdsets((prev) => {
+        const newReplies = [...prev, ...newAdsets];
+        return Array.from(new Map(newReplies.map((r) => [r.id, r])).values());
+      });
+
+      setAdsetPaging(newPaging);
+    } catch (err) {
+      console.log("Failed to fetch more adsets", err);
+      toast.error("Failed to fetch more adsets");
+    }
+  }, [adsetPaging]);
   return (
     <div className="p-6 space-y-6 max-h-screen">
       {/* buttons */}
@@ -115,20 +202,20 @@ export function Campaigns() {
             >
               Create Adsets
             </button>
-          ) : selectedType === "ads" ?(
+          ) : selectedType === "ads" ? (
             <button
               className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
               onClick={() => setSelected("createCampaign")}
             >
               Create Ads
             </button>
-          ):(
+          ) : (
             <button
-            className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
-            onClick={() => setSelected("adscreatives")}
-          >
-            Create AdsCreatives
-          </button>
+              className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
+              onClick={() => setSelected("adscreatives")}
+            >
+              Create AdsCreatives
+            </button>
           )}
         </div>
 
@@ -153,9 +240,12 @@ export function Campaigns() {
           </div>
         )}
 
-         {selected === "adscreatives" && (
+        {selected === "adscreatives" && (
           <div className="mb-4">
-            <CreateAdsCreatives setSelected={setSelected} />
+            <CreateAdsCreatives
+              setSelected={setSelected}
+              refreshCreatives={getAdCreatives}
+            />
           </div>
         )}
         {/* List to dispaly data */}
@@ -168,9 +258,25 @@ export function Campaigns() {
             refreshCampaign={getCampaign}
           />
         )}
-        {selectedType === "adsets"}
-        {selectedType === "ads" }
-        {selectedType === "adscreatives" && (<AdCreativesList/>)}
+        {selectedType === "adsets" && (
+          <ViewAdsets
+            adsets={adset}
+            hasMoreAdsets={hasMoreAdsets}
+            paging={adsetPaging}
+            adsetsLoading={adsetLoading}
+            refreshAdsets={getAdset}
+          />
+        )}
+        {selectedType === "ads"}
+        {selectedType === "adscreatives" && (
+          <AdCreativesList
+            creatives={creatives}
+            hasMoreCreatives={hasMoreCreatives}
+            paging={creativePaging}
+            creativesLoading={creativesLoading}
+            refreshCreatives={getCreatives}
+          />
+        )}
       </div>
     </div>
   );

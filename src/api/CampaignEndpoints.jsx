@@ -229,4 +229,26 @@ export const deleteAdcreative = async (adcreativeId) => {
         error.message
     );
   }
+}; 
+
+//fetch all adsets
+export const fetchAdset = async () => {
+  try {
+    const res = await Api.get(`fb-ad/adsets`);
+    console.log({ res });
+    if (res.status === 200) {
+      console.log({ res });
+      const {data,paging}=res.data;
+      console.log("Adset data:", data);
+      console.log("Paging:", paging);
+      return {data,paging};
+    }
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
 };
