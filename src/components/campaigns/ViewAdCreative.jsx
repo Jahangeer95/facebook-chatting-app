@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getAdCreativesPreview } from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
 
-export function ViewAdCreative({ adcreativeId, setSelectedAdCreative }) {
+export function ViewAdCreative({ adcreativeId }) {
   const [preview, setPreview] = useState("");
   const [adFormat, setAdFormat] = useState("DESKTOP_FEED_STANDARD");
 

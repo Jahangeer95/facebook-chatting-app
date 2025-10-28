@@ -40,7 +40,7 @@ export function AdCreativesList({
 
         <ViewAdCreative
           adcreativeId={selectedAdCreative}
-          setSelectedAdCreative={setSelectedAdCreative}
+          // setSelectedAdCreative={setSelectedAdCreative}
         />
       </div>
     );
