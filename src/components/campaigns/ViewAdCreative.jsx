@@ -6,20 +6,21 @@ export function ViewAdCreative({ adcreativeId }) {
   const [preview, setPreview] = useState("");
   const [adFormat, setAdFormat] = useState("DESKTOP_FEED_STANDARD");
 
-  //view ad creative
-  const getPreview = async (adcreativeId) => {
-    try {
-      const data = await getAdCreativesPreview(adcreativeId, adFormat);
-      console.log("Data of adcreative preview", data);
-      setPreview(data);
-    } catch (err) {
-      toast.error("Failed to load ad preview");
-    }
-  };
 
   useEffect(() => {
+    //view ad creative
+    const getPreview = async () => {
+      try {
+        const data = await getAdCreativesPreview(adcreativeId, adFormat);
+        console.log("Data of adcreative preview", data);
+        setPreview(data);
+      } catch (err) {
+        toast.error("Failed to load ad preview");
+      }
+    };
+
     if (adcreativeId) {
-      getPreview(adcreativeId);
+      getPreview();
     }
   }, [adcreativeId, adFormat]);
   
