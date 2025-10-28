@@ -1,11 +1,22 @@
 // import { useCallback, useEffect, useState } from "react";
-import { deleteAdcreative } from "../../api/CampaignEndpoints";
+import {
+  deleteAdcreative,
+} from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner,faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import { ViewAdCreative } from "./ViewAdCreative";
 
-export function AdCreativesList({creatives, hasMoreCreatives, paging, creativesLoading, refreshCreatives}) {
+export function AdCreativesList({
+  creatives,
+  hasMoreCreatives,
+  paging,
+  creativesLoading,
+  refreshCreatives,
+}) {
+  const [selectedAdCreative, setSelectedAdCreative] = useState("");
   //to delete ad creative
   const handleDelete = async (id) => {
     try {
@@ -16,6 +27,24 @@ export function AdCreativesList({creatives, hasMoreCreatives, paging, creativesL
       toast.error(error.message);
     }
   };
+
+  if (selectedAdCreative) {
+    return (
+      <div>
+        <button
+          className="px-2 py-2 bg-gray-700 text-white rounded hover:bg-blue-500 mb-4"
+          onClick={() => setSelectedAdCreative("")}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+
+        <ViewAdCreative
+          adcreativeId={selectedAdCreative}
+          setSelectedAdCreative={setSelectedAdCreative}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-white shadow-sm border border-gray-200 rounded-lg p-5 mt-10">
@@ -66,6 +95,9 @@ export function AdCreativesList({creatives, hasMoreCreatives, paging, creativesL
                     </th>
                     <th className="border px-2 py-2 font-semibold text-left">
                       Delete
+                    </th>
+                    <th className="border px-2 py-2 font-semibold text-left">
+                      View Ad Creative
                     </th>
                   </tr>
                 </thead>
@@ -131,6 +163,18 @@ export function AdCreativesList({creatives, hasMoreCreatives, paging, creativesL
                           onClick={() => handleDelete(item.id)}
                         >
                           Delete
+                        </button>
+                      </td>
+
+                      <td className="px-2 py-2 text-gray-500">
+                        <button
+                          className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                          onClick={() => {
+                            setSelectedAdCreative(item.id);
+                            // getpreview(item.id);
+                          }}
+                        >
+                          View
                         </button>
                       </td>
                     </tr>

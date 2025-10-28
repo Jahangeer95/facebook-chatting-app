@@ -252,3 +252,24 @@ export const fetchAdset = async () => {
     );
   }
 };
+
+//get preview
+export const getAdCreativesPreview = async (adcreativeId,adFormat) => {
+  try {
+    const res = await Api.get(`fb-ad/adcreatives/${adcreativeId}/preview`, {
+      params: { ad_format: adFormat },
+    });
+    console.log({ res });
+    if (res.status === 200) {
+      console.log("Adcreative preview:", res.data?.data);
+      return res.data?.data?.[0]?.body;
+    }
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};
