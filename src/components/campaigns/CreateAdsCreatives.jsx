@@ -3,10 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Modal } from "../modal/Modal";
 import { toast } from "react-toastify";
-import { createAdCreatives, uploadAdImage } from "../../api/CampaignEndpoints";
+import {
+  createAdCreatives,
+  createPreview,
+  uploadAdImage,
+} from "../../api/CampaignEndpoints";
 import { useParams } from "react-router-dom";
 
-export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
+export function CreateAdsCreatives({ setSelected, refreshCreatives }) {
   const { pageID } = useParams();
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -14,6 +18,7 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
   const [headline, setHeadline] = useState("");
   const [callToAction, setCallToAction] = useState("");
   const [imageFile, setImageFile] = useState(null);
+  const [preview, setPreview] = useState("");
 
   const callToActionOptions = [
     "BOOK_TRAVEL",
@@ -128,11 +133,10 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
   ];
   const handleCreate = async () => {
     try {
-
       //upload image
       const imgResult = await uploadAdImage(imageFile);
       const image = imgResult.image_hash;
-      console.log("Image hash",image)
+      console.log("Image hash", image);
 
       //create ad creative
       await createAdCreatives(
@@ -156,6 +160,27 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
       toast.error(error.message);
     }
   };
+  const handlePreview = async () => {
+    try {
+      //upload image
+      const imgResult = await uploadAdImage(imageFile);
+      const image = imgResult.image_hash;
+      console.log("Image hash", image);
+      const data = await createPreview(
+        name,
+        pageID,
+        message,
+        link,
+        headline,
+        callToAction,
+        image
+      );
+      toast.success("AdCreative Preview created successfully");
+      setPreview(data.data[0].body);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <Modal onClose={() => setSelected(false)}>
@@ -170,8 +195,7 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
             onClick={() => setSelected("")}
           />
         </div>
-
-
+        <div className="h-[350px] md:h-[400px] overflow-y-auto">
         <label className="font-bold mb-1 text-white text-sm sm:text-base">
           Name :
         </label>
@@ -183,7 +207,6 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
           onChange={(e) => setName(e.target.value)}
           required
         />
-
 
         <label className="font-bold mb-1 text-white text-sm sm:text-base">
           Message:
@@ -197,7 +220,6 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
           required
         />
 
-
         <label className="font-bold mb-1 text-white text-sm sm:text-base">
           Link:
         </label>
@@ -210,7 +232,6 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
           required
         />
 
-
         <label className="font-bold mb-1 text-white text-sm sm:text-base">
           Headline:
         </label>
@@ -222,7 +243,6 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
           onChange={(e) => setHeadline(e.target.value)}
           required
         />
-
 
         <label className="font-bold mb-1 text-white text-sm sm:text-base">
           Call To Action :
@@ -241,7 +261,6 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
           ))}
         </select>
 
-
         <label
           htmlFor="fileInput"
           className="font-bold mb-1 text-white text-sm sm:text-base"
@@ -255,8 +274,13 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
           onChange={(e) => setImageFile(e.target.files[0])}
           required
         />
-
-
+        <div>
+          {preview && (
+            <div className="mt-4 border border-gray-200 rounded-md overflow-auto w-full flex items-center justify-center">
+              <div dangerouslySetInnerHTML={{ __html: preview }} />
+            </div>
+          )}
+        </div>
         <div className="flex flex-col sm:flex-row justify-center gap-2 border-t border-gray-400 p-2">
           <button
             className="px-7 py-2 rounded bg-gray-300 w-full sm:w-auto hover:bg-gray-400 transition"
@@ -267,10 +291,18 @@ export function CreateAdsCreatives({ setSelected,refreshCreatives }) {
           <button
             className="px-7 py-2 rounded bg-blue-600 text-white w-full sm:w-auto hover:bg-blue-700 transition"
             onClick={handleCreate}
-            disabled={!imageFile}
+            // disabled={!imageFile}
           >
             Create
           </button>
+          <button
+            className="px-7 py-2 rounded bg-blue-600 text-white w-full sm:w-auto hover:bg-blue-700 transition"
+            onClick={handlePreview}
+            // disabled={!imageFile}
+          >
+            Preview
+          </button>
+          </div>
         </div>
       </div>
     </Modal>

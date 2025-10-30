@@ -293,3 +293,23 @@ export const createAd = async (name, adset_id, creative_id, status ) => {
     );
   }
 };
+
+//to create prevview
+export const createPreview = async (name, page_id, message, link, headline, call_to_action_type,image_hash) => {
+  try {
+    const body = {
+      name, page_id, message, link, headline, call_to_action_type,image_hash
+    };
+    const res = await Api.post(`fb-ad/adcreatives/preview`, body);
+    console.log({ res });
+    console.log("Result of preview:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};
