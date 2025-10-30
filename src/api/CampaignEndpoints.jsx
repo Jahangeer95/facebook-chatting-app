@@ -273,3 +273,23 @@ export const getAdCreativesPreview = async (adcreativeId,adFormat) => {
     );
   }
 };
+
+//create ad
+export const createAd = async (name, adset_id, creative_id, status ) => {
+  try {
+    const body = {
+      name, adset_id, creative_id, status
+    };
+    const res = await Api.post(`fb-ad/ads`, body);
+    console.log({ res });
+    console.log("Result of ads:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error in creating an ads :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};

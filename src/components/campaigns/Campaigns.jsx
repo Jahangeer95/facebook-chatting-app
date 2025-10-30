@@ -11,6 +11,7 @@ import { CreateAdsets } from "./CreateAdsets";
 import { CreateAdsCreatives } from "./CreateAdsCreatives";
 import { AdCreativesList } from "./AdsCreativesList";
 import { ViewAdsets } from "./ViewAdsets";
+import { CreateAds } from "./CreateAds";
 
 export function Campaigns() {
   const [selected, setSelected] = useState("");
@@ -205,7 +206,7 @@ export function Campaigns() {
           ) : selectedType === "ads" ? (
             <button
               className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
-              onClick={() => setSelected("createCampaign")}
+              onClick={() => setSelected("createAds")}
             >
               Create Ads
             </button>
@@ -236,7 +237,7 @@ export function Campaigns() {
 
         {selected === "createAds" && (
           <div className="mb-4">
-            <CreateCampaigns setSelected={setSelected} />
+            <CreateAds setSelected={setSelected} adset={adset} creatives={creatives}/>
           </div>
         )}
 

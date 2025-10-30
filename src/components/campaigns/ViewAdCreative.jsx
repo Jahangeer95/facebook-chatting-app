@@ -52,7 +52,7 @@ export function ViewAdCreative({ adcreativeId }) {
       </div>
 
       <div
-        className="border border-gray-200 rounded-md overflow-hidden w-full flex items-center justify-center"
+        className="border border-gray-200 rounded-md overflow-auto w-full flex items-center justify-center"
         dangerouslySetInnerHTML={{__html: preview }}
       />
     </div>
