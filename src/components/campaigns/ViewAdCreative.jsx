@@ -26,7 +26,7 @@ export function ViewAdCreative({ adId, name }) {
     if (adId) {
       getPreview();
     }
-  }, [adId, , name]);
+  }, [adId, adFormat,name]);
 
   return (
     <div className="p-6 bg-white rounded-md shadow-md mt-5">
