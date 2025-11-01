@@ -5,7 +5,7 @@ import { Modal } from "../modal/Modal";
 import { toast } from "react-toastify";
 import { createAd} from "../../api/CampaignEndpoints";
 
-export function CreateAds({ setSelected, adset, creatives }) {
+export function CreateAds({ setSelected, adset, creatives ,refreshAds}) {
   const [name, setName] = useState("");
   const [adsetId, setAdsetID] = useState("");
   const [adCreativeId, setAdCreativeId] = useState("");
@@ -15,6 +15,7 @@ export function CreateAds({ setSelected, adset, creatives }) {
     try {
       await createAd(name,adsetId,adCreativeId,status);
       toast.success("Campaign created successfully");
+      refreshAds();
       setSelected(false);
       setName("");
       setAdsetID("");

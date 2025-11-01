@@ -39,8 +39,9 @@ export function AdCreativesList({
         </button>
 
         <ViewAdCreative
-          adcreativeId={selectedAdCreative}
+          adId={selectedAdCreative}
           // setSelectedAdCreative={setSelectedAdCreative}
+          name={"adcreatives"}
         />
       </div>
     );
