@@ -77,14 +77,14 @@ export function Campaigns() {
 
   //get ads
   const getAds = useCallback(async () => {
-    setAdsetLoading(true);
+    setAdsLoading(true);
     try {
       const { data, paging } = await fetchAds();
       console.log("Data", data);
       setAds(data || []);
       setAdsPaging(paging);
     } catch (err) {
-      toast.error("Failed to load Adsets");
+      toast.error("Failed to load Ads");
     } finally {
       setAdsLoading(false);
     }
@@ -162,7 +162,7 @@ export function Campaigns() {
     }
   }, [adsetPaging]);
 
-  //pagination for adsets
+  //pagination for ads
   const hasMoreAds = useCallback(async () => {
     if (!adsPaging?.next) {
       return;
@@ -265,7 +265,7 @@ export function Campaigns() {
             >
               Create Ads
             </button>
-          ) : selectedType === "ads" ? (
+          ) : selectedType === "adscreatives" ? (
             <button
               className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
               onClick={() => setSelected("adscreatives")}
