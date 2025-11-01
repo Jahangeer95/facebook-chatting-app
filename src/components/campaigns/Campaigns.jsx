@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { CreateCampaigns } from "./CreateCampaign";
 import { toast } from "react-toastify";
 import {
+  fetchAds,
   fetchAdset,
   getAdCreatives,
   getCampaigns,
@@ -12,6 +13,8 @@ import { CreateAdsCreatives } from "./CreateAdsCreatives";
 import { AdCreativesList } from "./AdsCreativesList";
 import { ViewAdsets } from "./ViewAdsets";
 import { CreateAds } from "./CreateAds";
+import { Insights } from "./Insights";
+import { AdsList } from "./AdsList";
 
 export function Campaigns() {
   const [selected, setSelected] = useState("");
@@ -25,6 +28,9 @@ export function Campaigns() {
   const [adset, setAdsets] = useState([]);
   const [adsetLoading, setAdsetLoading] = useState(false);
   const [adsetPaging, setAdsetPaging] = useState(null);
+  const [ads, setAds] = useState([]);
+  const [adsLoading, setAdsLoading] = useState(false);
+  const [adsPaging, setAdsPaging] = useState(null);
 
   const getCampaign = useCallback(async () => {
     setCampaignsLoading(true);
@@ -69,11 +75,27 @@ export function Campaigns() {
     }
   }, []);
 
+  //get ads
+  const getAds = useCallback(async () => {
+    setAdsetLoading(true);
+    try {
+      const { data, paging } = await fetchAds();
+      console.log("Data", data);
+      setAds(data || []);
+      setAdsPaging(paging);
+    } catch (err) {
+      toast.error("Failed to load Adsets");
+    } finally {
+      setAdsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     getCampaign();
     getCreatives();
     getAdset();
-  }, [getCampaign, getCreatives,getAdset]);
+    getAds();
+  }, [getCampaign, getCreatives, getAdset,getAds]);
 
   const hasMoreCampaigns = useCallback(async () => {
     if (!paging?.next) {
@@ -139,6 +161,28 @@ export function Campaigns() {
       toast.error("Failed to fetch more adsets");
     }
   }, [adsetPaging]);
+
+  //pagination for adsets
+  const hasMoreAds = useCallback(async () => {
+    if (!adsPaging?.next) {
+      return;
+    }
+    try {
+      const res = await fetch(adsPaging.next);
+      const data = await res.json();
+      const newAds = data?.data || [];
+      const newPaging = data?.paging || null;
+      setAds((prev) => {
+        const newReplies = [...prev, ...newAds];
+        return Array.from(new Map(newReplies.map((r) => [r.id, r])).values());
+      });
+
+      setAdsPaging(newPaging);
+    } catch (err) {
+      console.log("Failed to fetch more adsets", err);
+      toast.error("Failed to fetch more adsets");
+    }
+  }, [adsPaging]);
   return (
     <div className="p-6 space-y-6 max-h-screen">
       {/* buttons */}
@@ -175,6 +219,15 @@ export function Campaigns() {
         >
           AdsCreatives
         </button>
+
+        <button
+          className={`px-3 py-2 rounded hover:bg-blue-700 text-white ${
+            selectedType === "insights" ? "bg-blue-600" : "bg-gray-400"
+          }`}
+          onClick={() => setSelectedType("insights")}
+        >
+          Insights
+        </button>
       </div>
 
       {/* content */}
@@ -187,7 +240,9 @@ export function Campaigns() {
               ? "Adsets"
               : selectedType === "ads"
               ? "Ads"
-              : "Adscreatives"}
+              : selectedType === "adscreatives"
+              ? "Adscreatives"
+              : "Insights"}
           </h2>
           {selectedType === "campaign" ? (
             <button
@@ -210,14 +265,14 @@ export function Campaigns() {
             >
               Create Ads
             </button>
-          ) : (
+          ) : selectedType === "ads" ? (
             <button
               className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
               onClick={() => setSelected("adscreatives")}
             >
               Create AdsCreatives
             </button>
-          )}
+          ):("")}
         </div>
 
         {selected === "createCampaign" && (
@@ -231,13 +286,18 @@ export function Campaigns() {
 
         {selected === "createAdset" && (
           <div className="mb-4">
-            <CreateAdsets campaigns={campaigns} setSelected={setSelected} />
+            <CreateAdsets campaigns={campaigns} setSelected={setSelected} refreshAdsets={getAdset}/>
           </div>
         )}
 
         {selected === "createAds" && (
           <div className="mb-4">
-            <CreateAds setSelected={setSelected} adset={adset} creatives={creatives}/>
+            <CreateAds
+              setSelected={setSelected}
+              adset={adset}
+              creatives={creatives}
+              refreshAds={getAds}
+            />
           </div>
         )}
 
@@ -268,7 +328,15 @@ export function Campaigns() {
             refreshAdsets={getAdset}
           />
         )}
-        {selectedType === "ads"}
+        {selectedType === "ads"&&(
+           <AdsList
+           ads={ads}
+           hasMoreAds={hasMoreAds}
+           paging={adsPaging}
+           adsLoading={adsLoading}
+           refreshAds={getAds}
+         />
+        )}
         {selectedType === "adscreatives" && (
           <AdCreativesList
             creatives={creatives}
@@ -277,6 +345,10 @@ export function Campaigns() {
             creativesLoading={creativesLoading}
             refreshCreatives={getCreatives}
           />
+        )}
+
+        {selectedType === "insights" && (
+          <Insights/>
         )}
       </div>
     </div>
