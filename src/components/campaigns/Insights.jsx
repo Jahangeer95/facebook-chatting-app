@@ -97,7 +97,7 @@ export function Insights() {
                     item.ad_id ||
                     item.adset_id ||
                     item.campaign_id ||
-                    item.account_id
+                    item.account_id||item.id
                   }
                   className="border rounded hover:bg-gray-50 text-xs"
                 >
