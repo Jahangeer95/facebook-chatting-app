@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner,faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { ViewAdCreative } from "./ViewAdCreative";
+import { Delete } from "./Delete";
 
 export function AdCreativesList({
   creatives,
@@ -17,11 +18,15 @@ export function AdCreativesList({
   refreshCreatives,
 }) {
   const [selectedAdCreative, setSelectedAdCreative] = useState("");
+  const [selectedId, setSelectedId] = useState("");
+  const [openDelete, setOpenDelete] = useState(false);
   //to delete ad creative
   const handleDelete = async (id) => {
     try {
       await deleteAdcreative(id);
       refreshCreatives();
+      setOpenDelete(false);
+      setSelectedId("")
       toast.success("Creatives deleted successfully");
     } catch (error) {
       toast.error(error.message);
@@ -161,7 +166,7 @@ export function AdCreativesList({
                       <td className="px-2 py-2 text-gray-500">
                         <button
                           className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => {setSelectedId(item.id); setOpenDelete(true)}}
                         >
                           Delete
                         </button>
@@ -188,6 +193,10 @@ export function AdCreativesList({
           )}
         </InfiniteScroll>
       </div>
+      {/* delete campaign */}
+      {openDelete &&selectedId &&(
+        <Delete setOpenDelete={setOpenDelete} id={selectedId} handleDelete={handleDelete}/>
+      )}
     </div>
   );
 }

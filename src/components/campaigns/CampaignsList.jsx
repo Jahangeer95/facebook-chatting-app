@@ -6,6 +6,7 @@ import { UpdateCampaigns } from "./UpdateCampaign";
 import { deleteCampaign, getAdsets } from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
 import { AdsetsList } from "./AdsetsList";
+import { Delete } from "./Delete";
 
 export function CampaignsList({
   campaigns,
@@ -19,11 +20,15 @@ export function CampaignsList({
   const [adset, setAdsets] = useState([]);
   const [adsetLoading, setAdsetLoading] = useState(false);
   const [adsetPaging, setAdsetPaging] = useState(null);
+  const [selectedId, setSelectedId] = useState("");
+  const [openDelete, setOpenDelete] = useState(false);
   //delete campaign
   const handleDelete = async (id) => {
     try {
       await deleteCampaign(id);
       toast.success("Campaign deleted successfully");
+      setOpenDelete(false);
+      setSelectedId("")
       refreshCampaign();
     } catch (error) {
       toast.error(error.message);
@@ -177,7 +182,7 @@ export function CampaignsList({
                       <td className="px-2 py-2 text-gray-500">
                         <button
                           className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => {setSelectedId(item.id); setOpenDelete(true)}}
                         >
                           Delete
                         </button>
@@ -198,7 +203,7 @@ export function CampaignsList({
               </table>
             </div>
           ) : (
-            <p className="text-gray-600">No Campaign is available</p>
+            <p className="text-gray-500  text-center mt-10">No Campaign is available</p>
           )}
         </InfiniteScroll>
       </div>
@@ -209,6 +214,11 @@ export function CampaignsList({
           setSelected={setSelectedCampaign}
           refreshCampaign={refreshCampaign}
         />
+      )}
+
+      {/* delete campaign */}
+      {openDelete &&selectedId &&(
+        <Delete setOpenDelete={setOpenDelete} id={selectedId} handleDelete={handleDelete}/>
       )}
     </div>
   );

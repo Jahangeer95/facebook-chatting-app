@@ -5,6 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { deleteAdset } from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
 import { UpdateAdsets } from "./UpdateAdset";
+import { Delete } from "./Delete";
 
 export function AdsetsList({
   campaigns,
@@ -15,10 +16,14 @@ export function AdsetsList({
   refreshAdsets,
 }) {
   const [selectedAdset, setSelectedAdset] = useState("");
+  const [selectedId, setSelectedId] = useState("");
+  const [openDelete, setOpenDelete] = useState(false);
   //delete adset
   const handleDelete = async (id) => {
     try {
       await deleteAdset(id);
+      setOpenDelete(false);
+      setSelectedId(" ");
       refreshAdsets();
       toast.success("Adset deleted successfully");
     } catch (error) {
@@ -133,7 +138,7 @@ export function AdsetsList({
                       <td className="px-2 py-2 text-gray-500">
                         <button
                           className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => {setSelectedId(item.id);setOpenDelete(true)}}
                         >
                           Delete
                         </button>
@@ -152,7 +157,7 @@ export function AdsetsList({
               </table>
             </div>
           ) : (
-            <p className="text-gray-600">No Adset is available</p>
+            <p className="text-gray-500 text-center mt-10">No Adset is available</p>
           )}
         </InfiniteScroll>
       </div>
@@ -164,6 +169,11 @@ export function AdsetsList({
           setSelected={setSelectedAdset}
           refreshAdsets={refreshAdsets}
         />
+      )}
+
+      {/* delete adset */}
+      {openDelete &&selectedId &&(
+          <Delete setOpenDelete={setOpenDelete} id={selectedId} handleDelete={handleDelete}/>
       )}
     </div>
   );
