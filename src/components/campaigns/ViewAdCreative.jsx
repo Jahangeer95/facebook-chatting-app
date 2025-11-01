@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
-import { getAdCreativesPreview } from "../../api/CampaignEndpoints";
+import { getAdCreativesPreview, getAdPreview } from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
 
-export function ViewAdCreative({ adcreativeId }) {
+export function ViewAdCreative({ adId, name }) {
   const [preview, setPreview] = useState("");
   const [adFormat, setAdFormat] = useState("DESKTOP_FEED_STANDARD");
-
 
   useEffect(() => {
     //view ad creative
     const getPreview = async () => {
       try {
-        const data = await getAdCreativesPreview(adcreativeId, adFormat);
+        let data;
+        if (name === "adcreatives") {
+          data = await getAdCreativesPreview(adId, adFormat);
+        } else if (name === "ads") {
+          data = await getAdPreview(adId, adFormat);
+        }
         console.log("Data of adcreative preview", data);
         setPreview(data);
       } catch (err) {
@@ -19,16 +23,16 @@ export function ViewAdCreative({ adcreativeId }) {
       }
     };
 
-    if (adcreativeId) {
+    if (adId) {
       getPreview();
     }
-  }, [adcreativeId, adFormat]);
-  
+  }, [adId, adFormat]);
+
   return (
     <div className="p-6 bg-white rounded-md shadow-md mt-5">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-lg font-semibold text-gray-800">
-          Ad Creative Preview
+          Ad Preview
         </h1>
         <select
           className="border border-gray-300 rounded p-2 text-gray-700 text-sm"
@@ -53,7 +57,7 @@ export function ViewAdCreative({ adcreativeId }) {
 
       <div
         className="border border-gray-200 rounded-md overflow-auto w-full flex items-center justify-center"
-        dangerouslySetInnerHTML={{__html: preview }}
+        dangerouslySetInnerHTML={{ __html: preview }}
       />
     </div>
   );

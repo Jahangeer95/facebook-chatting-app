@@ -313,3 +313,77 @@ export const createPreview = async (name, page_id, message, link, headline, call
     );
   }
 };
+
+//fetch insights
+export const getInsight = async (level, preset) => {
+  try {
+    const res = await Api.get(`/fb-ad/insight`, {
+      params: {level:level, data_preset: preset },
+    });
+
+    console.log("Fetched Insights:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching insights:", error);
+  }
+};
+
+//fetch all ads
+export const fetchAds = async () => {
+  try {
+    const res = await Api.get(`fb-ad/ads`);
+    console.log({ res });
+    if (res.status === 200) {
+      console.log({ res });
+      const {data,paging}=res.data;
+      console.log("Ads data:", data);
+      console.log("Paging:", paging);
+      return {data,paging};
+    }
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};
+
+//delete ads
+export const deleteAd = async (adId) => {
+  try {
+    const res = await Api.delete(`fb-ad/ads/${adId}`);
+    console.log({ res });
+    console.log("Result of delete ad:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error in deleting ad :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+}; 
+
+//get preview
+export const getAdPreview = async (adId,adFormat) => {
+  try {
+    const res = await Api.get(`fb-ad/ads/${adId}/preview`, {
+      params: { ad_format: adFormat },
+    });
+    console.log({ res });
+    if (res.status === 200) {
+      console.log("Adcreative preview:", res.data?.data);
+      return res.data?.data?.[0]?.body;
+    }
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
+  }
+};
