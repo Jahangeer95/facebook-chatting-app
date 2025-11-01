@@ -281,6 +281,7 @@ export function CreateAdsCreatives({ setSelected, refreshCreatives }) {
             </div>
           )}
         </div>
+        </div>
         <div className="flex flex-col sm:flex-row justify-center gap-2 border-t border-gray-400 p-2">
           <button
             className="px-7 py-2 rounded bg-gray-300 w-full sm:w-auto hover:bg-gray-400 transition"
@@ -303,7 +304,7 @@ export function CreateAdsCreatives({ setSelected, refreshCreatives }) {
             Preview
           </button>
           </div>
-        </div>
+        {/* </div> */}
       </div>
     </Modal>
   );
