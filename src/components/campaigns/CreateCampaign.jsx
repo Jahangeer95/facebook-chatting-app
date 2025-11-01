@@ -119,6 +119,7 @@ export function CreateCampaigns({ setSelected, refreshCampaign }) {
           <option value="">Select Buying Type</option>
           <option value="AUCTION">AUCTION</option>
           <option value="RESERVED">RESERVED</option>
+          <option value="REACH_AND_FREQUENCY">REACH AND FREQUENCY</option>
         </select>
 
         <div className="flex flex-col sm:flex-row justify-center gap-2 border-t border-gray-400 p-2">

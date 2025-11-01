@@ -19,6 +19,7 @@ export function CreateAdsets({ campaigns, setSelected ,refreshAdsets }) {
   const [countries, setCountries] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [bidAmount,setBidAmount]=useState("");
 
   const options = countryList().getData();
 
@@ -150,6 +151,22 @@ export function CreateAdsets({ campaigns, setSelected ,refreshAdsets }) {
             <option value="NONE">NONE</option>
           </select>
 
+          {/* bid amount */}
+          {
+            ["LOWEST_COST_WITHOUT_CAP","COST_CAP"].includes(bidStrategy)&&(
+              <>
+              <label className="font-bold text-white text-sm sm:text-base">Bid Amount :</label>
+              <input
+                type="number"
+                placeholder="Enter bid amount"
+                className="px-2 py-1 mb-3 border block w-full mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400 rounded"
+                value={bidAmount}
+                onChange={(e) => setBidAmount(e.target.value)}
+                required
+              />
+              </>
+            )
+          }
           {/* status */}
           <label className="font-bold text-white text-sm sm:text-base">
             Status :
