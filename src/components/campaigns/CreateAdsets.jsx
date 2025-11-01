@@ -8,7 +8,7 @@ import Select from "react-select";
 import countryList from "react-select-country-list";
 import { optimizationOptions } from "../../helper/OptimizationGoalsOptions";
 
-export function CreateAdsets({ campaigns, setSelected }) {
+export function CreateAdsets({ campaigns, setSelected ,refreshAdsets }) {
   const [name, setName] = useState("");
   const [campaignId, setCampaignId] = useState("");
   const [dailyBudget, setDailyBudget] = useState("");
@@ -44,6 +44,7 @@ export function CreateAdsets({ campaigns, setSelected }) {
       await createAdset(body);
 
       toast.success("Adset created successfully");
+      refreshAdsets();
       setSelected(false);
       setName("");
       setCampaignId("");
