@@ -286,7 +286,7 @@ export function Campaigns() {
 
         {selected === "createAdset" && (
           <div className="mb-4">
-            <CreateAdsets campaigns={campaigns} setSelected={setSelected} refreshAdsets={getAdset}/>
+            <CreateAdsets campaigns={campaigns} setSelected={setSelected} refreshAdsets={getAdset} hasMoreCampaigns={hasMoreCampaigns}/>
           </div>
         )}
 
@@ -297,6 +297,8 @@ export function Campaigns() {
               adset={adset}
               creatives={creatives}
               refreshAds={getAds}
+              hasMoreAdsets={hasMoreAdsets}
+              hasMoreCreatives={hasMoreCreatives}
             />
           </div>
         )}

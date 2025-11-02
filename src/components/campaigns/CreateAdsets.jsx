@@ -8,7 +8,7 @@ import Select from "react-select";
 import countryList from "react-select-country-list";
 import { optimizationOptions } from "../../helper/OptimizationGoalsOptions";
 
-export function CreateAdsets({ campaigns, setSelected ,refreshAdsets }) {
+export function CreateAdsets({ campaigns, setSelected ,refreshAdsets, hasMoreCampaigns }) {
   const [name, setName] = useState("");
   const [campaignId, setCampaignId] = useState("");
   const [dailyBudget, setDailyBudget] = useState("");
@@ -115,16 +115,17 @@ export function CreateAdsets({ campaigns, setSelected ,refreshAdsets }) {
           <select
             className="px-2 py-1 mb-3 border block w-full mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400 rounded text-sm sm:text-base"
             value={campaignId}
-            onChange={(e) => setCampaignId(e.target.value)}
+            onChange={(e) => {const value=e.target.value;if(value==="loadMore"){hasMoreCampaigns()}else{setCampaignId(value)}}}
             required
           >
             <option value="">Select Campaign</option>
             {Array.isArray(campaigns) &&
               campaigns.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {c.name}
+                  {c.name.replace(/_/g," ")}
                 </option>
               ))}
+              {hasMoreCampaigns &&(<option value="loadMore" className="text-sm text-gray-500 text-center">Load More</option>)}
           </select>
 
           {/* bid strategy */}

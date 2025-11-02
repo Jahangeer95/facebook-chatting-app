@@ -5,7 +5,7 @@ import { Modal } from "../modal/Modal";
 import { toast } from "react-toastify";
 import { createAd} from "../../api/CampaignEndpoints";
 
-export function CreateAds({ setSelected, adset, creatives ,refreshAds}) {
+export function CreateAds({ setSelected, adset, creatives ,refreshAds, hasMoreAdsets, hasMoreCreatives}) {
   const [name, setName] = useState("");
   const [adsetId, setAdsetID] = useState("");
   const [adCreativeId, setAdCreativeId] = useState("");
@@ -58,7 +58,7 @@ export function CreateAds({ setSelected, adset, creatives ,refreshAds}) {
         <select
           className="px-2 py-1 mb-3 border block w-full mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400 rounded text-sm sm:text-base"
           value={adsetId}
-          onChange={(e) => setAdsetID(e.target.value)}
+          onChange={(e) => {const value=e.target.value;if(value==="loadMore"){hasMoreAdsets()}else{setAdsetID(value)}}}
           required
         >
           <option value="">Select Adset</option>
@@ -68,6 +68,7 @@ export function CreateAds({ setSelected, adset, creatives ,refreshAds}) {
                 {a.name}
               </option>
             ))}
+            {hasMoreAdsets&&(<option value="loadMore" className="text-sm text-gray-500 text-center">Load More</option>)}
         </select>
 
         {/* adcreativeid */}
@@ -77,7 +78,7 @@ export function CreateAds({ setSelected, adset, creatives ,refreshAds}) {
         <select
           className="px-2 py-1 mb-3 border block w-full mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400 rounded text-sm sm:text-base"
           value={adCreativeId}
-          onChange={(e) => setAdCreativeId(e.target.value)}
+          onChange={(e) => {const value=e.target.value; if(value==="loadMore"){hasMoreCreatives()}else{setAdCreativeId(value)}}}
           required
         >
           <option value="">Select Creative</option>
@@ -87,6 +88,7 @@ export function CreateAds({ setSelected, adset, creatives ,refreshAds}) {
                 {a.title}
               </option>
             ))}
+            {hasMoreCreatives&&(<option value="loadMore" className="text-sm text-gray-500 text-center">Load More</option>)}
         </select>
 
         {/* status */}
