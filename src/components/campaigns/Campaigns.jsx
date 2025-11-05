@@ -186,7 +186,7 @@ export function Campaigns() {
   return (
     <div className="p-6 space-y-6 max-h-screen">
       {/* buttons */}
-      <div className="flex gap-5 mb-4">
+      <div className="flex flex-wrap gap-5 mb-4">
         <button
           className={`px-3 py-2 rounded hover:bg-blue-700 text-white  ${
             selectedType === "campaign" ? "bg-blue-600" : "bg-gray-400"
