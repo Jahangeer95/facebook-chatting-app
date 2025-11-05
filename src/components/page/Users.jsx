@@ -6,7 +6,7 @@ import { DeletePage } from "./DeletePage";
 export function Users({users,refreshUsers}) {
   const [loading, setLoading] = useState(false);
   // const [users, setUsers] = useState([]);
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
   console.log("Logged In User:", user);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);

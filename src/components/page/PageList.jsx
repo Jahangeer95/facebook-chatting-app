@@ -7,7 +7,7 @@ import { DeletePage } from "./DeletePage";
 export function PageList({pages,fetchPage,refreshUsers,users}) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
   console.log("Logged In User:", user);
   const [selectedPageId, setSelectedPageId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);

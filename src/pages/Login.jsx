@@ -1,6 +1,6 @@
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUser } from "../api/Login";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ export function Login() {
       } else {
         const res = await loginUser(username, password);
         if (res.data) {
-          sessionStorage.setItem("user", JSON.stringify(res.data));
+          localStorage.setItem("user", JSON.stringify(res.data));
           const token = localStorage.getItem("user_auth_token");
           //save user id
           localStorage.setItem("user_id", res.data._id);
@@ -40,6 +40,14 @@ export function Login() {
       toast.error(error.message || "Failed to login.");
     }
   };
+
+  //redirect user to /pages if auth token is in localStorage
+  useEffect(()=>{
+    const token = localStorage.getItem("user_auth_token");
+    if (token) {
+      navigate("/pages");
+    }
+  },[navigate])
   return (
     <div className="flex justify-center items-center border min-h-screen bg-gray-100">
       <div className="w-96 shadow-lg bg-white rounded-md p-8">

@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 export function Pages() {
   const [selected, setSelected] = useState("");
   //current user
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
   console.log("Logged In User:", user);
   const [pages, setPages] = useState([]);
   const [users, setUsers] = useState([]);

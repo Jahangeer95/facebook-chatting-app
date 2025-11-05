@@ -11,7 +11,7 @@ import { logoutUser } from "../helper/Logout";
 export function Sidebar({ isSidebarOpen }) {
   const { pageID } = useParams();
   //current user
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
   console.log("Logged In User:", user);
   //id of facebook ad account
   const adTokenId=sessionStorage.getItem("fb_ad_account_id");
