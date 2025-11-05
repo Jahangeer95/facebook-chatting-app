@@ -6,20 +6,20 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const login = async () => {
     try {
-      if (!email.trim() || !password.trim()) {
-        if (!email.trim()) {
-          toast.error("Email is empty.");
+      if (!username.trim() || !password.trim()) {
+        if (!username.trim()) {
+          toast.error("Username is empty.");
         }
         if (!password.trim()) {
           toast.error("Password is empty.");
         }
       } else {
-        const res = await loginUser(email, password);
+        const res = await loginUser(username, password);
         if (res.data) {
           sessionStorage.setItem("user", JSON.stringify(res.data));
           const token = localStorage.getItem("user_auth_token");
@@ -45,17 +45,17 @@ export function Login() {
       <div className="w-96 shadow-lg bg-white rounded-md p-8">
         <h1 className="text-center text-3xl block font-semibold mb-2">Login</h1>
         <div>
-          <label htmlFor="email" className="font-bold mb-1">
+          <label htmlFor="username" className="font-bold mb-1">
             <FontAwesomeIcon icon={faUser} className="mr-2" />
             Username :
           </label>
           <input
-            id="email"
-            type="email"
-            placeholder="Email"
+            id="username"
+            type="text"
+            placeholder="Username"
             className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded "
-            onChange={(e) => setEmail(e.target.value)}
-            inputMode="email"
+            onChange={(e) => setUsername(e.target.value)}
+            inputMode="text"
             required
           />
         </div>

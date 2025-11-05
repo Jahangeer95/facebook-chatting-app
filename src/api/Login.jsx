@@ -1,9 +1,9 @@
 import { Api } from "../config";
 
 //user login
-export const loginUser = async (email, password) => {
+export const loginUser = async (username, password) => {
   try {
-    const body = { email, password };
+    const body = { username, password };
     const res = await Api.post(`user/login`, body);
     console.log({ res });
     if (res.status === 200) {
