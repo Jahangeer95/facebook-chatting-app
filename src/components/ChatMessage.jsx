@@ -14,6 +14,7 @@ export function ChatMessage({ message }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const attachment = message.attachments?.data?.[0];
   const imageUrl = attachment?.image_data?.url;
+  const sticker=message.shares?.data?.[0]?.link;
 
   const messageContent = () => {
     //to handle attachment message
@@ -49,12 +50,12 @@ export function ChatMessage({ message }) {
     }
 
     //to handle sticker message
-    if (message.sticker) {
+    if (sticker) {
       return (
         <img
-          src={message.sticker}
+          src={sticker}
           alt="sticker"
-          className="max-w-[120px] rounded-lg"
+          className="max-w-[80px] rounded-lg"
           onError={() => console.warn("Sticker failed to load")}
         />
       );
