@@ -87,7 +87,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                           item.access_token
                         );
                         sessionStorage.setItem("fb_ad_account_id", item.ad_token_id);
-                        if(user?.role=== "ADMIN" || user?.role=== "MANAGER"){
+                        if(user?.role=== "ADMIN" || user?.role=== "MANAGER"|| user?.role === "OWNER"){
                         navigate(`/${item.page_id}/home`);
                         }
                         else if(user?.role=== "EDITOR" || user?.role=== "MODERATOR"){
@@ -98,7 +98,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                       View
                     </button>
                     {/* add users to page */}
-                    {user?.role === "ADMIN" && (
+                    {(user?.role === "ADMIN" || user?.role === "OWNER") && (
                       <select
                         onChange={(e) =>
                           addUserToPage(item._id, e.target.value)
@@ -114,7 +114,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                       </select>
                     )}
                     {/* Delete page */}
-                    {user?.role === "ADMIN" && (
+                    {(user?.role === "ADMIN" || user?.role === "OWNER") && (
                       <button
                         className="p-2 m-2 bg-red-500 rounded hover:bg-red-600 text-white hover:scale-105 w-fit"
                         onClick={() =>{ setSelectedPageId(item._id); setOpenDelete(true)}}

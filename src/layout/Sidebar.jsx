@@ -22,7 +22,7 @@ export function Sidebar({ isSidebarOpen }) {
       }`}
     >
       <ul className="divide-y divide-gray-300">
-        {(user?.role === "ADMIN" || user?.role === "MANAGER") && (
+        {(user?.role === "ADMIN" || user?.role === "MANAGER"|| user?.role === "OWNER") && (
           <li>
             <NavLink
               to={`/${pageID}/home`}

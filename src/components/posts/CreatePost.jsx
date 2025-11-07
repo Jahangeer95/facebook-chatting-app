@@ -32,7 +32,7 @@ export function CreatePost() {
     <div className="relative w-full mt-3">
       <div className="object-right-top mb-4">
         <div className="text-end relative" ref={menuRef}>
-        {(user?.role === "ADMIN" ||user?.role === "MANAGER" || user?.role === "EDITOR")  && (
+        {(user?.role === "ADMIN" ||user?.role === "MANAGER" || user?.role === "EDITOR" || user?.role === "OWNER")  && (
           <button
             className="p-3 bg-blue-700 rounded  mr-4 text-white"
             onClick={() => setOpen(!open)}

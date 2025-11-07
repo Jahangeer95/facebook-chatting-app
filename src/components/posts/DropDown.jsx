@@ -38,7 +38,7 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
         >
           Update
         </li>
-        {(user?.role === "ADMIN" || user?.role === "MANAGER") && (
+        {(user?.role === "ADMIN" || user?.role === "MANAGER" || user?.role === "OWNER") && (
           <li
             className="cursor-pointer hover:text-blue-600 mb-2"
             onClick={() => setOpenDelete(true)}

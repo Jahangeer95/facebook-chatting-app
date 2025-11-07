@@ -57,7 +57,7 @@ export function Users({users,refreshUsers}) {
                 <th className="border px-2 py-1">Email</th>
                 <th className="border px-2 py-1">Role</th>
                 <th className="border px-2 py-1">Pages</th>
-                {user?.role === "ADMIN" && (
+                {(user?.role === "ADMIN" || user?.role === "OWNER") && (
                   <th className="border px-2 py-1">Action</th>
                 )}
               </tr>
@@ -72,8 +72,8 @@ export function Users({users,refreshUsers}) {
                   <td className="px-2 py-2 text-sm border">{item.email}</td>
                   <td className="px-2 py-2 text-sm flex justify-between items-center">
                     <p className="w-[100px]">{item.role}</p>
-                    {(user?.role === "ADMIN" || user?.role === "MANAGER") &&
-                      item.role !== "ADMIN" && (
+                    {(user?.role === "ADMIN" || user?.role === "MANAGER"|| user?.role === "OWNER") &&
+                      (item.role !== "ADMIN" && user?.role !== "OWNER") && (
                         <select
                           onChange={(e) =>
                             handleUpdate(item._id, e.target.value)
@@ -99,7 +99,7 @@ export function Users({users,refreshUsers}) {
                       : "No pages"}
                   </td>
                   <td>
-                    {user?.role === "ADMIN" && item.role !== "ADMIN" && (
+                    {(user?.role === "ADMIN" || user?.role === "OWNER") && (item.role !== "ADMIN" && item.role !== "OWNER") && (
                       <button
                         className="p-2 m-2 bg-red-500 rounded hover:bg-red-600 text-white hover:scale-105 w-fit"
                         onClick={() => {
