@@ -23,18 +23,18 @@ export const loginUser = async (username, password) => {
 export const createPage = async (adId, pageId, accessToken) => {
   try {
     let body={};
-    if (adId) {
+    // if (adId) {
        body = {
-        ad_token_id: adId,
+        ad_token_id: adId||null,
         page_id: pageId,
         access_token: accessToken,
       };
-    }else{
-      body = {
-        page_id: pageId,
-        access_token: accessToken,
-      };
-    }
+    // }else{
+    //   body = {
+    //     page_id: pageId,
+    //     access_token: accessToken,
+    //   };
+    // }
     const res = await Api.post(`user/pages`, body);
     console.log({ res });
     console.log("Result:", res.data);
@@ -170,5 +170,29 @@ export const getUserDetail = async (userId) => {
     }
   } catch (error) {
     console.error("Error :", error);
+  }
+};
+
+//update page details
+export const updatePage = async (adId, pageId, accessToken,_id ) => {
+  try {
+    let body={};
+       body = {
+        ad_token_id: adId ||null,
+        page_id: pageId,
+        access_token: accessToken,
+      };
+    
+    const res = await Api.put(`user/pages/${_id}`, body);
+    console.log({ res });
+    console.log("Result:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw new Error(
+      error.response?.error?.message ||
+        error.response?.data?.message ||
+        error.message
+    );
   }
 };
