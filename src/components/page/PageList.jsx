@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { DeletePage } from "./DeletePage";
+import { UpdatePage } from "./UpdatePage";
 
 export function PageList({pages,fetchPage,refreshUsers,users}) {
   const [loading, setLoading] = useState(false);
@@ -11,6 +12,8 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
   console.log("Logged In User:", user);
   const [selectedPageId, setSelectedPageId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [selectedPage, setSelectedPage] = useState("");
 
 
   const addUserToPage = async (pageId, userId) => {
@@ -64,7 +67,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
               {pages?.data?.pages?.map((item) => (
                 <tr
                   key={item._id}
-                  className="flex border p-3 rounded justify-between hover:bg-gray-100"
+                  className="flex border p-3 rounded justify-between hover:bg-gray-100 mb-2"
                 >
                   <td>
                     <h1 className="font-semibold text-gray-800 mr-2 text-sm">
@@ -76,7 +79,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                   </td>
                   <td className="flex">
                     <button
-                      className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto hover:scale-105"
+                      className="p-2 m-2 bg-blue-600 rounded-lg hover:bg-blue-700 text-white ml-auto hover:scale-105"
                       onClick={() => {
                         sessionStorage.setItem("fb_page_id", item.page_id);
                         sessionStorage.setItem(
@@ -100,7 +103,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                         onChange={(e) =>
                           addUserToPage(item._id, e.target.value)
                         }
-                        className="border rounded border-blue-400 p-2 ml-2 w-full sm:w-33 md:w-40 text-sm focus:outline-none"
+                        className="border rounded border-blue-400 p-2 m-2 w-full sm:w-33 md:w-40 text-sm focus:outline-none"
                       >
                         <option value="" className="justify-between border-b">Add User</option>
                         {Array.isArray(users)&&users.map((u) => (
@@ -119,6 +122,10 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                         Delete
                       </button>
                     )}
+                    <button className="p-2 m-2 bg-green-600 rounded-lg hover:bg-green-700 text-white ml-auto hover:scale-105"
+                      onClick={() =>{ setSelectedPage(item); setOpenUpdate(true)}}>
+                      Update
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -139,6 +146,9 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
       </div> */}
       {openDelete &&selectedPageId &&(
         <DeletePage setOpenDelete={setOpenDelete} pageId={selectedPageId} handleDelete={handleDelete}/>
+      )}
+      {openUpdate &&selectedPage &&(
+        <UpdatePage setOpenUpdate={setOpenUpdate} page={selectedPage} refreshPages={fetchPage}/>
       )}
     </div>
   );
