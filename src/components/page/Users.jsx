@@ -1,5 +1,5 @@
 import { deleteUser, updateUserRole } from "../../api/Login";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { DeletePage } from "./DeletePage";
 
@@ -11,9 +11,9 @@ export function Users({users,refreshUsers}) {
   const [selectedUserId, setSelectedUserId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
 
-  useEffect(() => {
-    refreshUsers();
-  }, [refreshUsers]);
+  // useEffect(() => {
+  //   refreshUsers();
+  // }, [refreshUsers]);
 
   //delete a user
   const handleDelete = async (userId) => {

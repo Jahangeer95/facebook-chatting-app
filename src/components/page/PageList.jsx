@@ -1,5 +1,5 @@
 import { addUsersToPage, deletePageData } from "../../api/Login";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { DeletePage } from "./DeletePage";
@@ -44,9 +44,9 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
       }
     };
 
-  useEffect(() => {
-    refreshUsers();
-  }, [refreshUsers]);
+  // useEffect(() => {
+  //   refreshUsers();
+  // }, [refreshUsers]);
   return (
     <div className="w-full md:w-full">
       <div className=" mb-4 border-b border-gray-400 p-2">

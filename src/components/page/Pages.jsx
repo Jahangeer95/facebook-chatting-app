@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CreatePage } from "./CreatePage";
 import { PageList } from "./PageList";
 import { Users } from "./Users";
@@ -15,6 +15,7 @@ export function Pages() {
   console.log("Logged In User:", user);
   const [pages, setPages] = useState([]);
   const [users, setUsers] = useState([]);
+  const hasFetched=useRef(false);
 
   const getPage =useCallback( async () => {
     try {
@@ -37,6 +38,8 @@ export function Pages() {
   },[]);
 
   useEffect(() => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
     getPage();
     getAllUsers();
   }, [getAllUsers,getPage]);
