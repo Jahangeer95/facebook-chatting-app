@@ -79,15 +79,15 @@ export function ChatInput({ onSend, disabled }) {
         {/* for emoji */}
         <label
           htmlFor="text"
-          className="cursor-pointer p-2 rounded hover:bg-gray-400 text-gray-800 bg-gray-200"
-          onClick={() => setEmoji((prev) => !prev)}
+          className={`cursor-pointer p-2 rounded ${!disabled?'hover:bg-gray-400 text-gray-800 bg-gray-200':'cursor-not-allowed bg-gray-300 text-gray-500'}`}
+          onClick={() => { if(!disabled){setEmoji((prev) => !prev)}}}
         >
           <FontAwesomeIcon icon={faSmile} />
         </label>
         {/* icon for file input */}
         <label
           htmlFor="fileInput"
-          className="cursor-pointer p-2 rounded hover:bg-gray-400 text-gray-800 bg-gray-200"
+          className={`cursor-pointer p-2 rounded${!disabled?'hover:bg-gray-400 text-gray-800 bg-gray-200':'cursor-not-allowed bg-gray-300 text-gray-500'}`}
         >
           <FontAwesomeIcon icon={faPaperclip} />
         </label>
