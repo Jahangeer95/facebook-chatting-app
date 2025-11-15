@@ -99,7 +99,7 @@ export function Users({users,refreshUsers}) {
                       : "No pages"}
                   </td>
                   <td>
-                    {(user?.role === "ADMIN" || user?.role === "OWNER") && (item.role !== "ADMIN" && item.role !== "OWNER") && (
+                    {((user?.role === "OWNER" && item.role!=="OWNER")||(user?.role === "ADMIN" && item.role !== "ADMIN" && item.role !== "OWNER"))&& (
                       <button
                         className="p-2 m-2 bg-red-500 rounded hover:bg-red-600 text-white hover:scale-105 w-fit"
                         onClick={() => {
