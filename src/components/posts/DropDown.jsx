@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "../modal/Modal";
+import { user } from "../../config";
 
 export function DropDown({ postId, message, onUpdate, onDelete }) {
   const [openDelete, setOpenDelete] = useState(false);
@@ -9,7 +10,7 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
   const [newMessage, setNewMessage] = useState(message || " ");
   const [file, setFile] = useState(null);
   //current user
-  const user = JSON.parse(localStorage.getItem("user"));
+  // const user = JSON.parse(localStorage.getItem("user"));
 
   const handleUpdate = () => {
     if (onUpdate && file) {

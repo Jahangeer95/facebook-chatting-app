@@ -4,13 +4,14 @@ import { TextPost } from "./TextPost";
 import { MediaPost } from "./MediaPost";
 import { Modal } from "../modal/Modal";
 import { Buttons } from "./Buttons";
+import { user } from "../../config";
 
 export function CreatePost() {
   const [open, setOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("");
   const menuRef = useRef(null);
   //current user
-  const user = JSON.parse(localStorage.getItem("user"));
+  // const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     const handleClick = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {

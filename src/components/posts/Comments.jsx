@@ -7,6 +7,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { CommentInput } from "./CommentInput";
 import { CommentList } from "./CommentList";
 import { Insights } from "./Insights";
+import { user } from "../../config";
 
 export function Comments({ postId, pageName }) {
   const [selected, setSelected] = useState(false);
@@ -88,12 +89,12 @@ export function Comments({ postId, pageName }) {
   return (
     <div className="flex flex-col border-t border-gray-300">
       <div className="flex justify-between mr-5 p-2 text-gray-600">
-        <button
+        {(user?.role === "ADMIN" || user?.role === "MANAGER" || user?.role === "OWNER") && (<button
           className="text-blue-600 ml-4"
           onClick={() => setOpenInsights(true)}
         >
           Get Insights
-        </button>
+        </button>)}
         <button onClick={() => setSelected(!selected)}>
           {selected ? "Hide" : "Comments"}
         </button>

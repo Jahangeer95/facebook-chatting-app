@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PagePosts } from "./PagePosts";
 import { SchedulePosts } from "./SchedulePosts";
+import { user } from "../../config";
 
 export function Buttons() {
   const [selectedType, setSelectedType] = useState("publish");
@@ -15,14 +16,14 @@ export function Buttons() {
         >
           Published Posts 
         </button>
-        <button
+         {(user?.role === "ADMIN" ||user?.role === "MANAGER"|| user?.role === "OWNER")&&(<button
           className={`p-3  mb-3  rounded text-white ${
             selectedType === "schedule" ? "bg-blue-700 font-bold" : "bg-blue-500"
           }`}
           onClick={() => setSelectedType("schedule")}
         >
           Scheduled Posts
-        </button>
+        </button>)}
       </div>
 
       <div 
