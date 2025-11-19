@@ -10,7 +10,7 @@ export function CreatePost() {
   const [selectedType, setSelectedType] = useState("");
   const menuRef = useRef(null);
   //current user
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     const handleClick = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
