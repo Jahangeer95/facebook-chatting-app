@@ -7,6 +7,7 @@ import { deleteCampaign, getAdsets } from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
 import { AdsetsList } from "./AdsetsList";
 import { Delete } from "./Delete";
+import { user } from "../../config";
 
 export function CampaignsList({
   campaigns,
@@ -137,12 +138,12 @@ export function CampaignsList({
                     <th className="border px-2 py-2 font-semibold text-left">
                       Created Time
                     </th>
-                    <th className="border px-2 py-2 font-semibold text-left">
+                    {(user?.role === "ADMIN" ||user?.role === "MANAGER"|| user?.role === "OWNER")  && (<th className="border px-2 py-2 font-semibold text-left">
                       Update
-                    </th>
-                    <th className="border px-2 py-2 font-semibold text-left">
+                    </th>)}
+                    {(user?.role === "ADMIN" ||user?.role === "MANAGER"|| user?.role === "OWNER")  && (<th className="border px-2 py-2 font-semibold text-left">
                       Delete
-                    </th>
+                    </th>)}
                     <th className="border px-2 py-2 font-semibold text-left">
                       Adsets
                     </th>
@@ -171,22 +172,22 @@ export function CampaignsList({
                         {new Date(item.created_time).toLocaleString()}
                       </td>
                       {/* button to update campaign */}
-                      <td className="px-2 py-2 text-gray-500">
+                       {(user?.role === "ADMIN" ||user?.role === "MANAGER"|| user?.role === "OWNER")  && (<td className="px-2 py-2 text-gray-500">
                         <button
                           className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
                           onClick={() => setSelectedCampaign(item)}
                         >
                           Update
                         </button>
-                      </td>
-                      <td className="px-2 py-2 text-gray-500">
+                      </td>)}
+                       {(user?.role === "ADMIN" ||user?.role === "MANAGER"|| user?.role === "OWNER")  && (<td className="px-2 py-2 text-gray-500">
                         <button
                           className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
                           onClick={() => {setSelectedId(item.id); setOpenDelete(true)}}
                         >
                           Delete
                         </button>
-                      </td>
+                      </td>)}
                       <td className="px-2 py-2 text-gray-500">
                         <button
                           className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"

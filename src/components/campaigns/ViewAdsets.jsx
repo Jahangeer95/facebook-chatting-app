@@ -5,6 +5,7 @@ import { deleteAdset } from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { Delete } from "./Delete";
+import { user } from "../../config";
 
 export function ViewAdsets({
   adsets,
@@ -75,9 +76,9 @@ export function ViewAdsets({
                     <th className="border px-2 py-2 font-semibold text-left">
                       Targeting
                     </th>
-                    <th className="border px-2 py-2 font-semibold text-left">
+                    {(user?.role === "ADMIN" ||user?.role === "MANAGER"|| user?.role === "OWNER")  && (<th className="border px-2 py-2 font-semibold text-left">
                       Delete
-                    </th>
+                    </th>)}
                   </tr>
                 </thead>
                 <tbody>
@@ -118,14 +119,14 @@ export function ViewAdsets({
                       </td>
 
                       {/* button to delete campaign adset*/}
-                      <td className="px-2 py-2 text-gray-500">
+                      {(user?.role === "ADMIN" ||user?.role === "MANAGER"|| user?.role === "OWNER")  && (<td className="px-2 py-2 text-gray-500">
                         <button
                           className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
                           onClick={() => {setSelectedId(item.id); setOpenDelete(true)}}
                         >
                           Delete
                         </button>
-                      </td>
+                      </td>)}
                     </tr>
                   ))}
                 </tbody>

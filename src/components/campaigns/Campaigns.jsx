@@ -15,6 +15,7 @@ import { ViewAdsets } from "./ViewAdsets";
 import { CreateAds } from "./CreateAds";
 import { Insights } from "./Insights";
 import { AdsList } from "./AdsList";
+import { user } from "../../config";
 
 export function Campaigns() {
   const [selected, setSelected] = useState("");
@@ -31,6 +32,8 @@ export function Campaigns() {
   const [ads, setAds] = useState([]);
   const [adsLoading, setAdsLoading] = useState(false);
   const [adsPaging, setAdsPaging] = useState(null);
+  //current user
+  // const user = JSON.parse(localStorage.getItem("user"));
 
   const getCampaign = useCallback(async () => {
     setCampaignsLoading(true);
@@ -220,14 +223,14 @@ export function Campaigns() {
           AdsCreatives
         </button>
 
-        <button
+        {(user?.role === "ADMIN" ||user?.role === "MANAGER"|| user?.role === "OWNER")  && (<button
           className={`px-3 py-2 rounded hover:bg-blue-700 text-white ${
             selectedType === "insights" ? "bg-blue-600" : "bg-gray-400"
           }`}
           onClick={() => setSelectedType("insights")}
         >
           Insights
-        </button>
+        </button>)}
       </div>
 
       {/* content */}
@@ -244,28 +247,28 @@ export function Campaigns() {
               ? "Adscreatives"
               : "Insights"}
           </h2>
-          {selectedType === "campaign" ? (
+          {(user?.role === "ADMIN" || user?.role === "MANAGER" ||  user?.role === "OWNER")&& selectedType === "campaign" ? (
             <button
               className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
               onClick={() => setSelected("createCampaign")}
             >
               Create Campaigns
             </button>
-          ) : selectedType === "adsets" ? (
+          ) : (user?.role === "ADMIN" ||user?.role === "MANAGER" ||  user?.role === "OWNER")&& selectedType === "adsets" ? (
             <button
               className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
               onClick={() => setSelected("createAdset")}
             >
               Create Adsets
             </button>
-          ) : selectedType === "ads" ? (
+          ) : (user?.role === "ADMIN" ||user?.role === "MANAGER" || user?.role === "EDITOR" || user?.role === "OWNER") && selectedType === "ads" ? (
             <button
               className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
               onClick={() => setSelected("createAds")}
             >
               Create Ads
             </button>
-          ) : selectedType === "adscreatives" ? (
+          ) : (user?.role === "ADMIN" ||user?.role === "MANAGER" || user?.role === "OWNER") && selectedType === "adscreatives" ? (
             <button
               className="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
               onClick={() => setSelected("adscreatives")}
