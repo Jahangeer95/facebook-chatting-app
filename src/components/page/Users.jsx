@@ -73,7 +73,7 @@ export function Users({users,refreshUsers}) {
                   <td className="px-2 py-2 text-sm flex justify-between items-center">
                     <p className="w-[100px]">{item.role}</p>
                     {(user?.role === "ADMIN" || user?.role === "MANAGER"|| user?.role === "OWNER") &&
-                      (item.role !== "ADMIN" && user?.role !== "OWNER") && (
+                      (item.role !== "ADMIN" && item.role !== "OWNER") && (
                         <select
                           onChange={(e) =>
                             handleUpdate(item._id, e.target.value)
