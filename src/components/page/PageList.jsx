@@ -122,10 +122,10 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                         Delete
                       </button>
                     )}
-                    <button className="p-2 m-2 bg-green-600 rounded-lg hover:bg-green-700 text-white ml-auto hover:scale-105"
+                    {(user?.role === "ADMIN" || user?.role === "OWNER"||user?.role === "MANAGER") && (<button className="p-2 m-2 bg-green-600 rounded-lg hover:bg-green-700 text-white ml-auto hover:scale-105"
                       onClick={() =>{ setSelectedPage(item); setOpenUpdate(true)}}>
                       Update
-                    </button>
+                    </button>)}
                   </td>
                 </tr>
               ))}
