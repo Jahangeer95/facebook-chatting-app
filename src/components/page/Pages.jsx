@@ -7,12 +7,13 @@ import { LogoutButton } from "../../helper/LogoutButton";
 import { UserDetail } from "./UserDetails";
 import { getPages, getUsers } from "../../api/Login";
 import { toast } from "react-toastify";
+import { user } from "../../config";
 
 export function Pages() {
   const [selected, setSelected] = useState("");
   //current user
-  const user = JSON.parse(localStorage.getItem("user"));
-  console.log("Logged In User:", user);
+  // const user = JSON.parse(localStorage.getItem("user"));
+  // console.log("Logged In User:", user);
   const [pages, setPages] = useState([]);
   const [users, setUsers] = useState([]);
   const hasFetched=useRef(false);
@@ -64,7 +65,7 @@ export function Pages() {
           <PageList pages={pages} fetchPage={getPage} refreshUsers={getAllUsers} users={users}/>
         </div>
         <div className="m-2 flex flex-col  w-full md:w-1/2">
-          {(user?.role === "ADMIN" || user?.role === "OWNER") && (
+          {(user?.role === "ADMIN" || user?.role === "OWNER" || user?.role === "MANAGER") && (
             <button
               className="p-2 bg-blue-600 rounded hover:bg-blue-700 text-white hover:scale-105 w-fit"
               onClick={() => setSelected("user")}

@@ -8,10 +8,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, useParams } from "react-router-dom";
 import { logoutUser } from "../helper/Logout";
+import { user } from "../config";
 export function Sidebar({ isSidebarOpen }) {
   const { pageID } = useParams();
   //current user
-  const user = JSON.parse(localStorage.getItem("user"));
+  // const user = JSON.parse(localStorage.getItem("user"));
   console.log("Logged In User:", user);
   //id of facebook ad account
   const adTokenId=sessionStorage.getItem("fb_ad_account_id");
@@ -64,7 +65,7 @@ export function Sidebar({ isSidebarOpen }) {
           </NavLink>
         </li>
         {adTokenId && adTokenId !== "undefined" && (
-          <li>
+          (user?.role === "ADMIN" || user?.role === "MANAGER"|| user?.role === "OWNER") && (<li>
             <NavLink
               to={`/${pageID}/campaigns`}
               className={({ isActive }) =>
@@ -76,7 +77,7 @@ export function Sidebar({ isSidebarOpen }) {
               <FontAwesomeIcon icon={faBullhorn} />
               Campaigns
             </NavLink>
-          </li>
+          </li>)
         )}
       </ul>
       <ul className="mt-auto divide-y divide-gray-300">
