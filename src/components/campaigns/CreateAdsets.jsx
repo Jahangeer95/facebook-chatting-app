@@ -154,7 +154,7 @@ export function CreateAdsets({ campaigns, setSelected ,refreshAdsets, hasMoreCam
 
           {/* bid amount */}
           {
-            ["LOWEST_COST_WITHOUT_CAP","COST_CAP"].includes(bidStrategy)&&(
+            ["LOWEST_COST_WITHOUT_CAP","COST_CAP","LOWEST_COST_WITH_BID_CAP"].includes(bidStrategy)&&(
               <>
               <label className="font-bold text-white text-sm sm:text-base">Bid Amount :</label>
               <input
