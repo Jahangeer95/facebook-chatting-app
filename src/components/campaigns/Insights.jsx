@@ -74,7 +74,7 @@ export function Insights() {
 
       {/* data */}
       {loading ? (
-        <p className="text-gray-500 italic">Loading insights...</p>
+        <p className="text-gray-500 italic text-center">Loading insights...</p>
       ) : insights.length > 0 ? (
         <div className="overflow-x-auto rounded-lg border border-gray-200">
           <table className="w-full text-sm text-left">

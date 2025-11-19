@@ -26,7 +26,7 @@ export function DeletePage({ setOpenDelete, handleDelete,pageId }) {
             </div>
 
             <p className="text-center text-white p-2">
-              Are you sure you want to delete this page?
+              Are you sure you want to delete this?
             </p>
             <div className="flex justify-center gap-2 mt-4 p-2 border-t border-gray-400">
               <button
