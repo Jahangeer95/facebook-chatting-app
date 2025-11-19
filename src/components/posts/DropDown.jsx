@@ -9,7 +9,7 @@ export function DropDown({ postId, message, onUpdate, onDelete }) {
   const [newMessage, setNewMessage] = useState(message || " ");
   const [file, setFile] = useState(null);
   //current user
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleUpdate = () => {
     if (onUpdate && file) {
