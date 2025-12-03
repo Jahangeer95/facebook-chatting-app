@@ -51,7 +51,7 @@ export function Pages() {
       <UserDetail />
       <div className="flex flex-col sm:flex-row justify-center bg-white items-start rounded-md space-y-10 space-x-5  sm:m-5 sm:items-center">
         <div className="m-5 flex flex-col  w-full md:w-1/2">
-          {(user?.role === "ADMIN" || user?.role === "OWNER") && (
+          {(user?.role === "ADMIN" || user?.role === "OWNER" || user?.role === "MANAGER") && (
             <button
               className="p-2 bg-blue-600 rounded hover:bg-blue-700 text-white hover:scale-105 w-fit"
               onClick={() => setSelected("create")}
