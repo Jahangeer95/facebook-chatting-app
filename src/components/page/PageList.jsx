@@ -56,7 +56,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
       {loading ? (
         <p className="text-center m-4">Loading Available Pages...</p>
       ) : pages?.data?.pages?.length ? (
-        <div className="overflow-x-auto space-y-2 mt-3 rounded-md w-full md:pl-5">
+        <div className="overflow-x-auto space-y-2 mt-3 rounded-md w-full">
           <table className="min-w-full border-collapse  rounded-md">
             <thead className="bg-gray-50 text-blue-600">
               <tr>
