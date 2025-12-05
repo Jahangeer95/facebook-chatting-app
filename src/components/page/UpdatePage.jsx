@@ -77,7 +77,7 @@ export function UpdatePage({ setOpenUpdate, page,refreshPages }) {
           type="text"
           value={accessToken}
           placeholder="Access Token"
-          className="px-2 py-1 mb-3 border block w-full mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400 rounded text-sm sm:text-base bg-white cursor-not-allowed disabled:bg-white disabled:text-gray-700 disabled:border-gray-300"
+          className="px-2 py-1 mb-3 border block w-full mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400 rounded text-sm sm:text-base bg-white cursor-pointer disabled:bg-white disabled:text-gray-700 disabled:border-gray-300"
           onChange={(e) => setAccessToken(e.target.value)}
           required
         />
