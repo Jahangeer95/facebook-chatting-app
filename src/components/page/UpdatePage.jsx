@@ -52,7 +52,7 @@ export function UpdatePage({ setOpenUpdate, page,refreshPages }) {
 
         {/* page id */}
         <label htmlFor="id" className="font-bold mb-1 text-white">
-          Page Id :
+          Page ID :
         </label>
         <input
           id="id"

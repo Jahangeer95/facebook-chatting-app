@@ -55,7 +55,7 @@ export function UserDetail() {
             <tbody className="divide-y divide-gray-200">
               <tr>
                 <td className="px-4 py-3">
-                  <span className="font-semibold">Username:</span>
+                  <span className="font-semibold">Username: </span>
                   {user.username}
                 </td>
               </tr>
