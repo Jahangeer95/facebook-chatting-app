@@ -14,6 +14,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
   const [openDelete, setOpenDelete] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [selectedPage, setSelectedPage] = useState("");
+  const [selectedUser, setSelectedUser] = useState(""); //selecteduser 
  //loogedIn user
   const [user,setUser]=useState(null);
   useEffect(()=>{
@@ -107,9 +108,15 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                     {/* add users to page */}
                     {(user?.role === "ADMIN" || user?.role === "OWNER") && (
                       <select
-                        onChange={(e) =>
-                          addUserToPage(item._id, e.target.value)
-                        }
+                        value={selectedUser}
+                        onChange={async (e) =>{
+                          const userId=e.target.value;
+                          if(!userId){
+                            return;
+                          }
+                          await addUserToPage(item._id, e.target.value)
+                          setSelectedUser("");
+                        }}
                         className="border rounded border-blue-400 p-2 w-32 sm:w-40 md:w-40 text-sm focus:outline-none"
                       >
                         <option value="" className="justify-between border-b">Add User</option>
