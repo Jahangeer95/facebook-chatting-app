@@ -16,10 +16,11 @@ export function Sidebar({ isSidebarOpen }) {
     const [user,setUser]=useState(null);
     useEffect(()=>{
       const loggedInUser=JSON.parse(localStorage.getItem("user"));
+      console.log("Logged In User in Sidebar:", loggedInUser);
       setUser(loggedInUser);
     },[])
   // const user = JSON.parse(localStorage.getItem("user"));
-  console.log("Logged In User:", user);
+  // console.log("Logged In User:", user);
   //id of facebook ad account
   const adTokenId=sessionStorage.getItem("fb_ad_account_id");
   return (

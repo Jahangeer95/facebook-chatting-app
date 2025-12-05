@@ -17,8 +17,8 @@ export function PageDetails({ formatName }) {
       console.log(res.data.data.name);
       console.log(res.data.data.about);
     } catch (err) {
-      console.error("Page information failed to load", err);
-      toast.error("Page information failed to load");
+      console.error("Page Details failed to load", err);
+      toast.error("Page Details failed to load");
     } finally {
       setSettingLoading(false);
     }
