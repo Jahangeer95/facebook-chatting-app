@@ -15,7 +15,7 @@ import { ViewAdsets } from "./ViewAdsets";
 import { CreateAds } from "./CreateAds";
 import { Insights } from "./Insights";
 import { AdsList } from "./AdsList";
-import { user } from "../../config";
+// import { user } from "../../config";
 
 export function Campaigns() {
   const [selected, setSelected] = useState("");
@@ -33,8 +33,11 @@ export function Campaigns() {
   const [adsLoading, setAdsLoading] = useState(false);
   const [adsPaging, setAdsPaging] = useState(null);
   //current user
-  // const user = JSON.parse(localStorage.getItem("user"));
-
+  const [user,setUser]=useState(null);
+  useEffect(()=>{
+  const loggedInUser = JSON.parse(localStorage.getItem("user"));
+    setUser(loggedInUser);
+  },[])
   const getCampaign = useCallback(async () => {
     setCampaignsLoading(true);
     try {

@@ -3,7 +3,7 @@
 
 import axios from "axios";
 //current user
-export const user=JSON.parse(localStorage.getItem("user"))
+// export const user=JSON.parse(localStorage.getItem("user"))
 // export const baseURL = "https://backend-whatsapp-chat-production.up.railway.app/";
 // export const pageID = "796037320257871";
 // export const accessToken="EAAKoMbXdYFABPXJv8f1eMaXnVqLa6dHIrysFtHqEZCyVAegPGqg6B9ZAEpCaAgVeZBZCJ9JYTIkCyjhkhGIBsOp2qwbi3KdZCqYzsHoYFhWZCJfwZCPGcJdkizDTcPrWkMYy5gNO76y01jWhIxTZAJgcX0yclUVk0oiZCZCXoPvhw7PfBuzgEIbVhMnX4aZAzlN3LlY1hkjzhByjozjttQblEzZBJewalQZDZD"

@@ -8,10 +8,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, useParams } from "react-router-dom";
 import { logoutUser } from "../helper/Logout";
-import { user } from "../config";
+import { useEffect, useState } from "react";
+// import { user } from "../config";
 export function Sidebar({ isSidebarOpen }) {
   const { pageID } = useParams();
-  //current user
+  //current user   //loggedIn user
+    const [user,setUser]=useState(null);
+    useEffect(()=>{
+      const loggedInUser=JSON.parse(localStorage.getItem("user"));
+      setUser(loggedInUser);
+    },[])
   // const user = JSON.parse(localStorage.getItem("user"));
   console.log("Logged In User:", user);
   //id of facebook ad account

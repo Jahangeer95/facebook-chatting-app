@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PagePosts } from "./PagePosts";
 import { SchedulePosts } from "./SchedulePosts";
-import { user } from "../../config";
+// import { user } from "../../config";
 
 export function Buttons() {
   const [selectedType, setSelectedType] = useState("publish");
+    //loogedIn user
+    const [user,setUser]=useState(null);
+    useEffect(()=>{
+      const loggedInUser=JSON.parse(localStorage.getItem("user"));
+      setUser(loggedInUser);
+    },[])
   return (
     <div className="flex flex-col items-center mb-10 h-screen">
       <div className="flex justify-center gap-4">

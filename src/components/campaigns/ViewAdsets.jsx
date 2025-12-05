@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { deleteAdset } from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Delete } from "./Delete";
-import { user } from "../../config";
+// import { user } from "../../config";
 
 export function ViewAdsets({
   adsets,
@@ -16,6 +16,12 @@ export function ViewAdsets({
 }) {
   const [selectedId, setSelectedId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
+    //loogedIn user
+    const [user,setUser]=useState(null);
+    useEffect(()=>{
+      const loggedInUser=JSON.parse(localStorage.getItem("user"));
+      setUser(loggedInUser);
+    },[])
   //delete adset
   const handleDelete = async (id) => {
     try {

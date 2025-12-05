@@ -1,13 +1,13 @@
 import { faArrowLeft, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { UpdateCampaigns } from "./UpdateCampaign";
 import { deleteCampaign, getAdsets } from "../../api/CampaignEndpoints";
 import { toast } from "react-toastify";
 import { AdsetsList } from "./AdsetsList";
 import { Delete } from "./Delete";
-import { user } from "../../config";
+// import { user } from "../../config";
 
 export function CampaignsList({
   campaigns,
@@ -23,6 +23,12 @@ export function CampaignsList({
   const [adsetPaging, setAdsetPaging] = useState(null);
   const [selectedId, setSelectedId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
+     //loogedIn user
+  const [user,setUser]=useState(null);
+  useEffect(()=>{
+    const loggedInUser=JSON.parse(localStorage.getItem("user"));
+    setUser(loggedInUser);
+  },[])
   //delete campaign
   const handleDelete = async (id) => {
     try {

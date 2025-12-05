@@ -7,7 +7,7 @@ import { LogoutButton } from "../../helper/LogoutButton";
 import { UserDetail } from "./UserDetails";
 import { getPages, getUsers } from "../../api/Login";
 import { toast } from "react-toastify";
-import { user } from "../../config";
+// import { user } from "../../config";
 
 export function Pages() {
   const [selected, setSelected] = useState("");
@@ -17,6 +17,12 @@ export function Pages() {
   const [pages, setPages] = useState([]);
   const [users, setUsers] = useState([]);
   const hasFetched=useRef(false);
+  //loggedIn user
+  const [user,setUser]=useState(null);
+  useEffect(()=>{
+    const loggedInUser=JSON.parse(localStorage.getItem("user"));
+    setUser(loggedInUser);
+  },[])
 
   const getPage =useCallback( async () => {
     try {

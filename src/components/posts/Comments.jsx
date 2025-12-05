@@ -7,7 +7,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { CommentInput } from "./CommentInput";
 import { CommentList } from "./CommentList";
 import { Insights } from "./Insights";
-import { user } from "../../config";
+// import { user } from "../../config";
 
 export function Comments({ postId, pageName }) {
   const [selected, setSelected] = useState(false);
@@ -17,6 +17,13 @@ export function Comments({ postId, pageName }) {
   const [loading, setLoading] = useState(false);
   const [openInsights, setOpenInsights] = useState(false);
 
+  //loogedIn user
+  const [user,setUser]=useState(null);
+  useEffect(()=>{
+    const loggedInUser=JSON.parse(localStorage.getItem("user"));
+    setUser(loggedInUser);
+  },[])
+  
   useEffect(() => {
     if (selected) {
       const getComments = async () => {

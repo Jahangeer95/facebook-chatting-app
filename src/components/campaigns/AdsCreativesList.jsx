@@ -6,10 +6,10 @@ import { toast } from "react-toastify";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner,faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ViewAdCreative } from "./ViewAdCreative";
 import { Delete } from "./Delete";
-import { user } from "../../config";
+// import { user } from "../../config";
 
 export function AdCreativesList({
   creatives,
@@ -21,6 +21,12 @@ export function AdCreativesList({
   const [selectedAdCreative, setSelectedAdCreative] = useState("");
   const [selectedId, setSelectedId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
+    //loogedIn user
+    const [user,setUser]=useState(null);
+    useEffect(()=>{
+      const loggedInUser=JSON.parse(localStorage.getItem("user"));
+      setUser(loggedInUser);
+    },[])
   //to delete ad creative
   const handleDelete = async (id) => {
     try {

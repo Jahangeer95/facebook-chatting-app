@@ -4,7 +4,7 @@ import { TextPost } from "./TextPost";
 import { MediaPost } from "./MediaPost";
 import { Modal } from "../modal/Modal";
 import { Buttons } from "./Buttons";
-import { user } from "../../config";
+// import { user } from "../../config";
 
 export function CreatePost() {
   const [open, setOpen] = useState(false);
@@ -12,6 +12,12 @@ export function CreatePost() {
   const menuRef = useRef(null);
   //current user
   // const user = JSON.parse(localStorage.getItem("user"));
+  //loogedIn user
+  const [user,setUser]=useState(null);
+  useEffect(()=>{
+    const loggedInUser=JSON.parse(localStorage.getItem("user"));
+    setUser(loggedInUser);
+  },[])
   useEffect(() => {
     const handleClick = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
