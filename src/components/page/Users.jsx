@@ -83,7 +83,7 @@ export function Users({users,refreshUsers}) {
                               return;
                             }
                             await handleUpdate(item._id, e.target.value);
-                            setSelectedUserId("");
+                            setSelectedUser("");
                           }}
                           className="border rounded border-blue-400 p-2 ml-2 w-[100px] sm:w-[120px]"
                         >
