@@ -1,16 +1,16 @@
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Modal } from "../modal/Modal";
 import { createUser } from "../../api/Login";
 import { toast } from "react-toastify";
 
-export function CreateUser({ setSelected,refreshUsers }) {
+export function CreateUser({ setSelected, refreshUsers }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-
+  const [showPassword, setShowPassword] = useState("");
   const handleCreate = async () => {
     // //check username length
     // if (username.length < 5) {
@@ -44,14 +44,18 @@ export function CreateUser({ setSelected,refreshUsers }) {
     <Modal onClose={() => setSelected(false)}>
       <div className="w-[300px] mx-auto sm:w-[400px] md:w-[400px] lg:w-[400px]">
         <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
-          <h2 className="text-lg font-semibold text-white sm:text-xl">Create User</h2>
+          <h2 className="text-lg font-semibold text-white sm:text-xl">
+            Create User
+          </h2>
           <FontAwesomeIcon
             icon={faTimes}
             className="cursor-pointer text-white text-sm sm:text-base"
             onClick={() => setSelected("")}
           />
         </div>
-        <label className="font-bold mb-1 text-white text-sm sm:text-base">Username :</label>
+        <label className="font-bold mb-1 text-white text-sm sm:text-base">
+          Username :
+        </label>
         <input
           type="text"
           placeholder="Enter username"
@@ -61,7 +65,9 @@ export function CreateUser({ setSelected,refreshUsers }) {
           required
         />
 
-        <label className="font-bold mb-1 text-white text-sm sm:text-base">Email :</label>
+        <label className="font-bold mb-1 text-white text-sm sm:text-base">
+          Email :
+        </label>
         <input
           type="email"
           placeholder="Enter email"
@@ -70,18 +76,35 @@ export function CreateUser({ setSelected,refreshUsers }) {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        <div className="relative mb-4">
+          <label className="font-bold mb-1 text-white text-sm sm:text-base">
+            Password :
+          </label>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter password"
+            className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded text-sm sm:text-base"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          {/*show/hide password icon */}
+          {
+            <span
+              className="absolute right-2 top-[38px] cursor-pointer text-gray-500"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                className="text-gray-500 hover:text-blue-500 cursor-pointer"
+              />
+            </span>
+          }
+        </div>
 
-        <label className="font-bold mb-1 text-white text-sm sm:text-base">Password :</label>
-        <input
-          type="password"
-          placeholder="Enter password"
-          className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400  rounded text-sm sm:text-base"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-
-        <label className="font-bold mb-1 text-white text-sm sm:text-base">Role :</label>
+        <label className="font-bold mb-1 text-white text-sm sm:text-base">
+          Role :
+        </label>
         <select
           // type="text"
           // placeholder="Enter role"

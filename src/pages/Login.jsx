@@ -1,4 +1,9 @@
-import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faEyeSlash,
+  faLock,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { loginUser } from "../api/Login";
@@ -8,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState("");
   const navigate = useNavigate();
   const login = async () => {
     try {
@@ -30,9 +36,8 @@ export function Login() {
           //check if auth is present only then navigate to pages
           if (token) {
             navigate("/pages");
-          }
-          else{
-            toast.error("Login failed auth token is missing")
+          } else {
+            toast.error("Login failed auth token is missing");
           }
         }
       }
@@ -42,12 +47,12 @@ export function Login() {
   };
 
   //redirect user to /pages if auth token is in localStorage
-  useEffect(()=>{
+  useEffect(() => {
     const token = localStorage.getItem("user_auth_token");
     if (token) {
       navigate("/pages");
     }
-  },[navigate])
+  }, [navigate]);
   return (
     <div className="flex justify-center items-center border min-h-screen bg-gray-100">
       <div className="w-96 shadow-lg bg-white rounded-md p-8">
@@ -67,19 +72,31 @@ export function Login() {
             required
           />
         </div>
-        <div>
+        <div className="mb-4 relative">
           <label htmlFor="password" className="font-bold mb-1">
             <FontAwesomeIcon icon={faLock} className="mr-2" />
             Password :
           </label>
           <input
             id="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Password"
             className="px-2 py-1 mb-3 border  block w-full  mt-2 focus:outline-none focus:ring-1 focus:ring-blue-400 rounded"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {/*show/hide password icon */}
+          {
+            <span
+              className="absolute right-2 top-[38px] cursor-pointer text-gray-500"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                className="text-gray-500 hover:text-blue-500 cursor-pointer"
+              />
+            </span>
+          }
           <div className="text-center">
             <button
               className="px-4 py-2 bg-blue-400 rounded text-white mt-2 hover:bg-blue-800 transition w-full sm:w-auto"
