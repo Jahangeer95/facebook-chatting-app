@@ -10,6 +10,7 @@ export function Users({users,refreshUsers}) {
   console.log("Logged In User:", user);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
+  const [selectedUser, setSelectedUser] = useState("");
 
   // useEffect(() => {
   //   refreshUsers();
@@ -75,9 +76,15 @@ export function Users({users,refreshUsers}) {
                     {(user?.role === "ADMIN" || user?.role === "MANAGER"|| user?.role === "OWNER") &&
                       (item.role !== "ADMIN" && item.role !== "OWNER") && (item._id !== user?._id) &&(
                         <select
-                          onChange={(e) =>
-                            handleUpdate(item._id, e.target.value)
-                          }
+                         value={selectedUser}
+                          onChange={async (e) =>{
+                            const userId=e.target.value;
+                            if(!userId){
+                              return;
+                            }
+                            await handleUpdate(item._id, e.target.value);
+                            setSelectedUserId("");
+                          }}
                           className="border rounded border-blue-400 p-2 ml-2 w-[100px] sm:w-[120px]"
                         >
                           <option value="">UPDATE</option>
