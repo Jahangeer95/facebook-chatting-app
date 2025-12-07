@@ -106,7 +106,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                       View
                     </button>
                     {/* add users to page */}
-                    {(user?.role === "ADMIN" || user?.role === "OWNER" || user?.role === "Manager" ) && (
+                    {(user?.role === "ADMIN" || user?.role === "OWNER" || user?.role === "MANAGER" ) && (
                       <select
                         value={selectedUser}
                         onChange={async (e) =>{
