@@ -120,7 +120,7 @@ export function PageList({pages,fetchPage,refreshUsers,users}) {
                         className="border rounded border-blue-400 p-2 w-32 sm:w-40 md:w-40 text-sm focus:outline-none"
                       >
                         <option value="" className="justify-between border-b">Add User</option>
-                        {Array.isArray(users)&&users.map((u) => (
+                        {Array.isArray(users)&&users.filter(u=>!u.pages?.some(page=>page._id===item._id)).map((u) => (
                           <option key={u._id} value={u._id}>
                             {u.username}   |   {u.role}
                           </option>
