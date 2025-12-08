@@ -18,7 +18,11 @@ export function PageDetails({ formatName }) {
       console.log(res.data.data.about);
     } catch (err) {
       console.error("Page Details failed to load", err);
-      toast.error("Page Details failed to load");
+      toast.error(
+        <div>
+          <strong>Page Details</strong> {err.message}
+        </div>
+      );
     } finally {
       setSettingLoading(false);
     }
@@ -33,7 +37,13 @@ export function PageDetails({ formatName }) {
       await updatePageDetails(setting, value);
       await getPageDetails();
     } catch (err) {
-      toast.error("Failed to update setting");
+      toast.error(
+        <div>
+          <strong>Update Page Details</strong> {err.message}
+        </div>
+      );
+    } finally {
+      getPageDetails();
     }
   };
 
@@ -46,7 +56,9 @@ export function PageDetails({ formatName }) {
   return (
     <div className="w-full md:max-w-[500px]  rounded-lg shadow p-3 bg-white min-h-fit">
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
-        <h1 className="text-xl sm:text-2xl font-semibold text-blue-700">Page Details</h1>
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-700">
+          Page Details
+        </h1>
       </div>
 
       {settingLoading ? (
@@ -65,9 +77,7 @@ export function PageDetails({ formatName }) {
             <tbody>
               {Object.entries(pageInfo).map(([item, value]) => (
                 <tr key={item} className="">
-                  <td className="border px-2 py-2 ">
-                    {formatName(item)}
-                  </td>
+                  <td className="border px-2 py-2 ">{formatName(item)}</td>
                   <td className="border px-2 py-2 flex">
                     {["about", "description", "phone", "website"].includes(
                       item

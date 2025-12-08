@@ -18,7 +18,9 @@ export function Insights({ formatName }) {
       const response = await getPageInsights();
       setInsights(response);
     } catch (err) {
-      toast.error("Failed to load insights");
+      toast.error( <div>
+        <strong>Page Insights</strong> {err.message}
+      </div>);
     } finally {
       setLoading(false);
     }

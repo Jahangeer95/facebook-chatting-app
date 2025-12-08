@@ -1,14 +1,15 @@
-import { faSpinner} from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { getPageRoles } from "../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export function PageUsers({ formatName }) {
   const [rolesLoading, setRolesLoading] = useState(false);
   const [pageRoles, setPageRoles] = useState([]);
   const [paging, setPaging] = useState(null);
+  const hasfetched = useRef(false);
   const getRoles = async () => {
     setRolesLoading(true);
     try {
@@ -16,14 +17,23 @@ export function PageUsers({ formatName }) {
       setPageRoles(roles);
       setPaging(paging);
     } catch (err) {
-      toast.error("Failed to load roles");
+      if (!hasfetched.current) {
+        toast.error(
+          <div>
+            <strong>Page Roles</strong> {err.message}
+          </div>
+        );
+      }
     } finally {
       setRolesLoading(false);
+      hasfetched.current = true;
     }
   };
 
   useEffect(() => {
-    getRoles();
+    if (!hasfetched.current) {
+      getRoles();
+    }
   }, []);
 
   const hasMoreRoles = async () => {
@@ -50,7 +60,9 @@ export function PageUsers({ formatName }) {
   return (
     <div className="w-full md:max-w-[500px] rounded-lg shadow p-3">
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2">
-        <h1 className="text-xl sm:text-2xl font-semibold text-blue-700">Page Users</h1>
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-700">
+          Page Users
+        </h1>
       </div>
       <div className="w-full mt-3 overflow-auto h-[200px]" id="scrollusers">
         <InfiniteScroll
@@ -85,9 +97,7 @@ export function PageUsers({ formatName }) {
                   {pageRoles.map((item) => (
                     <tr key={item.id} className="border">
                       <td className="px-4 py-2 font-bold text-gray-800">
-                        <span>
-                         {item.name}
-                        </span>
+                        <span>{item.name}</span>
                       </td>
                       <td className="px-4 py-2 text-xs text-gray-600 border whitespace-pre-line">
                         {formatName(item.tasks.join("\n"))}

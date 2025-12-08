@@ -28,7 +28,8 @@ export const fetchPageDetail = async () => {
     return { data };
   } catch (error) {
     console.error("Error fetching page detail:", error);
-    return { data: [] };
+    // return { data: [] };
+    throw new Error(error?.response?.data?.error);
   }
 };
 
@@ -248,7 +249,8 @@ export const getPageRoles = async (after = "") => {
     return { roles, paging };
   } catch (error) {
     console.error("Error fetching Page Roles:", error);
-    return { roles: [], paging: null };
+    // return { roles: [], paging: null };
+    throw new Error(error?.response?.data?.error)
   }
 };
 
@@ -261,6 +263,7 @@ export const getPageSettings = async () => {
     return res.data;
   } catch (error) {
     console.error("Error fetching Page Settings:", error);
+    throw new Error(error?.response?.data?.error)
   }
 };
 
@@ -273,6 +276,7 @@ export const updatePageSettings = async (setting, value) => {
     return res.data;
   } catch (error) {
     console.error("Error updating Page Settings:", error);
+    throw new Error(error?.response?.data?.error)
   }
 };
 
@@ -288,5 +292,6 @@ export const updatePageDetails = async ([setting, value]) => {
     return res.data;
   } catch (error) {
     console.error("Error updating Page Details:", error);
+    throw new Error(error?.response?.data?.error)
   }
 };

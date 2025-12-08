@@ -1,24 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { getPageSettings, updatePageSettings } from "../../api";
 
 export function Settings() {
   const [settingLoading, setSettingLoading] = useState(false);
   const [pageSetting, setPageSetting] = useState([]);
+  const hasfetched = useRef(false);
   const getSettings = async () => {
     setSettingLoading(true);
     try {
       const response = await getPageSettings();
       setPageSetting(response);
     } catch (err) {
-      toast.error("Failed to load settings");
+      if (!hasfetched.current) {
+        toast.error( <div>
+          <strong>Page Settings</strong> {err.message}
+        </div>);
+      }
     } finally {
       setSettingLoading(false);
+      hasfetched.current = true;
     }
   };
 
   useEffect(() => {
-    getSettings();
+    if (!hasfetched.current) {
+      getSettings();
+    }
   }, []);
 
   const updateSettings = async (setting, value) => {
@@ -27,14 +35,16 @@ export function Settings() {
       await updatePageSettings(setting, val);
       await getSettings();
     } catch (err) {
-      toast.error("Failed to update setting");
+      toast.error(err.message);
     }
   };
 
   return (
     <div className="w-full mb-10 md:max-w-[500px] rounded-lg shadow p-3 bg-white">
       <div className="flex justify-between items-center mb-4 border-b border-gray-400 p-2 ">
-        <h1 className="text-xl sm:text-2xl font-semibold text-blue-700">Page Settings</h1>
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-700">
+          Page Settings
+        </h1>
       </div>
 
       {settingLoading ? (
