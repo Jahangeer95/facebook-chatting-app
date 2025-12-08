@@ -37,7 +37,8 @@ export const getCampaigns = async () => {
     }
   } catch (error) {
     console.error("Error :", error);
-    return { data: [], paging: null };
+    // return { data: [], paging: null };
+    throw new Error(error?.response?.data?.message);
   }
 };
 
@@ -131,7 +132,8 @@ export const getAdsets = async (id) => {
     }
   } catch (error) {
     console.error("Error :", error);
-    return { data: [], paging: null };
+    // return { data: [], paging: null };
+    throw new Error(error?.response?.data?.message);
   }
 };
 
@@ -191,7 +193,8 @@ export const getAdCreatives = async () => {
     }
   } catch (error) {
     console.error("Error :", error);
-    return { data: [], paging: null };
+    // return { data: [], paging: null };
+    throw new Error(error?.response?.data?.message);
   }
 };
 
@@ -325,6 +328,7 @@ export const getInsight = async (level, preset) => {
     return res.data;
   } catch (error) {
     console.error("Error fetching insights:", error);
+    throw new Error(error?.response?.data?.message);
   }
 };
 

@@ -16,7 +16,9 @@ export function Insights() {
       console.log("Data", data);
       setInsights(data || []);
     } catch (err) {
-      toast.error("Failed to load insights");
+      toast.error( <div>
+        <strong>Campaign Insights</strong> {err.message}
+      </div>);
     } finally {
       setLoading(false);
     }

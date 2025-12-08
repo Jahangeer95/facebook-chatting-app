@@ -46,7 +46,11 @@ export function Campaigns() {
       setcampaigns(data || []);
       setPaging(paging);
     } catch (err) {
-      toast.error("Failed to load insights");
+      toast.error(
+        <div>
+          <strong>Campaigns</strong> {err.message}
+        </div>
+      );
     } finally {
       setCampaignsLoading(false);
     }
@@ -60,7 +64,11 @@ export function Campaigns() {
       setCreatives(data || []);
       setCreativePaging(paging);
     } catch (err) {
-      toast.error("Failed to load creatives");
+      toast.error(
+        <div>
+          <strong>Creatives</strong> {err.message}
+        </div>
+      );
     } finally {
       setCreativesLoading(false);
     }
@@ -75,7 +83,11 @@ export function Campaigns() {
       setAdsets(data || []);
       setAdsetPaging(paging);
     } catch (err) {
-      toast.error("Failed to load Adsets");
+      toast.error(
+        <div>
+          <strong>Adsets</strong> {err.message}
+        </div>
+      );
     } finally {
       setAdsetLoading(false);
     }
@@ -90,7 +102,11 @@ export function Campaigns() {
       setAds(data || []);
       setAdsPaging(paging);
     } catch (err) {
-      toast.error("Failed to load Ads");
+      toast.error(
+        <div>
+          <strong>Ads</strong> {err.message}
+        </div>
+      );
     } finally {
       setAdsLoading(false);
     }
@@ -120,7 +136,9 @@ export function Campaigns() {
       setPaging(newPaging);
     } catch (err) {
       console.log("Failed to fetch more campaigns", err);
-      toast.error("Failed to fetch more campaigns");
+      toast.error(<div>
+        <strong>More Campaigns</strong> {err.message}
+      </div>);
     }
   }, [paging]);
 
@@ -142,7 +160,11 @@ export function Campaigns() {
       setCreativePaging(newPaging);
     } catch (err) {
       console.log("Failed to fetch more creatives", err);
-      toast.error("Failed to fetch more creatives");
+      toast.error(
+        <div>
+          <strong>More Creatives</strong> {err.message}
+        </div>
+      );
     }
   }, [creativePaging]);
 
@@ -164,7 +186,9 @@ export function Campaigns() {
       setAdsetPaging(newPaging);
     } catch (err) {
       console.log("Failed to fetch more adsets", err);
-      toast.error("Failed to fetch more adsets");
+      toast.error( <div>
+        <strong>More Adsets</strong> {err.message}
+      </div>);
     }
   }, [adsetPaging]);
 
@@ -186,7 +210,9 @@ export function Campaigns() {
       setAdsPaging(newPaging);
     } catch (err) {
       console.log("Failed to fetch more adsets", err);
-      toast.error("Failed to fetch more adsets");
+      toast.error( <div>
+        <strong>More Ads</strong> {err.message}
+      </div>);
     }
   }, [adsPaging]);
   return (
