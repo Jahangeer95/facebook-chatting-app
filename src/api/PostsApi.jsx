@@ -65,7 +65,7 @@ export const createTextPost = async (
     return res.data;
   } catch (error) {
     console.error("Error in posting:", error);
-    throw new Error(error.response?.data?.message);
+    throw new Error(error.response?.data?.error);
   }
 };
 
