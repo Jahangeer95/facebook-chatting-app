@@ -100,6 +100,7 @@ export const updatePost = async (postid, message) => {
     return res.data;
   } catch (error) {
     console.error("Error in posting:", error);
+    throw new Error(error.response?.data?.message);
   }
 };
 

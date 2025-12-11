@@ -104,7 +104,11 @@ export function PagePosts() {
       }
     } catch (error) {
       console.log("Error updating a post", error);
-      toast.error("Error updating a post");
+      toast.error(
+        <div>
+          <strong>Update Post</strong> {error.message}
+        </div>
+      );
     }
   };
   const handleDeletePost = async (id) => {
