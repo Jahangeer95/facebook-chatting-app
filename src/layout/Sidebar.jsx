@@ -72,7 +72,7 @@ export function Sidebar({ isSidebarOpen }) {
           </NavLink>
         </li>
         {adTokenId && adTokenId !== "undefined" && (
-          (user?.role === "ADMIN" || user?.role === "MANAGER"|| user?.role === "OWNER") && (<li>
+          (user?.role === "ADMIN" || user?.role === "MANAGER"|| user?.role === "OWNER"|| user?.role === "EDITOR") && (<li>
             <NavLink
               to={`/${pageID}/campaigns`}
               className={({ isActive }) =>
