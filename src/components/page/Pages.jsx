@@ -72,15 +72,16 @@ export function Pages() {
         </div>
         <div className="m-2 flex flex-col  w-full md:w-1/2">
           {(user?.role === "ADMIN" || user?.role === "OWNER" || user?.role === "MANAGER") && (
+            <>
             <button
               className="p-2 bg-blue-600 rounded hover:bg-blue-700 text-white hover:scale-105 w-fit"
               onClick={() => setSelected("user")}
             >
               Create User
             </button>
-          )}
           {selected === "user" && <CreateUser setSelected={setSelected} users={users} refreshUsers={getAllUsers}/>}
           <Users users={users} refreshUsers={getAllUsers}/>
+          </> )}
         </div>
       </div>
     </div>
