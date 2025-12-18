@@ -9,7 +9,7 @@ import { CommentList } from "./CommentList";
 import { Insights } from "./Insights";
 // import { user } from "../../config";
 
-export function Comments({ postId, pageName }) {
+export function Comments({ postId, pageName, summary }) {
   const [selected, setSelected] = useState(false);
   const [comments, setComments] = useState([]);
   const [message, setMessage] = useState("");
@@ -103,7 +103,7 @@ export function Comments({ postId, pageName }) {
           Get Insights
         </button>)}
         <button onClick={() => setSelected(!selected)}>
-          {selected ? "Hide" : "Comments"}
+          {summary} {selected ? "Hide" : "Comments"}
         </button>
       </div>
       {openInsights && (

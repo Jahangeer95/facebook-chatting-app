@@ -232,7 +232,7 @@ export function PagePosts() {
                   )}
                 </div>
               ))}
-              <Comments postId={post.id} pageName={pageInfo?.data.name} />
+              <Comments postId={post.id} pageName={pageInfo?.data.name} summary={post.comments.summary?.total_count}/>
             </div>
           ))
         ) : (
