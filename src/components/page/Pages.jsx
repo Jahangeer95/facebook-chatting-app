@@ -45,13 +45,19 @@ export function Pages() {
   },[]);
 
   useEffect(() => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
-    getPage();
+    const getData=async()=>{
+      await getPage();
 
-    if(user?.role === "ADMIN" || user?.role === "OWNER" || user?.role === "MANAGER"){
-    getAllUsers();}
-  }, [getAllUsers,getPage]);
+      if(user?.role === "ADMIN" || user?.role === "OWNER" || user?.role === "MANAGER"){
+        await getAllUsers();
+      }
+    }
+    if (!hasFetched.current && user){ 
+    hasFetched.current = true;
+       getData();
+    }
+    
+  }, [getAllUsers,getPage,user]);
 
   return (
     <div>
