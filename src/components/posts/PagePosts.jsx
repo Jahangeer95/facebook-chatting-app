@@ -21,6 +21,7 @@ export function PagePosts() {
   const [open, setOpen] = useState(null);
   const menuRef = useRef(null);
   const [pageInfo, setPageInfo] = useState(null);
+  const [hasMore,setHasMore]=useState(true);
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -42,6 +43,7 @@ export function PagePosts() {
       const { posts: initialPost, paging: initialPage } = await fetchAllPosts();
       setPosts(initialPost);
       setPaging(initialPage);
+      setHasMore(true);
     } catch (err) {
       console.error("Posts failed to load", err);
       toast.error("Posts failed to load");
@@ -67,18 +69,31 @@ export function PagePosts() {
     getPageDetails();
   }, []);
   const hasMorePosts = async () => {
-    if (!paging?.cursors?.after) {
+    if (!paging?.cursors?.after || !hasMore) {
       return;
     }
     try {
       const { posts: newPosts, paging: newPaging } = await fetchAllPosts(
         paging.cursors.after
       );
-      setPosts((prev) => [...prev, ...newPosts]);
+
+      if(!newPosts || newPosts.length===0){
+        setHasMore(false);
+        return
+      }
+      setPosts((prev) => {
+        const postsIds=new Set(prev.map(p=>p.id));
+        const uniquePosts=newPosts.filter(p=> !postsIds.has(p.id));
+        if(uniquePosts.length===0){
+          setHasMore(false);
+          return prev;
+        }
+        return [...prev, ...uniquePosts]});
       setPaging(newPaging);
     } catch (err) {
       console.log("Failed to fetch more posts", err);
       toast.error("Failed to fetch more Posts");
+      setHasMore(false);
     }
   };
 
@@ -145,7 +160,7 @@ export function PagePosts() {
       <InfiniteScroll
         dataLength={posts.length}
         next={hasMorePosts}
-        hasMore={!!paging?.cursors?.after}
+        hasMore={hasMore}
         loader={
           <div className="text-center p-4 text-sm text-gray-600">
             <FontAwesomeIcon
