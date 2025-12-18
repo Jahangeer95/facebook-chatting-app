@@ -48,7 +48,9 @@ export function Pages() {
     if (hasFetched.current) return;
     hasFetched.current = true;
     getPage();
-    getAllUsers();
+
+    if(user?.role === "ADMIN" || user?.role === "OWNER" || user?.role === "MANAGER"){
+    getAllUsers();}
   }, [getAllUsers,getPage]);
 
   return (
