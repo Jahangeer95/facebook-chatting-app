@@ -50,7 +50,7 @@ export function CreatePage({ setSelected,refreshPages,refreshUsers }) {
           // required
         />
         <label htmlFor="id" className="font-bold mb-1 text-white">
-          Page Id :
+          Page ID :
         </label>
         <input
           id="id"
