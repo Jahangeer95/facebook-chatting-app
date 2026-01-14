@@ -29,7 +29,8 @@ export const fetchMessages = async (conversationId, afterCursor = "") => {
     return data;
   } catch (error) {
     console.error("Error fetching messages:", error);
-    return { messages: [], paging: null };
+    // return { messages: [], paging: null };
+    throw new Error(error?.response?.data?.message);
   }
 };
 

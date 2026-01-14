@@ -8,6 +8,7 @@ import {
 import { io } from "socket.io-client";
 import {baseURL } from "../config";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const socket = io(baseURL, { transports: ["websocket"] });
 
@@ -76,6 +77,7 @@ export function ChatPage() {
         setPaging(null);
         setAfterCursor("");
         setHasMoreMessages(true);
+        try{
       const { messages: fetchedMessages, paging } = await fetchMessages(
         selected.conversationId
       );
@@ -86,6 +88,9 @@ export function ChatPage() {
           .sort((a, b) => new Date(a.created_time) - new Date(b.created_time))
       );
       setPaging(paging);
+    }catch(error){
+      toast.error(error.message);
+    }
     };
 
     loadMessages();
