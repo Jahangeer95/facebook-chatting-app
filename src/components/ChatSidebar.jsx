@@ -6,8 +6,14 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { ProfileImage } from "./ProfileImage";
 import { useParams } from "react-router-dom";
 
-export function ChatSidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}) {
-  const {pageID}=useParams();
+export function ChatSidebar({
+  users = [],
+  onSelect,
+  selectedId,
+  onLoadMore,
+  hasMore,
+}) {
+  const { pageID } = useParams();
   return (
     <div
       className="w-1/5 border-r overflow-auto bg-gray-50 h-screen"
@@ -22,7 +28,12 @@ export function ChatSidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}
         hasMore={hasMore}
         loader={
           <div className="text-center p-4 text-sm text-gray-600">
-            <FontAwesomeIcon icon={faSpinner} spin size='lg' className="text-blue-700"/>
+            <FontAwesomeIcon
+              icon={faSpinner}
+              spin
+              size="lg"
+              className="text-blue-700"
+            />
           </div>
         }
         scrollableTarget="scrollableSidebar"
@@ -56,11 +67,11 @@ export function ChatSidebar({users = [],onSelect,selectedId,onLoadMore,hasMore,}
                   <span className="font-semibold">
                     {user?.name || "Unknown"}
                   </span>
-                  {conv.unread_count > 0 && (
+                  {/* {conv.unread_count > 0 && (
                     <span className="bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded-full object-cover">
                       {conv.unread_count}
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
